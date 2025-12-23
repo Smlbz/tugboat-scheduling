@@ -1,0 +1,137 @@
+{
+    "berths": [
+        {
+            "id": "B001",
+            "name": "1号泊位",
+            "position": {
+                "lng": 120.3826,
+                "lat": 36.0671
+            },
+            "tugs_stack": [
+                "TUG002",
+                "TUG001"
+            ],
+            "max_capacity": 3,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B002",
+            "name": "2号泊位",
+            "position": {
+                "lng": 120.3850,
+                "lat": 36.0680
+            },
+            "tugs_stack": [
+                "TUG003"
+            ],
+            "max_capacity": 2,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B003",
+            "name": "3号泊位",
+            "position": {
+                "lng": 120.3900,
+                "lat": 36.0700
+            },
+            "tugs_stack": [
+                "TUG004"
+            ],
+            "max_capacity": 2,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B004",
+            "name": "4号泊位",
+            "position": {
+                "lng": 120.3920,
+                "lat": 36.0710
+            },
+            "tugs_stack": [
+                "TUG005"
+            ],
+            "max_capacity": 2,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B005",
+            "name": "5号泊位",
+            "position": {
+                "lng": 120.3800,
+                "lat": 36.0650
+            },
+            "tugs_stack": [
+                "TUG007",
+                "TUG006"
+            ],
+            "max_capacity": 3,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B006",
+            "name": "6号泊位",
+            "position": {
+                "lng": 120.3880,
+                "lat": 36.0690
+            },
+            "tugs_stack": [
+                "TUG009"
+            ],
+            "max_capacity": 2,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B007",
+            "name": "7号泊位(大型)",
+            "position": {
+                "lng": 120.4000,
+                "lat": 36.0750
+            },
+            "tugs_stack": [
+                "TUG011",
+                "TUG010"
+            ],
+            "max_capacity": 4,
+            "berth_type": "LARGE"
+        },
+        {
+            "id": "B008",
+            "name": "8号泊位(老港区)",
+            "position": {
+                "lng": 120.3750,
+                "lat": 36.0600
+            },
+            "tugs_stack": [
+                "TUG013",
+                "TUG012"
+            ],
+            "max_capacity": 3,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B009",
+            "name": "9号泊位",
+            "position": {
+                "lng": 120.3870,
+                "lat": 36.0685
+            },
+            "tugs_stack": [
+                "TUG015",
+                "TUG014"
+            ],
+            "max_capacity": 3,
+            "berth_type": "NORMAL"
+        },
+        {
+            "id": "B010",
+            "name": "10号泊位(危险品)",
+            "position": {
+                "lng": 120.4050,
+                "lat": 36.0780
+            },
+            "tugs_stack": [],
+            "max_capacity": 2,
+            "berth_type": "HAZARDOUS"
+        }
+    ]
+}

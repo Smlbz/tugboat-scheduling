@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMATSS 拖轮调度系统</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部导航 -->
+        <header class="header">
+            <h1>🚢 CMATSS 认知多智能体拖轮调度系统</h1>
+            <div class="header-actions">
+                <span id="status-indicator" class="status-online">● 系统在线</span>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 左侧面板: 任务列表 -->
+            <aside class="left-panel">
+                <div class="panel-header">
+                    <h2>📋 待排任务</h2>
+                    <button id="refresh-jobs" class="btn-icon" title="刷新">🔄</button>
+                </div>
+                <div id="job-list" class="job-list">
+                    <!-- 任务卡片动态生成 -->
+                </div>
+                <button id="schedule-btn" class="btn-primary">
+                    🤖 智能调度
+                </button>
+            </aside>
+
+            <!-- 中间: 地图 -->
+            <section class="map-container">
+                <div id="map"></div>
+                <!-- 图例 -->
+                <div class="map-legend">
+                    <div class="legend-item"><span class="dot green"></span> 可用</div>
+                    <div class="legend-item"><span class="dot yellow"></span> 警告</div>
+                    <div class="legend-item"><span class="dot red"></span> 锁定</div>
+                    <div class="legend-item"><span class="dot blue"></span> 作业中</div>
+                </div>
+            </section>
+
+            <!-- 右侧面板: 方案展示 -->
+            <aside class="right-panel">
+                <div class="panel-header">
+                    <h2>📊 调度方案</h2>
+                </div>
+                <div id="solution-list" class="solution-list">
+                    <div class="empty-state">
+                        点击"智能调度"生成方案
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- 底部: Chatbot -->
+        <div id="chatbot" class="chatbot">
+            <div class="chatbot-header">
+                <span>💬 智能助手</span>
+                <button id="toggle-chat" class="btn-icon">−</button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot">
+                    您好！我是调度解释助手，有任何问题请随时询问。
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="输入问题，如：为什么不派亚洲2号？">
+                <button id="send-chat" class="btn-primary">发送</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/static/main.js"></script>
+</body>
+</html>

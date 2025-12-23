@@ -1,0 +1,85 @@
+{
+    "jobs": [
+        {
+            "id": "JOB001",
+            "job_type": "BERTHING",
+            "ship_name": "远洋巨轮号",
+            "ship_length": 280,
+            "ship_tonnage": 50000,
+            "target_berth_id": "B007",
+            "start_time": "2024-01-15T08:00:00+08:00",
+            "end_time": "2024-01-15T10:00:00+08:00",
+            "required_horsepower": 10000,
+            "required_tug_count": 2,
+            "priority": 8,
+            "is_high_risk": false,
+            "special_requirements": []
+        },
+        {
+            "id": "JOB002",
+            "job_type": "UNBERTHING",
+            "ship_name": "集装箱快运",
+            "ship_length": 200,
+            "ship_tonnage": 30000,
+            "target_berth_id": "B003",
+            "start_time": "2024-01-15T10:30:00+08:00",
+            "end_time": "2024-01-15T12:00:00+08:00",
+            "required_horsepower": 6000,
+            "required_tug_count": 1,
+            "priority": 6,
+            "is_high_risk": false,
+            "special_requirements": []
+        },
+        {
+            "id": "JOB003",
+            "job_type": "BERTHING",
+            "ship_name": "化工运输1号",
+            "ship_length": 180,
+            "ship_tonnage": 25000,
+            "target_berth_id": "B010",
+            "start_time": "2024-01-15T14:00:00+08:00",
+            "end_time": "2024-01-15T16:00:00+08:00",
+            "required_horsepower": 8000,
+            "required_tug_count": 2,
+            "priority": 9,
+            "is_high_risk": true,
+            "special_requirements": [
+                "需要有危化品作业资质",
+                "禁止老旧拖轮"
+            ]
+        },
+        {
+            "id": "JOB004",
+            "job_type": "SHIFTING",
+            "ship_name": "散货轮东方",
+            "ship_length": 150,
+            "ship_tonnage": 18000,
+            "target_berth_id": "B005",
+            "start_time": "2024-01-15T11:00:00+08:00",
+            "end_time": "2024-01-15T12:30:00+08:00",
+            "required_horsepower": 5000,
+            "required_tug_count": 1,
+            "priority": 5,
+            "is_high_risk": false,
+            "special_requirements": []
+        },
+        {
+            "id": "JOB005",
+            "job_type": "ESCORT",
+            "ship_name": "LNG运输船",
+            "ship_length": 300,
+            "ship_tonnage": 80000,
+            "target_berth_id": "B007",
+            "start_time": "2024-01-15T18:00:00+08:00",
+            "end_time": "2024-01-15T20:00:00+08:00",
+            "required_horsepower": 12000,
+            "required_tug_count": 3,
+            "priority": 10,
+            "is_high_risk": true,
+            "special_requirements": [
+                "需要最高马力拖轮",
+                "夜间作业"
+            ]
+        }
+    ]
+}
