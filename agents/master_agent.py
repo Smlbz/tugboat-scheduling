@@ -126,32 +126,41 @@ class MasterAgent(BaseAgent):
         """
         连活算法
         
-        TODO [成员A]: 完善连活识别逻辑
+        识别时间间隔短、距离近的任务对，以实现连活调度
         """
         chain_pairs = []
         sorted_jobs = sorted(jobs, key=lambda j: j.start_time)
         
         for i, job1 in enumerate(sorted_jobs):
             for job2 in sorted_jobs[i+1:]:
+                # 计算时间间隔（小时）
                 interval = (job2.start_time - job1.end_time).total_seconds() / 3600
                 
+                # 筛选时间间隔
                 if interval < 0 or interval > CHAIN_JOB_TIME_THRESHOLD_HOURS:
                     continue
                 
+                # 计算任务间距离
                 distance = self.perception_agent.get_berth_distance(
                     job1.target_berth_id,
                     job2.target_berth_id
                 )
                 
+                # 筛选距离
                 if distance <= CHAIN_JOB_DISTANCE_THRESHOLD_NM:
-                    saving = distance * 50 * 0.8  # 简化成本计算
+                    # 计算节省成本
+                    # 假设油价为50元/海里，连活节省20%成本
+                    saving = distance * 50 * 0.2
                     chain_pairs.append(ChainJobPair(
                         job1_id=job1.id,
                         job2_id=job2.id,
-                        interval_hours=interval,
-                        distance_nm=distance,
-                        cost_saving=saving
+                        interval_hours=round(interval, 2),
+                        distance_nm=round(distance, 2),
+                        cost_saving=round(saving, 2)
                     ))
+        
+        # 按节省成本排序，优先选择节省最多的连活
+        chain_pairs.sort(key=lambda cp: cp.cost_saving, reverse=True)
         
         return chain_pairs
     
