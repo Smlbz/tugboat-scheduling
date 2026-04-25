@@ -1,85 +1,855 @@
 {
-    "jobs": [
-        {
-            "id": "JOB001",
-            "job_type": "BERTHING",
-            "ship_name": "远洋巨轮号",
-            "ship_length": 280,
-            "ship_tonnage": 50000,
-            "target_berth_id": "B007",
-            "start_time": "2024-01-15T08:00:00+08:00",
-            "end_time": "2024-01-15T10:00:00+08:00",
-            "required_horsepower": 10000,
-            "required_tug_count": 2,
-            "priority": 8,
-            "is_high_risk": false,
-            "special_requirements": []
-        },
-        {
-            "id": "JOB002",
-            "job_type": "UNBERTHING",
-            "ship_name": "集装箱快运",
-            "ship_length": 200,
-            "ship_tonnage": 30000,
-            "target_berth_id": "B003",
-            "start_time": "2024-01-15T10:30:00+08:00",
-            "end_time": "2024-01-15T12:00:00+08:00",
-            "required_horsepower": 6000,
-            "required_tug_count": 1,
-            "priority": 6,
-            "is_high_risk": false,
-            "special_requirements": []
-        },
-        {
-            "id": "JOB003",
-            "job_type": "BERTHING",
-            "ship_name": "化工运输1号",
-            "ship_length": 180,
-            "ship_tonnage": 25000,
-            "target_berth_id": "B010",
-            "start_time": "2024-01-15T14:00:00+08:00",
-            "end_time": "2024-01-15T16:00:00+08:00",
-            "required_horsepower": 8000,
-            "required_tug_count": 2,
-            "priority": 9,
-            "is_high_risk": true,
-            "special_requirements": [
-                "需要有危化品作业资质",
-                "禁止老旧拖轮"
-            ]
-        },
-        {
-            "id": "JOB004",
-            "job_type": "SHIFTING",
-            "ship_name": "散货轮东方",
-            "ship_length": 150,
-            "ship_tonnage": 18000,
-            "target_berth_id": "B005",
-            "start_time": "2024-01-15T11:00:00+08:00",
-            "end_time": "2024-01-15T12:30:00+08:00",
-            "required_horsepower": 5000,
-            "required_tug_count": 1,
-            "priority": 5,
-            "is_high_risk": false,
-            "special_requirements": []
-        },
-        {
-            "id": "JOB005",
-            "job_type": "ESCORT",
-            "ship_name": "LNG运输船",
-            "ship_length": 300,
-            "ship_tonnage": 80000,
-            "target_berth_id": "B007",
-            "start_time": "2024-01-15T18:00:00+08:00",
-            "end_time": "2024-01-15T20:00:00+08:00",
-            "required_horsepower": 12000,
-            "required_tug_count": 3,
-            "priority": 10,
-            "is_high_risk": true,
-            "special_requirements": [
-                "需要最高马力拖轮",
-                "夜间作业"
-            ]
-        }
-    ]
+  "jobs": [
+    {
+      "id": "JOB001",
+      "job_type": "ESCORT",
+      "ship_name": "散货轮希望",
+      "ship_length": 287,
+      "ship_tonnage": 75545,
+      "target_berth_id": "B010",
+      "start_time": "2025-12-11T14:42:31+08:00",
+      "end_time": "2025-12-11T16:42:31+08:00",
+      "required_horsepower": 14140,
+      "required_tug_count": 3,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB002",
+      "job_type": "ESCORT",
+      "ship_name": "客轮明珠",
+      "ship_length": 104,
+      "ship_tonnage": 25472,
+      "target_berth_id": "B004",
+      "start_time": "2025-12-11T14:42:31+08:00",
+      "end_time": "2025-12-11T16:42:31+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 1,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB003",
+      "job_type": "SHIFTING",
+      "ship_name": "远洋巨轮号",
+      "ship_length": 188,
+      "ship_tonnage": 25261,
+      "target_berth_id": "B009",
+      "start_time": "2025-12-11T14:42:28+08:00",
+      "end_time": "2025-12-11T16:42:28+08:00",
+      "required_horsepower": 10400,
+      "required_tug_count": 2,
+      "priority": 7,
+      "is_high_risk": false,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB004",
+      "job_type": "UNBERTHING",
+      "ship_name": "客轮友谊",
+      "ship_length": 113,
+      "ship_tonnage": 41819,
+      "target_berth_id": "B004",
+      "start_time": "2025-12-11T14:42:00+08:00",
+      "end_time": "2025-12-11T16:42:00+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 9,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB005",
+      "job_type": "ESCORT",
+      "ship_name": "化工运输1号",
+      "ship_length": 162,
+      "ship_tonnage": 10597,
+      "target_berth_id": "B010",
+      "start_time": "2025-12-11T14:42:28+08:00",
+      "end_time": "2025-12-11T16:42:28+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB006",
+      "job_type": "BERTHING",
+      "ship_name": "工程船建设",
+      "ship_length": 281,
+      "ship_tonnage": 59282,
+      "target_berth_id": "B010",
+      "start_time": "2025-12-11T14:42:17+08:00",
+      "end_time": "2025-12-11T16:42:17+08:00",
+      "required_horsepower": 16000,
+      "required_tug_count": 3,
+      "priority": 2,
+      "is_high_risk": true,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB007",
+      "job_type": "ESCORT",
+      "ship_name": "货轮诚信",
+      "ship_length": 253,
+      "ship_tonnage": 31751,
+      "target_berth_id": "B003",
+      "start_time": "2025-12-11T14:42:03+08:00",
+      "end_time": "2025-12-11T16:42:03+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 3,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB008",
+      "job_type": "SHIFTING",
+      "ship_name": "客轮明珠",
+      "ship_length": 163,
+      "ship_tonnage": 54725,
+      "target_berth_id": "B005",
+      "start_time": "2025-12-11T14:42:05+08:00",
+      "end_time": "2025-12-11T16:42:05+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 10,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB009",
+      "job_type": "ESCORT",
+      "ship_name": "集装箱快运",
+      "ship_length": 277,
+      "ship_tonnage": 11231,
+      "target_berth_id": "B010",
+      "start_time": "2025-12-11T14:42:06+08:00",
+      "end_time": "2025-12-11T16:42:06+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 7,
+      "is_high_risk": false,
+      "special_requirements": []
+    },
+    {
+      "id": "JOB010",
+      "job_type": "UNBERTHING",
+      "ship_name": "散货轮希望",
+      "ship_length": 241,
+      "ship_tonnage": 27114,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T14:42:07+08:00",
+      "end_time": "2025-12-11T16:42:07+08:00",
+      "required_horsepower": 8000,
+      "required_tug_count": 2,
+      "priority": 10,
+      "is_high_risk": false,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB011",
+      "job_type": "BERTHING",
+      "ship_name": "客轮友谊",
+      "ship_length": 197,
+      "ship_tonnage": 22635,
+      "target_berth_id": "B004",
+      "start_time": "2025-12-11T14:42:07+08:00",
+      "end_time": "2025-12-11T16:42:07+08:00",
+      "required_horsepower": 8000,
+      "required_tug_count": 2,
+      "priority": 10,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB012",
+      "job_type": "ESCORT",
+      "ship_name": "工程船建设",
+      "ship_length": 172,
+      "ship_tonnage": 20662,
+      "target_berth_id": "B005",
+      "start_time": "2025-12-11T14:42:08+08:00",
+      "end_time": "2025-12-11T16:42:08+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 8,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB013",
+      "job_type": "SHIFTING",
+      "ship_name": "散货轮发展",
+      "ship_length": 293,
+      "ship_tonnage": 26214,
+      "target_berth_id": "B004",
+      "start_time": "2025-12-11T14:42:09+08:00",
+      "end_time": "2025-12-11T16:42:09+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": []
+    },
+    {
+      "id": "JOB014",
+      "job_type": "SHIFTING",
+      "ship_name": "客轮友谊",
+      "ship_length": 236,
+      "ship_tonnage": 60285,
+      "target_berth_id": "B002",
+      "start_time": "2025-12-11T14:42:09+08:00",
+      "end_time": "2025-12-11T16:42:09+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 2,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB015",
+      "job_type": "SHIFTING",
+      "ship_name": "客轮明珠",
+      "ship_length": 113,
+      "ship_tonnage": 49858,
+      "target_berth_id": "B001",
+      "start_time": "2025-12-11T14:42:11+08:00",
+      "end_time": "2025-12-11T16:42:11+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 7,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB016",
+      "job_type": "BERTHING",
+      "ship_name": "化工运输1号",
+      "ship_length": 204,
+      "ship_tonnage": 26029,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T14:42:12+08:00",
+      "end_time": "2025-12-11T16:42:12+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB017",
+      "job_type": "SHIFTING",
+      "ship_name": "油轮安全",
+      "ship_length": 153,
+      "ship_tonnage": 71654,
+      "target_berth_id": "B008",
+      "start_time": "2025-12-11T14:42:13+08:00",
+      "end_time": "2025-12-11T16:42:13+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 10,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB018",
+      "job_type": "BERTHING",
+      "ship_name": "油轮能源",
+      "ship_length": 130,
+      "ship_tonnage": 35587,
+      "target_berth_id": "B001",
+      "start_time": "2025-12-11T14:42:13+08:00",
+      "end_time": "2025-12-11T16:42:13+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 5,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB019",
+      "job_type": "UNBERTHING",
+      "ship_name": "工程船奋进",
+      "ship_length": 293,
+      "ship_tonnage": 51659,
+      "target_berth_id": "B002",
+      "start_time": "2025-12-11T14:42:14+08:00",
+      "end_time": "2025-12-11T16:42:14+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 3,
+      "is_high_risk": false,
+      "special_requirements": []
+    },
+    {
+      "id": "JOB020",
+      "job_type": "UNBERTHING",
+      "ship_name": "化工运输1号",
+      "ship_length": 119,
+      "ship_tonnage": 74751,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T14:42:15+08:00",
+      "end_time": "2025-12-11T16:42:15+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 4,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB021",
+      "job_type": "BERTHING",
+      "ship_name": "货轮诚信",
+      "ship_length": 206,
+      "ship_tonnage": 43825,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T14:42:15+08:00",
+      "end_time": "2025-12-11T16:42:15+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 3,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB022",
+      "job_type": "UNBERTHING",
+      "ship_name": "集装箱先锋",
+      "ship_length": 243,
+      "ship_tonnage": 13961,
+      "target_berth_id": "B001",
+      "start_time": "2025-12-11T14:42:16+08:00",
+      "end_time": "2025-12-11T16:42:16+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 2,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB023",
+      "job_type": "BERTHING",
+      "ship_name": "工程船奋进",
+      "ship_length": 233,
+      "ship_tonnage": 63507,
+      "target_berth_id": "B009",
+      "start_time": "2025-12-11T14:42:19+08:00",
+      "end_time": "2025-12-11T16:42:19+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 2,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB024",
+      "job_type": "UNBERTHING",
+      "ship_name": "渔船远航",
+      "ship_length": 194,
+      "ship_tonnage": 56899,
+      "target_berth_id": "B005",
+      "start_time": "2025-12-11T14:42:19+08:00",
+      "end_time": "2025-12-11T16:42:19+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 10,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB025",
+      "job_type": "ESCORT",
+      "ship_name": "客轮明珠",
+      "ship_length": 200,
+      "ship_tonnage": 18595,
+      "target_berth_id": "B001",
+      "start_time": "2025-12-11T14:42:20+08:00",
+      "end_time": "2025-12-11T16:42:20+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB026",
+      "job_type": "BERTHING",
+      "ship_name": "化工运输1号",
+      "ship_length": 222,
+      "ship_tonnage": 71969,
+      "target_berth_id": "B005",
+      "start_time": "2025-12-11T14:42:21+08:00",
+      "end_time": "2025-12-11T16:42:21+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 4,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB027",
+      "job_type": "SHIFTING",
+      "ship_name": "集装箱快运",
+      "ship_length": 283,
+      "ship_tonnage": 56293,
+      "target_berth_id": "B004",
+      "start_time": "2025-12-11T14:42:22+08:00",
+      "end_time": "2025-12-11T16:42:22+08:00",
+      "required_horsepower": 10400,
+      "required_tug_count": 2,
+      "priority": 6,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB028",
+      "job_type": "SHIFTING",
+      "ship_name": "化工运输1号",
+      "ship_length": 284,
+      "ship_tonnage": 14660,
+      "target_berth_id": "B003",
+      "start_time": "2025-12-11T14:42:22+08:00",
+      "end_time": "2025-12-11T16:42:22+08:00",
+      "required_horsepower": 10400,
+      "required_tug_count": 2,
+      "priority": 5,
+      "is_high_risk": true,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB029",
+      "job_type": "SHIFTING",
+      "ship_name": "散货轮发展",
+      "ship_length": 220,
+      "ship_tonnage": 64058,
+      "target_berth_id": "B008",
+      "start_time": "2025-12-11T14:42:23+08:00",
+      "end_time": "2025-12-11T16:42:23+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 10,
+      "is_high_risk": true,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB030",
+      "job_type": "BERTHING",
+      "ship_name": "化工运输1号",
+      "ship_length": 208,
+      "ship_tonnage": 17224,
+      "target_berth_id": "B003",
+      "start_time": "2025-12-11T14:42:23+08:00",
+      "end_time": "2025-12-11T16:42:23+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 8,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB031",
+      "job_type": "SHIFTING",
+      "ship_name": "集装箱快运",
+      "ship_length": 127,
+      "ship_tonnage": 15235,
+      "target_berth_id": "B009",
+      "start_time": "2025-12-11T14:42:24+08:00",
+      "end_time": "2025-12-11T16:42:24+08:00",
+      "required_horsepower": 8000,
+      "required_tug_count": 2,
+      "priority": 2,
+      "is_high_risk": false,
+      "special_requirements": []
+    },
+    {
+      "id": "JOB032",
+      "job_type": "SHIFTING",
+      "ship_name": "工程船建设",
+      "ship_length": 287,
+      "ship_tonnage": 25317,
+      "target_berth_id": "B003",
+      "start_time": "2025-12-11T14:42:25+08:00",
+      "end_time": "2025-12-11T16:42:25+08:00",
+      "required_horsepower": 8000,
+      "required_tug_count": 2,
+      "priority": 2,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB033",
+      "job_type": "SHIFTING",
+      "ship_name": "远洋巨轮号",
+      "ship_length": 296,
+      "ship_tonnage": 58635,
+      "target_berth_id": "B001",
+      "start_time": "2025-12-11T14:42:26+08:00",
+      "end_time": "2025-12-11T16:42:26+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB034",
+      "job_type": "SHIFTING",
+      "ship_name": "渔船丰收",
+      "ship_length": 245,
+      "ship_tonnage": 70420,
+      "target_berth_id": "B009",
+      "start_time": "2025-12-11T14:42:27+08:00",
+      "end_time": "2025-12-11T16:42:27+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 10,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB035",
+      "job_type": "BERTHING",
+      "ship_name": "LNG运输船",
+      "ship_length": 231,
+      "ship_tonnage": 54873,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T15:21:29+08:00",
+      "end_time": "2025-12-11T17:21:29+08:00",
+      "required_horsepower": 14140,
+      "required_tug_count": 3,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB036",
+      "job_type": "UNBERTHING",
+      "ship_name": "散货轮发展",
+      "ship_length": 181,
+      "ship_tonnage": 25855,
+      "target_berth_id": "B010",
+      "start_time": "2025-12-11T15:21:28+08:00",
+      "end_time": "2025-12-11T17:21:28+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 5,
+      "is_high_risk": false,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB037",
+      "job_type": "UNBERTHING",
+      "ship_name": "渔船丰收",
+      "ship_length": 170,
+      "ship_tonnage": 28125,
+      "target_berth_id": "B002",
+      "start_time": "2025-12-11T15:21:26+08:00",
+      "end_time": "2025-12-11T17:21:26+08:00",
+      "required_horsepower": 10400,
+      "required_tug_count": 2,
+      "priority": 7,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB038",
+      "job_type": "SHIFTING",
+      "ship_name": "集装箱先锋",
+      "ship_length": 124,
+      "ship_tonnage": 23244,
+      "target_berth_id": "B003",
+      "start_time": "2025-12-11T15:21:00+08:00",
+      "end_time": "2025-12-11T17:21:00+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 10,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB039",
+      "job_type": "UNBERTHING",
+      "ship_name": "集装箱先锋",
+      "ship_length": 208,
+      "ship_tonnage": 35961,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T15:21:27+08:00",
+      "end_time": "2025-12-11T17:21:27+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 5,
+      "is_high_risk": false,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB040",
+      "job_type": "SHIFTING",
+      "ship_name": "工程船奋进",
+      "ship_length": 262,
+      "ship_tonnage": 36703,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T15:21:16+08:00",
+      "end_time": "2025-12-11T17:21:16+08:00",
+      "required_horsepower": 16000,
+      "required_tug_count": 3,
+      "priority": 5,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB041",
+      "job_type": "BERTHING",
+      "ship_name": "渔船丰收",
+      "ship_length": 158,
+      "ship_tonnage": 20819,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T15:21:02+08:00",
+      "end_time": "2025-12-11T17:21:02+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 8,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要最高马力拖轮"
+      ]
+    },
+    {
+      "id": "JOB042",
+      "job_type": "BERTHING",
+      "ship_name": "货轮诚信",
+      "ship_length": 250,
+      "ship_tonnage": 45024,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T15:21:04+08:00",
+      "end_time": "2025-12-11T17:21:04+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 4,
+      "is_high_risk": false,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB043",
+      "job_type": "SHIFTING",
+      "ship_name": "客轮明珠",
+      "ship_length": 267,
+      "ship_tonnage": 11067,
+      "target_berth_id": "B006",
+      "start_time": "2025-12-11T15:21:05+08:00",
+      "end_time": "2025-12-11T17:21:05+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 9,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB044",
+      "job_type": "SHIFTING",
+      "ship_name": "油轮海洋",
+      "ship_length": 154,
+      "ship_tonnage": 51495,
+      "target_berth_id": "B004",
+      "start_time": "2025-12-11T15:21:06+08:00",
+      "end_time": "2025-12-11T17:21:06+08:00",
+      "required_horsepower": 8000,
+      "required_tug_count": 2,
+      "priority": 6,
+      "is_high_risk": true,
+      "special_requirements": [
+        "夜间作业"
+      ]
+    },
+    {
+      "id": "JOB045",
+      "job_type": "BERTHING",
+      "ship_name": "集装箱快运",
+      "ship_length": 278,
+      "ship_tonnage": 18816,
+      "target_berth_id": "B001",
+      "start_time": "2025-12-11T15:21:06+08:00",
+      "end_time": "2025-12-11T17:21:06+08:00",
+      "required_horsepower": 8000,
+      "required_tug_count": 2,
+      "priority": 10,
+      "is_high_risk": false,
+      "special_requirements": []
+    },
+    {
+      "id": "JOB046",
+      "job_type": "UNBERTHING",
+      "ship_name": "油轮海洋",
+      "ship_length": 137,
+      "ship_tonnage": 49127,
+      "target_berth_id": "B007",
+      "start_time": "2025-12-11T15:21:07+08:00",
+      "end_time": "2025-12-11T17:21:07+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 2,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB047",
+      "job_type": "UNBERTHING",
+      "ship_name": "散货轮东方",
+      "ship_length": 243,
+      "ship_tonnage": 67319,
+      "target_berth_id": "B007",
+      "start_time": "2025-12-11T15:21:07+08:00",
+      "end_time": "2025-12-11T17:21:07+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 2,
+      "is_high_risk": false,
+      "special_requirements": [
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB048",
+      "job_type": "BERTHING",
+      "ship_name": "散货轮东方",
+      "ship_length": 152,
+      "ship_tonnage": 39150,
+      "target_berth_id": "B008",
+      "start_time": "2025-12-11T15:21:08+08:00",
+      "end_time": "2025-12-11T17:21:08+08:00",
+      "required_horsepower": 14000,
+      "required_tug_count": 3,
+      "priority": 2,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质"
+      ]
+    },
+    {
+      "id": "JOB049",
+      "job_type": "ESCORT",
+      "ship_name": "散货轮希望",
+      "ship_length": 255,
+      "ship_tonnage": 60542,
+      "target_berth_id": "B005",
+      "start_time": "2025-12-11T15:21:10+08:00",
+      "end_time": "2025-12-11T17:21:10+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 3,
+      "is_high_risk": false,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    },
+    {
+      "id": "JOB050",
+      "job_type": "UNBERTHING",
+      "ship_name": "散货轮发展",
+      "ship_length": 120,
+      "ship_tonnage": 54974,
+      "target_berth_id": "B010",
+      "start_time": "2025-12-11T15:21:11+08:00",
+      "end_time": "2025-12-11T17:21:11+08:00",
+      "required_horsepower": 10000,
+      "required_tug_count": 2,
+      "priority": 8,
+      "is_high_risk": true,
+      "special_requirements": [
+        "需要有危化品作业资质",
+        "禁止老旧拖轮"
+      ]
+    }
+  ]
 }

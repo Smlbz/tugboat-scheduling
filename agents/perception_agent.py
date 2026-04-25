@@ -40,7 +40,7 @@ class PerceptionAgent(BaseAgent):
     def get_berth_distance(self, berth1_id: str, berth2_id: str) -> float:
         """
         计算两个泊位之间的距离（海里）
-        
+
         TODO [成员C]: 实现真实的距离计算
         当前使用简化的直线距离
         """
@@ -48,11 +48,20 @@ class PerceptionAgent(BaseAgent):
         b2 = self.berths.get(berth2_id)
         if not b1 or not b2:
             return float('inf')
-        
+
         # 简化计算: 1度纬度 ≈ 60海里
         lat_diff = abs(b1.position.lat - b2.position.lat) * 60
         lng_diff = abs(b1.position.lng - b2.position.lng) * 60 * math.cos(math.radians(b1.position.lat))
         return math.sqrt(lat_diff**2 + lng_diff**2)
+
+    def estimate_distance_from_position(self, position, target_berth_id: str) -> float:
+        """从当前位置到目标泊位的估算距离（海里）"""
+        berth = self.berths.get(target_berth_id)
+        if not berth:
+            return 2.0
+        lat_diff = abs(position.lat - berth.position.lat) * 60
+        lng_diff = abs(position.lng - berth.position.lng) * 60 * math.cos(math.radians(position.lat))
+        return math.sqrt(lat_diff ** 2 + lng_diff ** 2)
     
     def check_berth_availability(self, berth_id: str) -> Dict:
         """

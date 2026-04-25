@@ -2,213 +2,1023 @@
   "tugs": [
     {
       "id": "TUG001",
-      "name": "青港拖1",
-      "horsepower": 4000,
-      "position": {"lng": 120.3826, "lat": 36.0671},
-      "berth_id": "B001",
-      "berth_position": "OUTER",
+      "name": "日港拖16",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.515662,
+        "lat": 35.320382
+      },
+      "berth_id": "B002",
+      "berth_position": "INNER",
       "status": "AVAILABLE",
-      "fatigue_value": 3.5,
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
-      "today_work_hours": 4.0,
-      "ship_age": 8,
+      "today_work_hours": 0.0,
+      "ship_age": 5,
       "crew_id": "CREW001"
     },
     {
       "id": "TUG002",
-      "name": "青港拖2",
-      "horsepower": 4500,
-      "position": {"lng": 120.3830, "lat": 36.0675},
-      "berth_id": "B001",
-      "berth_position": "INNER",
+      "name": "日港拖30",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.541947,
+        "lat": 35.371353
+      },
+      "berth_id": "B003",
+      "berth_position": "OUTER",
       "status": "AVAILABLE",
-      "fatigue_value": 2.0,
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
-      "today_work_hours": 2.0,
+      "today_work_hours": 0.0,
       "ship_age": 5,
       "crew_id": "CREW002"
     },
     {
       "id": "TUG003",
-      "name": "青港拖3",
-      "horsepower": 5000,
-      "position": {"lng": 120.3850, "lat": 36.0680},
-      "berth_id": "B002",
-      "berth_position": "OUTER",
-      "status": "BUSY",
-      "fatigue_value": 6.0,
+      "name": "氢电拖1",
+      "horsepower": 7070,
+      "position": {
+        "lng": 120.22308,
+        "lat": 36.00768
+      },
+      "berth_id": "B004",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
       "today_work_hours": 6.0,
-      "ship_age": 3,
+      "ship_age": 5,
       "crew_id": "CREW003"
     },
     {
       "id": "TUG004",
-      "name": "亚洲1号",
-      "horsepower": 6000,
-      "position": {"lng": 120.3900, "lat": 36.0700},
-      "berth_id": "B003",
+      "name": "青港拖30",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.239113,
+        "lat": 36.017167
+      },
+      "berth_id": "B005",
       "berth_position": "OUTER",
       "status": "AVAILABLE",
-      "fatigue_value": 1.5,
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
-      "today_work_hours": 1.5,
-      "ship_age": 2,
+      "today_work_hours": 4.0,
+      "ship_age": 5,
       "crew_id": "CREW004"
     },
     {
       "id": "TUG005",
-      "name": "亚洲2号",
-      "horsepower": 6000,
-      "position": {"lng": 120.3920, "lat": 36.0710},
-      "berth_id": "B004",
-      "berth_position": "OUTER",
-      "status": "AVAILABLE",
-      "fatigue_value": 4.0,
+      "name": "青港拖1",
+      "horsepower": 5200,
+      "position": {
+        "lng": 120.325805,
+        "lat": 36.096995
+      },
+      "berth_id": "B006",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
       "today_work_hours": 4.0,
-      "ship_age": 2,
+      "ship_age": 5,
       "crew_id": "CREW005"
     },
     {
       "id": "TUG006",
-      "name": "港盛拖1",
-      "horsepower": 3500,
-      "position": {"lng": 120.3800, "lat": 36.0650},
-      "berth_id": "B005",
+      "name": "青港拖31",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.21888,
+        "lat": 36.017055
+      },
+      "berth_id": "B007",
       "berth_position": "OUTER",
-      "status": "AVAILABLE",
-      "fatigue_value": 5.0,
+      "status": "BUSY",
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
-      "today_work_hours": 5.0,
-      "ship_age": 12,
+      "today_work_hours": 4.0,
+      "ship_age": 5,
       "crew_id": "CREW006"
     },
     {
       "id": "TUG007",
-      "name": "港盛拖2",
-      "horsepower": 3500,
-      "position": {"lng": 120.3810, "lat": 36.0655},
-      "berth_id": "B005",
+      "name": "亚洲19号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.23922,
+        "lat": 36.017003
+      },
+      "berth_id": "B008",
       "berth_position": "INNER",
-      "status": "LOCKED_BY_FRMS",
-      "fatigue_value": 11.0,
-      "fatigue_level": "RED",
-      "today_work_hours": 10.0,
-      "ship_age": 15,
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 4.0,
+      "ship_age": 5,
       "crew_id": "CREW007"
     },
     {
       "id": "TUG008",
-      "name": "海力拖1",
-      "horsepower": 5500,
-      "position": {"lng": 120.3950, "lat": 36.0720},
-      "berth_id": null,
-      "berth_position": null,
-      "status": "BUSY",
-      "fatigue_value": 7.5,
-      "fatigue_level": "YELLOW",
-      "today_work_hours": 7.5,
-      "ship_age": 6,
+      "name": "日港拖27",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.544253,
+        "lat": 35.375228
+      },
+      "berth_id": "B009",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
       "crew_id": "CREW008"
     },
     {
       "id": "TUG009",
-      "name": "海力拖2",
-      "horsepower": 5500,
-      "position": {"lng": 120.3880, "lat": 36.0690},
+      "name": "日港拖17",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.54312,
+        "lat": 35.376567
+      },
+      "berth_id": "B010",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW009"
+    },
+    {
+      "id": "TUG010",
+      "name": "新时代",
+      "horsepower": 3580,
+      "position": {
+        "lng": 120.307273,
+        "lat": 36.082468
+      },
+      "berth_id": "B001",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW010"
+    },
+    {
+      "id": "TUG011",
+      "name": "日港拖31",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.542912,
+        "lat": 35.376157
+      },
+      "berth_id": "B002",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW011"
+    },
+    {
+      "id": "TUG012",
+      "name": "日港拖2",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.534325,
+        "lat": 35.359107
+      },
+      "berth_id": "B003",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW012"
+    },
+    {
+      "id": "TUG013",
+      "name": "青港吊2",
+      "horsepower": 0,
+      "position": {
+        "lng": 83.6,
+        "lat": 39.1
+      },
+      "berth_id": "B004",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW013"
+    },
+    {
+      "id": "TUG014",
+      "name": "新迎宾",
+      "horsepower": 0,
+      "position": {
+        "lng": 120.307672,
+        "lat": 36.083762
+      },
+      "berth_id": "B005",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW014"
+    },
+    {
+      "id": "TUG015",
+      "name": "贵宾",
+      "horsepower": 1220,
+      "position": {
+        "lng": 120.328645,
+        "lat": 36.031168
+      },
       "berth_id": "B006",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW015"
+    },
+    {
+      "id": "TUG016",
+      "name": "安德",
+      "horsepower": 2500,
+      "position": {
+        "lng": 120.303108,
+        "lat": 36.051475
+      },
+      "berth_id": "B007",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW016"
+    },
+    {
+      "id": "TUG017",
+      "name": "日港拖18",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.542965,
+        "lat": 35.376595
+      },
+      "berth_id": "B008",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW017"
+    },
+    {
+      "id": "TUG018",
+      "name": "安泰",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.798237,
+        "lat": 35.586962
+      },
+      "berth_id": "B009",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW018"
+    },
+    {
+      "id": "TUG019",
+      "name": "寰宇7号",
+      "horsepower": 8000,
+      "position": {
+        "lng": 119.84942,
+        "lat": 35.46197
+      },
+      "berth_id": "B010",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW019"
+    },
+    {
+      "id": "TUG020",
+      "name": "新贵宾",
+      "horsepower": 0,
+      "position": {
+        "lng": 120.317042,
+        "lat": 36.08962
+      },
+      "berth_id": "B001",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW020"
+    },
+    {
+      "id": "TUG021",
+      "name": "日港拖12",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.515842,
+        "lat": 35.320427
+      },
+      "berth_id": "B002",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW021"
+    },
+    {
+      "id": "TUG022",
+      "name": "青港拖2",
+      "horsepower": 7000,
+      "position": {
+        "lng": 120.314832,
+        "lat": 36.085488
+      },
+      "berth_id": "B003",
+      "berth_position": "OUTER",
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW022"
+    },
+    {
+      "id": "TUG023",
+      "name": "青港拖8",
+      "horsepower": 5000,
+      "position": {
+        "lng": 119.760083,
+        "lat": 35.57347
+      },
+      "berth_id": "B004",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 5.0,
+      "ship_age": 5,
+      "crew_id": "CREW023"
+    },
+    {
+      "id": "TUG024",
+      "name": "青港拖16",
+      "horsepower": 5000,
+      "position": {
+        "lng": 119.773612,
+        "lat": 35.576852
+      },
+      "berth_id": "B005",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 2.0,
+      "ship_age": 5,
+      "crew_id": "CREW024"
+    },
+    {
+      "id": "TUG025",
+      "name": "青港拖27",
+      "horsepower": 5000,
+      "position": {
+        "lng": 119.775645,
+        "lat": 35.578113
+      },
+      "berth_id": "B006",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 4.0,
+      "ship_age": 5,
+      "crew_id": "CREW025"
+    },
+    {
+      "id": "TUG026",
+      "name": "港强",
+      "horsepower": 4000,
+      "position": {
+        "lng": 120.18884,
+        "lat": 36.002642
+      },
+      "berth_id": "B007",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 6.0,
+      "ship_age": 5,
+      "crew_id": "CREW026"
+    },
+    {
+      "id": "TUG027",
+      "name": "港福",
+      "horsepower": 4000,
+      "position": {
+        "lng": 120.326803,
+        "lat": 36.097458
+      },
+      "berth_id": "B008",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 2.0,
+      "ship_age": 5,
+      "crew_id": "CREW027"
+    },
+    {
+      "id": "TUG028",
+      "name": "寰宇1号",
+      "horsepower": 7000,
+      "position": {
+        "lng": 120.22569,
+        "lat": 36.012107
+      },
+      "berth_id": "B009",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 5.0,
+      "ship_age": 5,
+      "crew_id": "CREW028"
+    },
+    {
+      "id": "TUG029",
+      "name": "寰宇2号",
+      "horsepower": 7000,
+      "position": {
+        "lng": 119.797113,
+        "lat": 35.586748
+      },
+      "berth_id": "B010",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW029"
+    },
+    {
+      "id": "TUG030",
+      "name": "寰宇6号",
+      "horsepower": 7000,
+      "position": {
+        "lng": 120.20667,
+        "lat": 36.002285
+      },
+      "berth_id": "B001",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 5.0,
+      "ship_age": 5,
+      "crew_id": "CREW030"
+    },
+    {
+      "id": "TUG031",
+      "name": "亚洲10号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.189938,
+        "lat": 36.00146
+      },
+      "berth_id": "B002",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 6.0,
+      "ship_age": 5,
+      "crew_id": "CREW031"
+    },
+    {
+      "id": "TUG032",
+      "name": "亚洲11号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.203113,
+        "lat": 36.001533
+      },
+      "berth_id": "B003",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 4.0,
+      "ship_age": 5,
+      "crew_id": "CREW032"
+    },
+    {
+      "id": "TUG033",
+      "name": "亚洲12号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.2298,
+        "lat": 36.01354
+      },
+      "berth_id": "B004",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 7.0,
+      "ship_age": 5,
+      "crew_id": "CREW033"
+    },
+    {
+      "id": "TUG034",
+      "name": "亚洲16号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 119.7576,
+        "lat": 35.572127
+      },
+      "berth_id": "B005",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW034"
+    },
+    {
+      "id": "TUG035",
+      "name": "亚洲15号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.188823,
+        "lat": 36.002612
+      },
+      "berth_id": "B006",
+      "berth_position": "INNER",
+      "status": "MAINTENANCE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW035"
+    },
+    {
+      "id": "TUG036",
+      "name": "亚洲9号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.20672,
+        "lat": 35.997062
+      },
+      "berth_id": "B007",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 2.0,
+      "ship_age": 5,
+      "crew_id": "CREW036"
+    },
+    {
+      "id": "TUG037",
+      "name": "亚洲6号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 118.965288,
+        "lat": 38.08391
+      },
+      "berth_id": "B008",
+      "berth_position": "INNER",
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW037"
+    },
+    {
+      "id": "TUG038",
+      "name": "亚洲7号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.317917,
+        "lat": 36.089422
+      },
+      "berth_id": "B009",
+      "berth_position": "OUTER",
+      "status": "MAINTENANCE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW038"
+    },
+    {
+      "id": "TUG039",
+      "name": "亚洲2号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.19321,
+        "lat": 35.997888
+      },
+      "berth_id": "B010",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 4.0,
+      "ship_age": 5,
+      "crew_id": "CREW039"
+    },
+    {
+      "id": "TUG040",
+      "name": "亚洲3号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.237063,
+        "lat": 36.0422
+      },
+      "berth_id": "B001",
       "berth_position": "OUTER",
       "status": "AVAILABLE",
       "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
       "today_work_hours": 3.0,
-      "ship_age": 6,
-      "crew_id": "CREW009"
+      "ship_age": 5,
+      "crew_id": "CREW040"
     },
     {
-      "id": "TUG010",
-      "name": "远洋拖1",
-      "horsepower": 7000,
-      "position": {"lng": 120.4000, "lat": 36.0750},
-      "berth_id": "B007",
-      "berth_position": "OUTER",
-      "status": "AVAILABLE",
-      "fatigue_value": 2.5,
-      "fatigue_level": "GREEN",
-      "today_work_hours": 2.5,
-      "ship_age": 1,
-      "crew_id": "CREW010"
-    },
-    {
-      "id": "TUG011",
-      "name": "远洋拖2",
-      "horsepower": 7000,
-      "position": {"lng": 120.4010, "lat": 36.0755},
-      "berth_id": "B007",
+      "id": "TUG041",
+      "name": "青港拖23",
+      "horsepower": 4000,
+      "position": {
+        "lng": 114.251203,
+        "lat": 22.569032
+      },
+      "berth_id": "B002",
       "berth_position": "INNER",
-      "status": "MAINTENANCE",
-      "fatigue_value": 0.0,
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
       "today_work_hours": 0.0,
-      "ship_age": 1,
-      "crew_id": "CREW011"
+      "ship_age": 5,
+      "crew_id": "CREW041"
     },
     {
-      "id": "TUG012",
-      "name": "老港拖1",
-      "horsepower": 3000,
-      "position": {"lng": 120.3750, "lat": 36.0600},
-      "berth_id": "B008",
+      "id": "TUG042",
+      "name": "青港拖25",
+      "horsepower": 4000,
+      "position": {
+        "lng": 120.092233,
+        "lat": 38.397522
+      },
+      "berth_id": "B003",
       "berth_position": "OUTER",
       "status": "AVAILABLE",
-      "fatigue_value": 8.5,
-      "fatigue_level": "YELLOW",
-      "today_work_hours": 8.5,
-      "ship_age": 22,
-      "crew_id": "CREW012"
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW042"
     },
     {
-      "id": "TUG013",
-      "name": "老港拖2",
-      "horsepower": 3000,
-      "position": {"lng": 120.3760, "lat": 36.0605},
+      "id": "TUG043",
+      "name": "青港拖29",
+      "horsepower": 4000,
+      "position": {
+        "lng": 120.102175,
+        "lat": 38.400902
+      },
+      "berth_id": "B004",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW043"
+    },
+    {
+      "id": "TUG044",
+      "name": "青港拖6",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.221027,
+        "lat": 36.02028
+      },
+      "berth_id": "B005",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 6.0,
+      "ship_age": 5,
+      "crew_id": "CREW044"
+    },
+    {
+      "id": "TUG045",
+      "name": "环消拖2",
+      "horsepower": 7000,
+      "position": {
+        "lng": 119.797092,
+        "lat": 35.586243
+      },
+      "berth_id": "B006",
+      "berth_position": "INNER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW045"
+    },
+    {
+      "id": "TUG046",
+      "name": "青港拖9",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.221027,
+        "lat": 36.006307
+      },
+      "berth_id": "B007",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW046"
+    },
+    {
+      "id": "TUG047",
+      "name": "环消拖1",
+      "horsepower": 5000,
+      "position": {
+        "lng": 119.797003,
+        "lat": 35.58616
+      },
       "berth_id": "B008",
       "berth_position": "INNER",
       "status": "AVAILABLE",
-      "fatigue_value": 4.5,
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
-      "today_work_hours": 4.5,
-      "ship_age": 25,
-      "crew_id": "CREW013"
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW047"
     },
     {
-      "id": "TUG014",
-      "name": "新港拖1",
-      "horsepower": 4800,
-      "position": {"lng": 120.3870, "lat": 36.0685},
+      "id": "TUG048",
+      "name": "威港拖27",
+      "horsepower": 5200,
+      "position": {
+        "lng": 119.75901,
+        "lat": 35.57392
+      },
       "berth_id": "B009",
       "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW048"
+    },
+    {
+      "id": "TUG049",
+      "name": "威港拖31",
+      "horsepower": 5200,
+      "position": {
+        "lng": 119.759013,
+        "lat": 35.571715
+      },
+      "berth_id": "B010",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 2.0,
+      "ship_age": 5,
+      "crew_id": "CREW049"
+    },
+    {
+      "id": "TUG050",
+      "name": "亚洲1号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.205663,
+        "lat": 35.996385
+      },
+      "berth_id": "B001",
+      "berth_position": "OUTER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW050"
+    },
+    {
+      "id": "TUG051",
+      "name": "青港拖12",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.315508,
+        "lat": 36.085807
+      },
+      "berth_id": "B002",
+      "berth_position": "INNER",
       "status": "AVAILABLE",
-      "fatigue_value": 1.0,
+      "fatigue_value": 3.0,
       "fatigue_level": "GREEN",
       "today_work_hours": 1.0,
-      "ship_age": 4,
-      "crew_id": "CREW014"
+      "ship_age": 5,
+      "crew_id": "CREW051"
     },
     {
-      "id": "TUG015",
-      "name": "新港拖2",
-      "horsepower": 4800,
-      "position": {"lng": 120.3875, "lat": 36.0688},
-      "berth_id": "B009",
-      "berth_position": "INNER",
+      "id": "TUG052",
+      "name": "青港拖21",
+      "horsepower": 4000,
+      "position": {
+        "lng": 120.240618,
+        "lat": 36.017917
+      },
+      "berth_id": "B003",
+      "berth_position": "OUTER",
       "status": "AVAILABLE",
-      "fatigue_value": 9.0,
-      "fatigue_level": "YELLOW",
-      "today_work_hours": 9.0,
-      "ship_age": 4,
-      "crew_id": "CREW015"
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 4.0,
+      "ship_age": 5,
+      "crew_id": "CREW052"
+    },
+    {
+      "id": "TUG053",
+      "name": "青港拖26",
+      "horsepower": 4000,
+      "position": {
+        "lng": 113.682258,
+        "lat": 21.985478
+      },
+      "berth_id": "B004",
+      "berth_position": "INNER",
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW053"
+    },
+    {
+      "id": "TUG054",
+      "name": "青港拖20",
+      "horsepower": 4000,
+      "position": {
+        "lng": 120.228542,
+        "lat": 36.063322
+      },
+      "berth_id": "B005",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 5.0,
+      "ship_age": 5,
+      "crew_id": "CREW054"
+    },
+    {
+      "id": "TUG055",
+      "name": "亚洲18号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 120.204912,
+        "lat": 36.004113
+      },
+      "berth_id": "B006",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 7.0,
+      "ship_age": 5,
+      "crew_id": "CREW055"
+    },
+    {
+      "id": "TUG056",
+      "name": "寰宇3号",
+      "horsepower": 7000,
+      "position": {
+        "lng": 119.798077,
+        "lat": 35.586887
+      },
+      "berth_id": "B007",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 3.0,
+      "ship_age": 5,
+      "crew_id": "CREW056"
+    },
+    {
+      "id": "TUG057",
+      "name": "日港拖1",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.539752,
+        "lat": 35.370267
+      },
+      "berth_id": "B008",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW057"
+    },
+    {
+      "id": "TUG058",
+      "name": "日港拖15",
+      "horsepower": 0,
+      "position": {
+        "lng": 119.543062,
+        "lat": 35.37713
+      },
+      "berth_id": "B009",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW058"
+    },
+    {
+      "id": "TUG059",
+      "name": "亚洲17号",
+      "horsepower": 5000,
+      "position": {
+        "lng": 122.055033,
+        "lat": 30.57799
+      },
+      "berth_id": "B010",
+      "berth_position": "INNER",
+      "status": "BUSY",
+      "fatigue_value": 3.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 0.0,
+      "ship_age": 5,
+      "crew_id": "CREW059"
+    },
+    {
+      "id": "TUG060",
+      "name": "新港拖3",
+      "horsepower": 4800,
+      "position": {
+        "lng": 120.388,
+        "lat": 36.069
+      },
+      "berth_id": "B010",
+      "berth_position": "OUTER",
+      "status": "AVAILABLE",
+      "fatigue_value": 2.0,
+      "fatigue_level": "GREEN",
+      "today_work_hours": 2.0,
+      "ship_age": 3,
+      "crew_id": "CREW060"
     }
   ]
 }
