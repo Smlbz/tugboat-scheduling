@@ -168,3 +168,7 @@ class MasterAgent(BaseAgent):
         """获取方案解释"""
         result = self.explainer_agent.explain(solution_id, question)
         return result.explanation
+
+    def check_compliance(self, tug_id: str, job_id: str):
+        """检查拖轮执行任务的合规性"""
+        return self.compliance_agent.check_compliance(tug_id, job_id)

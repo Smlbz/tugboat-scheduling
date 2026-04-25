@@ -6,10 +6,13 @@ NSGA-II 多目标优化算法实现
 """
 
 import random
+import logging
 import numpy as np
 from deap import base, creator, tools, algorithms
 from typing import List, Dict, Tuple
 from interfaces.schemas import Tug, Job, Assignment, SolutionMetrics, FatigueLevel
+
+logger = logging.getLogger("NSGA2")
 
 
 class NSGA2Optimizer:
@@ -55,6 +58,7 @@ class NSGA2Optimizer:
         #   _evaluate_fitness 返回 (total_cost, balance_score, efficiency_score)
         weights = (-1.0, 1.0, 1.0)
         creator.create("FitnessMulti", base.Fitness, weights=weights)
+        creator.create("Individual", list, fitness=creator.FitnessMulti)
 
         self.toolbox = base.Toolbox()
 
@@ -85,6 +89,22 @@ class NSGA2Optimizer:
                 job_to_tugs[job.id].append(tug)
                 tug_workload[tug.id] += 1
 
+        # 去重：同一任务不能重复分配同一拖轮
+        for job_id in job_to_tugs:
+            seen = set()
+            unique = []
+            for tug in job_to_tugs[job_id]:
+                if tug.id not in seen:
+                    seen.add(tug.id)
+                    unique.append(tug)
+            job_to_tugs[job_id] = unique
+
+        # 根据去重结果重算工作量
+        tug_workload = {tug.id: 0 for tug in self.tugs}
+        for job_id, tugs in job_to_tugs.items():
+            for tug in tugs:
+                tug_workload[tug.id] += 1
+
         # 2. 生成逐个拖轮-任务的分配列表
         assignments = []
         for job in self.jobs:
@@ -99,10 +119,21 @@ class NSGA2Optimizer:
         total_cost = MetricsCalculator.calc_cost(
             assignments, self.tugs_dict, self.jobs_dict, self.perception_agent
         )
+
+        # 4. 约束惩罚：不满 required_tug_count 或马力不足的施加巨大惩罚
+        PENALTY_PER_MISSING_TUG = 50000.0
+        total_penalty = 0.0
+        for job in self.jobs:
+            unique_count = len(job_to_tugs.get(job.id, []))
+            needed = max(job.required_tug_count, 1)
+            if unique_count < needed:
+                missing = needed - unique_count
+                total_penalty += missing * PENALTY_PER_MISSING_TUG
+        total_cost += total_penalty
         balance_score = MetricsCalculator.calc_balance(workload_dict=tug_workload)
         efficiency_score = MetricsCalculator.calc_efficiency(assignments, self.jobs_dict)
 
-        # 4. 连活奖励：链式任务对共享拖轮则减少成本
+        # 5. 连活奖励：链式任务对共享拖轮则减少成本
         for chain in self.chain_pairs:
             tugs_job1 = {a.tug_id for a in assignments if a.job_id == chain.job1_id}
             tugs_job2 = {a.tug_id for a in assignments if a.job_id == chain.job2_id}
@@ -122,9 +153,10 @@ class NSGA2Optimizer:
     @staticmethod
     def _calc_assignment_score(tug: Tug, job: Job) -> float:
         """基于拖轮与任务的匹配度动态计算评分 (0-1)"""
-        # 1. 马力匹配度 (权重 0.5)
-        if job.required_horsepower > 0:
-            horsepower_ratio = tug.horsepower / job.required_horsepower
+        # 1. 马力匹配度 (权重 0.5) — 使用单船所需最低马力
+        per_tug_hp = job.required_horsepower / max(job.required_tug_count, 1)
+        if per_tug_hp > 0:
+            horsepower_ratio = tug.horsepower / per_tug_hp
             if horsepower_ratio >= 1.0:
                 horsepower_score = 1.0
             else:
@@ -170,6 +202,10 @@ class NSGA2Optimizer:
         fits = self.toolbox.map(self.toolbox.evaluate, invalid_ind)
         for fit, ind in zip(fits, invalid_ind):
             ind.fitness.values = fit
+
+        # 初始化拥挤度距离，供 selTournamentDCD 使用
+        for ind in population:
+            ind.fitness.crowding_dist = 0.0
 
         for gen in range(self.generations):
             # 1. 父代选择（基于拥挤度距离的锦标赛选择）

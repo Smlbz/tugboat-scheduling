@@ -368,7 +368,8 @@ body {
     border-radius: 3px;
 }
 
-/* 动画 */
+/* ============ 动画 ============ */
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -378,4 +379,256 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
-/* TODO [成员D]: 添加更多样式 */
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.9), 0 0 40px rgba(34, 197, 94, 0.3); }
+}
+
+@keyframes chainDashMove {
+    to { stroke-dashoffset: -36; }
+}
+
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes modalOverlayIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes assignmentSlideIn {
+    from { opacity: 0; max-height: 0; }
+    to { opacity: 1; max-height: 500px; }
+}
+
+/* ============ 拖轮高亮 ============ */
+
+.tug-highlighted {
+    animation: pulseGlow 1.5s ease-in-out infinite !important;
+    cursor: pointer;
+}
+
+/* ============ 连活标签 ============ */
+
+.chain-label {
+    background: transparent !important;
+    border: none !important;
+}
+
+.chain-label-inner {
+    background: rgba(30, 41, 59, 0.92);
+    border: 1px solid #22c55e;
+    border-radius: 8px;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #f8fafc;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 12px rgba(34, 197, 94, 0.3);
+    line-height: 1.4;
+}
+
+.chain-label-inner div:first-child {
+    font-weight: 600;
+    color: #22c55e;
+}
+
+.chain-label-sub {
+    font-size: 0.6rem;
+    color: #94a3b8;
+}
+
+/* ============ 采纳状态 ============ */
+
+.solution-card.adopted {
+    border-color: var(--success-color);
+    background: rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+}
+
+/* ============ 方案详情面板 ============ */
+
+.assignment-details-panel {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+    animation: assignmentSlideIn 0.3s ease;
+    overflow: hidden;
+}
+
+.assignment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(30, 41, 59, 0.8);
+}
+
+.assignment-header h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #22c55e;
+}
+
+.btn-close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem;
+    line-height: 1;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btn-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger-color);
+}
+
+.assignment-group {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+}
+
+.assignment-job {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.assignment-tug {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.assignment-tug:hover {
+    background: rgba(37, 99, 235, 0.15);
+}
+
+.tug-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.assignment-score {
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-size: 0.65rem;
+}
+
+.assignment-chains {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+    font-size: 0.75rem;
+}
+
+.assignment-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+/* ============ 违规弹窗 ============ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    opacity: 0;
+    animation: modalOverlayIn 0.2s ease forwards;
+    backdrop-filter: blur(2px);
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+}
+
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    width: 420px;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.25s ease;
+    z-index: 10000;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 12px 12px 0 0;
+}
+
+.modal-header h3 {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.modal-icon {
+    font-size: 1.25rem;
+}
+
+.modal-body {
+    padding: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.violation-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.violation-item:last-child {
+    border-bottom: none;
+}
+
+.violation-icon {
+    flex-shrink: 0;
+    color: var(--warning-color);
+}

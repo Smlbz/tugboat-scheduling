@@ -5,7 +5,7 @@ CMATSS 认知多智能体拖轮调度系统 - 主入口
 访问地址: http://localhost:8000
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +13,7 @@ from contextlib import asynccontextmanager
 import logging
 
 from agents.master_agent import MasterAgent
-from interfaces.schemas import ScheduleRequest, ScheduleResponse, ListResponse
+from interfaces.schemas import ScheduleRequest, ScheduleResponse, ListResponse, ComplianceCheckResponse
 from data.loader import load_tugs, load_berths, load_jobs, load_rules
 from config import API_HOST, API_PORT, LOG_LEVEL
 
@@ -120,6 +120,17 @@ def explain(solution_id: str, question: str = None):
         return {"explanation": explanation}
     except Exception as e:
         logger.error(f"解释生成失败: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/compliance/check", response_model=ComplianceCheckResponse)
+def compliance_check(tug_id: str = Body(...), job_id: str = Body(...)):
+    """检查拖轮执行任务的合规性"""
+    try:
+        result = master_agent.check_compliance(tug_id, job_id)
+        return result
+    except Exception as e:
+        logger.error(f"合规检查失败: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

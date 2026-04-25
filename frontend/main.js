@@ -10,8 +10,13 @@ const API_BASE = '';
 let map = null;
 let tugMarkers = {};
 let berthMarkers = {};
+let berthPositions = {};
+let jobBerthMap = {};
 let selectedJobs = [];
 let currentSolutions = [];
+let adoptedSolutionId = null;
+let chainLayers = [];
+let highlightedRestore = [];
 
 // ============ 初始化 ============
 
@@ -22,10 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initMap() {
-    // 初始化地图 (青岛港区域)
     map = L.map('map').setView([36.067, 120.385], 14);
 
-    // 使用暗色地图底图
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
         subdomains: 'abcd',
@@ -57,12 +60,14 @@ async function loadTugs() {
 async function loadBerths() {
     const response = await fetch(`${API_BASE}/api/berths`);
     const data = await response.json();
+    data.data.forEach(b => { berthPositions[b.id] = b.position; });
     renderBerthsOnMap(data.data);
 }
 
 async function loadJobs() {
     const response = await fetch(`${API_BASE}/api/jobs`);
     const data = await response.json();
+    data.data.forEach(j => { jobBerthMap[j.id] = j.target_berth_id; });
     renderJobList(data.data);
 }
 
@@ -173,6 +178,7 @@ async function runSchedule() {
         const data = await response.json();
         if (data.success) {
             currentSolutions = data.solutions;
+            clearAdoption();
             renderSolutions(data.solutions);
         } else {
             alert('调度失败: ' + data.error_message);
@@ -225,11 +231,279 @@ function getEmoji(index) {
     return ['💰', '⚖️', '🏆'][index] || '📋';
 }
 
+// ============ 方案采纳 ============
+
 function adoptSolution(solutionId) {
-    // TODO [成员D]: 实现方案采纳逻辑
-    // 1. 高亮地图上的分配
-    // 2. 显示连活连线
-    alert('已采纳方案: ' + solutionId);
+    const solution = currentSolutions.find(s => s.solution_id === solutionId);
+    if (!solution) return;
+
+    adoptedSolutionId = solutionId;
+    clearAdoption();
+
+    highlightAssignedTugs(solution.assignments);
+    drawChainLines(solution.chain_jobs || []);
+    showAssignmentDetails(solution);
+
+    // 高亮选中的方案卡片
+    document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('adopted'));
+    const card = document.querySelector(`.solution-card[data-id="${solutionId}"]`);
+    if (card) card.classList.add('adopted');
+}
+
+function clearAdoption() {
+    adoptedSolutionId = null;
+
+    // 恢复拖轮样式
+    highlightedRestore.forEach(fn => fn());
+    highlightedRestore = [];
+
+    // 移除连线
+    chainLayers.forEach(layer => map.removeLayer(layer));
+    chainLayers = [];
+
+    // 移除详情面板
+    const panel = document.getElementById('assignment-details');
+    if (panel) panel.remove();
+
+    // 移除违规弹窗
+    closeViolationModal();
+
+    // 取消卡片高亮
+    document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('adopted'));
+}
+
+function highlightAssignedTugs(assignments) {
+    assignments.forEach(a => {
+        const marker = tugMarkers[a.tug_id];
+        if (!marker || !marker.getElement()) return;
+
+        const el = marker.getElement();
+        const origColor = marker.options.color;
+        const origFillColor = marker.options.fillColor;
+        const origRadius = marker.options.radius;
+        const origWeight = marker.options.weight;
+
+        highlightedRestore.push(() => {
+            marker.setStyle({
+                color: origColor,
+                fillColor: origFillColor,
+                radius: origRadius,
+                weight: origWeight,
+                fillOpacity: 0.8
+            });
+            el.classList.remove('tug-highlighted');
+        });
+
+        marker.setStyle({
+            color: '#22c55e',
+            fillColor: '#22c55e',
+            radius: 12,
+            weight: 3,
+            fillOpacity: 1
+        });
+        el.classList.add('tug-highlighted');
+
+        const jobLabel = { BERTHING: '靠泊', UNBERTHING: '离泊', SHIFTING: '移泊', ESCORT: '护航' };
+        marker.bindPopup(`
+            <strong>${a.tug_name}</strong><br>
+            任务: ${a.job_id} (${jobLabel[a.job_type] || a.job_type})<br>
+            评分: ${(a.score * 100).toFixed(0)}%
+        `);
+        marker.openPopup();
+    });
+}
+
+function drawChainLines(chainJobs) {
+    chainJobs.forEach(chain => {
+        const berth1 = jobBerthMap[chain.job1_id];
+        const berth2 = jobBerthMap[chain.job2_id];
+        const pos1 = berthPositions[berth1];
+        const pos2 = berthPositions[berth2];
+        if (!pos1 || !pos2) return;
+
+        const latlngs = [[pos1.lat, pos1.lng], [pos2.lat, pos2.lng]];
+
+        // 虚线连线
+        const polyline = L.polyline(latlngs, {
+            color: '#22c55e',
+            weight: 3,
+            opacity: 0.85,
+            dashArray: '10, 8',
+            lineCap: 'round'
+        }).addTo(map);
+
+        // 连线动画（通过 JS 动态修改 dashOffset）
+        const el = polyline.getElement();
+        if (el) {
+            el.style.animation = 'chainDashMove 1s linear infinite';
+        }
+
+        // 中点标签
+        const midLat = (pos1.lat + pos2.lat) / 2;
+        const midLng = (pos1.lng + pos2.lng) / 2;
+        const label = L.marker([midLat, midLng], {
+            icon: L.divIcon({
+                className: 'chain-label',
+                html: `<div class="chain-label-inner">
+                    <div>⛓️ 连活</div>
+                    <div>节省 ¥${chain.cost_saving.toFixed(0)}</div>
+                    <div class="chain-label-sub">${chain.interval_hours.toFixed(1)}h间隔 / ${chain.distance_nm.toFixed(1)}nm</div>
+                </div>`,
+                iconSize: [130, 54],
+                iconAnchor: [65, 27]
+            })
+        }).addTo(map);
+
+        chainLayers.push(polyline, label);
+    });
+
+    // 调整视野包含所有连线
+    if (chainJobs.length > 0) {
+        const bounds = [];
+        chainJobs.forEach(chain => {
+            const b1 = jobBerthMap[chain.job1_id];
+            const b2 = jobBerthMap[chain.job2_id];
+            const p1 = berthPositions[b1];
+            const p2 = berthPositions[b2];
+            if (p1) bounds.push([p1.lat, p1.lng]);
+            if (p2) bounds.push([p2.lat, p2.lng]);
+        });
+        if (bounds.length > 0) {
+            // 仅当拖轮高亮后才调整视野
+        }
+    }
+}
+
+function showAssignmentDetails(solution) {
+    const existing = document.getElementById('assignment-details');
+    if (existing) existing.remove();
+
+    const panel = document.createElement('div');
+    panel.id = 'assignment-details';
+    panel.className = 'assignment-details-panel';
+
+    // 按作业分组
+    const byJob = {};
+    solution.assignments.forEach(a => {
+        if (!byJob[a.job_id]) byJob[a.job_id] = [];
+        byJob[a.job_id].push(a);
+    });
+
+    let html = `<div class="assignment-header">
+        <h3>${solution.name} - 分配详情</h3>
+        <button onclick="clearAdoption()" class="btn-close" title="关闭">✕</button>
+    </div>`;
+
+    const jobTypeMap = { BERTHING: '靠泊', UNBERTHING: '离泊', SHIFTING: '移泊', ESCORT: '护航' };
+
+    for (const [jobId, assigns] of Object.entries(byJob)) {
+        const type = jobTypeMap[assigns[0].job_type] || assigns[0].job_type;
+        html += `<div class="assignment-group">
+            <div class="assignment-job">${jobId} (${type})</div>`;
+        assigns.forEach(a => {
+            const marker = tugMarkers[a.tug_id];
+            const dotColor = marker ? marker.options.fillColor : '#22c55e';
+            html += `<div class="assignment-tug" onclick="map.panTo(tugMarkers['${a.tug_id}'].getLatLng())">
+                <span class="tug-dot" style="background:${dotColor}"></span>
+                ${a.tug_name}
+                <span class="assignment-score">${(a.score * 100).toFixed(0)}%</span>
+            </div>`;
+        });
+        html += `</div>`;
+    }
+
+    if (solution.chain_jobs && solution.chain_jobs.length > 0) {
+        const totalSaving = solution.chain_jobs.reduce((s, c) => s + c.cost_saving, 0);
+        html += `<div class="assignment-chains">
+            <span style="color:#22c55e;">⛓️ ${solution.chain_jobs.length} 对连活，节省 ¥${totalSaving.toFixed(0)}</span>
+        </div>`;
+    }
+
+    html += `<div class="assignment-metrics">
+        <div>💰 ¥${solution.metrics.total_cost.toFixed(0)}</div>
+        <div>⚖️ ${(solution.metrics.balance_score * 100).toFixed(0)}%</div>
+        <div>⚡ ${(solution.metrics.efficiency_score * 100).toFixed(0)}%</div>
+        <div>🏆 ${(solution.metrics.overall_score * 100).toFixed(0)}%</div>
+    </div>`;
+
+    panel.innerHTML = html;
+    document.querySelector('.right-panel').appendChild(panel);
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ============ 违规弹窗 ============
+
+function showViolationModal(title, violations) {
+    closeViolationModal();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.id = 'violation-modal';
+    overlay.onclick = e => { if (e.target === overlay) closeViolationModal(); };
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-content';
+
+    let bodyHtml = '';
+    if (typeof violations === 'string') {
+        bodyHtml = `<p>${violations}</p>`;
+    } else if (Array.isArray(violations)) {
+        bodyHtml = violations.map(v => `<div class="violation-item">
+            <span class="violation-icon">⚠️</span>
+            <span>${v}</span>
+        </div>`).join('');
+    } else if (violations && violations.violation_reason) {
+        bodyHtml = `<p>${violations.violation_reason}</p>`;
+        if (violations.violation_rules) {
+            bodyHtml += `<div style="margin-top:0.5rem;font-size:0.75rem;color:#94a3b8;">
+                违反规则: ${violations.violation_rules.join(', ')}
+            </div>`;
+        }
+    }
+
+    modal.innerHTML = `
+        <div class="modal-header">
+            <span class="modal-icon">🚨</span>
+            <h3>${title || '合规检查'}</h3>
+            <button onclick="closeViolationModal()" class="btn-close">✕</button>
+        </div>
+        <div class="modal-body">
+            ${bodyHtml || '<p>无违规信息</p>'}
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeViolationModal()" class="btn-primary" style="margin:0;">确认</button>
+        </div>
+    `;
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // 弹窗出现动画
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+}
+
+function closeViolationModal() {
+    const overlay = document.getElementById('violation-modal');
+    if (overlay) {
+        overlay.classList.remove('visible');
+        setTimeout(() => overlay.remove(), 200);
+    }
+}
+
+async function checkComplianceForAssignment(tugId, jobId) {
+    try {
+        const response = await fetch(`${API_BASE}/api/compliance/check`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tug_id: tugId, job_id: jobId })
+        });
+        const data = await response.json();
+        showViolationModal('合规检查结果', data);
+        return data;
+    } catch (error) {
+        showViolationModal('合规检查失败', [error.message || '无法连接到服务器']);
+        return null;
+    }
 }
 
 // ============ Chatbot ============
@@ -239,11 +513,9 @@ async function sendChat() {
     const question = input.value.trim();
     if (!question) return;
 
-    // 显示用户消息
     addChatMessage(question, 'user');
     input.value = '';
 
-    // 调用解释接口
     try {
         const solutionId = currentSolutions[0]?.solution_id || '';
         const response = await fetch(`${API_BASE}/api/explain?solution_id=${solutionId}&question=${encodeURIComponent(question)}`, {
@@ -275,7 +547,6 @@ function bindEvents() {
         if (e.key === 'Enter') sendChat();
     });
     document.getElementById('toggle-chat').addEventListener('click', () => {
-        const chatbot = document.getElementById('chatbot');
         const messages = document.getElementById('chat-messages');
         const input = document.querySelector('.chat-input');
         if (messages.style.display === 'none') {
@@ -287,8 +558,3 @@ function bindEvents() {
         }
     });
 }
-
-// TODO [成员D]: 添加更多交互功能
-// - 点击拖轮显示详情
-// - 方案采纳后的连线动画
-// - 违规弹窗特效

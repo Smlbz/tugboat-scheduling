@@ -3,7 +3,7 @@
     {
       "id": "TUG001",
       "name": "日港拖16",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.515662,
         "lat": 35.320382
@@ -20,7 +20,7 @@
     {
       "id": "TUG002",
       "name": "日港拖30",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.541947,
         "lat": 35.371353
@@ -122,7 +122,7 @@
     {
       "id": "TUG008",
       "name": "日港拖27",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.544253,
         "lat": 35.375228
@@ -139,7 +139,7 @@
     {
       "id": "TUG009",
       "name": "日港拖17",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.54312,
         "lat": 35.376567
@@ -173,7 +173,7 @@
     {
       "id": "TUG011",
       "name": "日港拖31",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.542912,
         "lat": 35.376157
@@ -190,7 +190,7 @@
     {
       "id": "TUG012",
       "name": "日港拖2",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.534325,
         "lat": 35.359107
@@ -207,10 +207,10 @@
     {
       "id": "TUG013",
       "name": "青港吊2",
-      "horsepower": 0,
+      "horsepower": 2000,
       "position": {
-        "lng": 83.6,
-        "lat": 39.1
+        "lng": 120.352,
+        "lat": 36.070
       },
       "berth_id": "B004",
       "berth_position": "INNER",
@@ -224,7 +224,7 @@
     {
       "id": "TUG014",
       "name": "新迎宾",
-      "horsepower": 0,
+      "horsepower": 4000,
       "position": {
         "lng": 120.307672,
         "lat": 36.083762
@@ -275,7 +275,7 @@
     {
       "id": "TUG017",
       "name": "日港拖18",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.542965,
         "lat": 35.376595
@@ -292,7 +292,7 @@
     {
       "id": "TUG018",
       "name": "安泰",
-      "horsepower": 0,
+      "horsepower": 4000,
       "position": {
         "lng": 119.798237,
         "lat": 35.586962
@@ -326,7 +326,7 @@
     {
       "id": "TUG020",
       "name": "新贵宾",
-      "horsepower": 0,
+      "horsepower": 4000,
       "position": {
         "lng": 120.317042,
         "lat": 36.08962
@@ -343,7 +343,7 @@
     {
       "id": "TUG021",
       "name": "日港拖12",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.515842,
         "lat": 35.320427
@@ -368,9 +368,9 @@
       "berth_id": "B003",
       "berth_position": "OUTER",
       "status": "LOCKED_BY_FRMS",
-      "fatigue_value": 3.0,
-      "fatigue_level": "GREEN",
-      "today_work_hours": 0.0,
+      "fatigue_value": 11.0,
+      "fatigue_level": "RED",
+      "today_work_hours": 8.0,
       "ship_age": 5,
       "crew_id": "CREW022"
     },
@@ -617,15 +617,15 @@
       "name": "亚洲6号",
       "horsepower": 5000,
       "position": {
-        "lng": 118.965288,
-        "lat": 38.08391
+        "lng": 120.330,
+        "lat": 36.090
       },
       "berth_id": "B008",
       "berth_position": "INNER",
       "status": "LOCKED_BY_FRMS",
-      "fatigue_value": 3.0,
-      "fatigue_level": "GREEN",
-      "today_work_hours": 0.0,
+      "fatigue_value": 11.0,
+      "fatigue_level": "RED",
+      "today_work_hours": 8.0,
       "ship_age": 5,
       "crew_id": "CREW037"
     },
@@ -685,15 +685,15 @@
       "name": "青港拖23",
       "horsepower": 4000,
       "position": {
-        "lng": 114.251203,
-        "lat": 22.569032
+        "lng": 120.310,
+        "lat": 36.075
       },
       "berth_id": "B002",
       "berth_position": "INNER",
       "status": "LOCKED_BY_FRMS",
-      "fatigue_value": 3.0,
-      "fatigue_level": "GREEN",
-      "today_work_hours": 0.0,
+      "fatigue_value": 11.0,
+      "fatigue_level": "RED",
+      "today_work_hours": 8.0,
       "ship_age": 5,
       "crew_id": "CREW041"
     },
@@ -702,8 +702,8 @@
       "name": "青港拖25",
       "horsepower": 4000,
       "position": {
-        "lng": 120.092233,
-        "lat": 38.397522
+        "lng": 120.280,
+        "lat": 36.050
       },
       "berth_id": "B003",
       "berth_position": "OUTER",
@@ -719,8 +719,8 @@
       "name": "青港拖29",
       "horsepower": 4000,
       "position": {
-        "lng": 120.102175,
-        "lat": 38.400902
+        "lng": 120.290,
+        "lat": 36.040
       },
       "berth_id": "B004",
       "berth_position": "INNER",
@@ -889,15 +889,15 @@
       "name": "青港拖26",
       "horsepower": 4000,
       "position": {
-        "lng": 113.682258,
-        "lat": 21.985478
+        "lng": 120.310,
+        "lat": 36.060
       },
       "berth_id": "B004",
       "berth_position": "INNER",
       "status": "LOCKED_BY_FRMS",
-      "fatigue_value": 3.0,
-      "fatigue_level": "GREEN",
-      "today_work_hours": 0.0,
+      "fatigue_value": 11.0,
+      "fatigue_level": "RED",
+      "today_work_hours": 8.0,
       "ship_age": 5,
       "crew_id": "CREW053"
     },
@@ -955,7 +955,7 @@
     {
       "id": "TUG057",
       "name": "日港拖1",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.539752,
         "lat": 35.370267
@@ -972,7 +972,7 @@
     {
       "id": "TUG058",
       "name": "日港拖15",
-      "horsepower": 0,
+      "horsepower": 5000,
       "position": {
         "lng": 119.543062,
         "lat": 35.37713
@@ -991,8 +991,8 @@
       "name": "亚洲17号",
       "horsepower": 5000,
       "position": {
-        "lng": 122.055033,
-        "lat": 30.57799
+        "lng": 120.320,
+        "lat": 36.080
       },
       "berth_id": "B010",
       "berth_position": "INNER",
