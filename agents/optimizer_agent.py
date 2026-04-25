@@ -96,17 +96,15 @@ class OptimizerAgent(BaseAgent):
         return optimizer, pareto_front
     
     def _individual_to_assignments(self, individual, optimizer) -> List[Assignment]:
-        """将 NSGA-II 个体转换为 Assignment 列表"""
+        """将 NSGA-II 个体转换为 Assignment 列表（支持多拖轮分配）"""
         assignments = []
-        for job_idx, tug_idx in enumerate(individual):
+        for gene_pos, tug_idx in enumerate(individual):
             if 0 <= tug_idx < len(optimizer.tugs):
-                job = optimizer.jobs[job_idx]
+                job = optimizer.jobs[optimizer.gene_to_job[gene_pos]]
                 tug = optimizer.tugs[tug_idx]
                 assignments.append(Assignment(
-                    tug_id=tug.id,
-                    tug_name=tug.name,
-                    job_id=job.id,
-                    job_type=job.job_type,
+                    tug_id=tug.id, tug_name=tug.name,
+                    job_id=job.id, job_type=job.job_type,
                     score=optimizer._calc_assignment_score(tug, job)
                 ))
         return assignments
@@ -196,70 +194,61 @@ class OptimizerAgent(BaseAgent):
         tug_workload = {tug.id: 0 for tug in tugs}
 
         for chain_pair in chain_pairs:
-            job1_id = chain_pair.job1_id
-            job2_id = chain_pair.job2_id
-
-            job1 = next((j for j in jobs if j.id == job1_id), None)
-            job2 = next((j for j in jobs if j.id == job2_id), None)
+            job1 = next((j for j in jobs if j.id == chain_pair.job1_id), None)
+            job2 = next((j for j in jobs if j.id == chain_pair.job2_id), None)
 
             if not job1 or not job2:
                 continue
-
-            if job1_id in assigned_jobs or job2_id in assigned_jobs:
+            if job1.id in assigned_jobs or job2.id in assigned_jobs:
                 continue
 
-            if available:
-                best_tug = min(
-                    available,
-                    key=lambda t: abs(t.horsepower - job1.required_horsepower / max(job1.required_tug_count, 1))
-                )
+            needed = max(job1.required_tug_count, job2.required_tug_count, 1)
+            if len(available) < needed:
+                continue
 
+            per_tug_hp = job1.required_horsepower / needed
+            sorted_tugs = sorted(available, key=lambda t: abs(t.horsepower - per_tug_hp))
+            chain_tugs = sorted_tugs[:needed]
+
+            for tug in chain_tugs:
                 assignments.append(Assignment(
-                    tug_id=best_tug.id,
-                    tug_name=best_tug.name,
-                    job_id=job1.id,
-                    job_type=job1.job_type,
-                    score=NSGA2Optimizer._calc_assignment_score(best_tug, job1)
+                    tug_id=tug.id, tug_name=tug.name,
+                    job_id=job1.id, job_type=job1.job_type,
+                    score=NSGA2Optimizer._calc_assignment_score(tug, job1)
                 ))
-
-                assigned_jobs.add(job1.id)
-                tug_workload[best_tug.id] += 1
-
                 assignments.append(Assignment(
-                    tug_id=best_tug.id,
-                    tug_name=best_tug.name,
-                    job_id=job2.id,
-                    job_type=job2.job_type,
-                    score=NSGA2Optimizer._calc_assignment_score(best_tug, job2)
+                    tug_id=tug.id, tug_name=tug.name,
+                    job_id=job2.id, job_type=job2.job_type,
+                    score=NSGA2Optimizer._calc_assignment_score(tug, job2)
                 ))
+                tug_workload[tug.id] += 2
+                available.remove(tug)
 
-                assigned_jobs.add(job2.id)
-                tug_workload[best_tug.id] += 1
-                available.remove(best_tug)
+            assigned_jobs.add(job1.id)
+            assigned_jobs.add(job2.id)
 
         for job in jobs:
             if job.id in assigned_jobs:
                 continue
 
-            if not available:
+            needed = max(job.required_tug_count, 1)
+            if len(available) < needed:
                 break
 
-            best_tug = min(
-                available,
-                key=lambda t: abs(t.horsepower - job.required_horsepower / max(job.required_tug_count, 1))
-            )
+            per_tug_hp = job.required_horsepower / needed
+            sorted_tugs = sorted(available, key=lambda t: abs(t.horsepower - per_tug_hp))
+            job_tugs = sorted_tugs[:needed]
 
-            assignments.append(Assignment(
-                tug_id=best_tug.id,
-                tug_name=best_tug.name,
-                job_id=job.id,
-                job_type=job.job_type,
-                score=NSGA2Optimizer._calc_assignment_score(best_tug, job)
-            ))
+            for tug in job_tugs:
+                assignments.append(Assignment(
+                    tug_id=tug.id, tug_name=tug.name,
+                    job_id=job.id, job_type=job.job_type,
+                    score=NSGA2Optimizer._calc_assignment_score(tug, job)
+                ))
+                tug_workload[tug.id] += 1
+                available.remove(tug)
 
             assigned_jobs.add(job.id)
-            tug_workload[best_tug.id] += 1
-            available.remove(best_tug)
         
         return assignments
     
@@ -290,91 +279,24 @@ class OptimizerAgent(BaseAgent):
         )
     
     def calc_cost(self, assignments: List[Assignment]) -> float:
-        """计算燃油成本"""
+        """计算燃油成本（委托到 MetricsCalculator）"""
         from data.loader import load_tugs, load_jobs
         from agents.perception_agent import PerceptionAgent
+        from utils.metrics_calculator import MetricsCalculator
 
-        tugs = {t.id: t for t in load_tugs()}
-        jobs = {j.id: j for j in load_jobs()}
-        perception_agent = PerceptionAgent()
-
-        total_cost = 0.0
-        OIL_PRICE_PER_NM = 50.0
-
-        for assignment in assignments:
-            tug = tugs.get(assignment.tug_id)
-            job = jobs.get(assignment.job_id)
-
-            if not tug or not job:
-                continue
-
-            if tug.berth_id:
-                distance = perception_agent.get_berth_distance(tug.berth_id, job.target_berth_id)
-            else:
-                distance = perception_agent.estimate_distance_from_position(tug.position, job.target_berth_id)
-
-            cost = distance * OIL_PRICE_PER_NM
-            total_cost += cost
-
-        return round(total_cost, 2)
+        tugs_dict = {t.id: t for t in load_tugs()}
+        jobs_dict = {j.id: j for j in load_jobs()}
+        return MetricsCalculator.calc_cost(assignments, tugs_dict, jobs_dict, PerceptionAgent())
     
     def calc_balance(self, assignments: List[Assignment]) -> float:
-        """计算作业均衡度"""
-        import statistics
-        
-        tug_jobs = {}
-        for assignment in assignments:
-            if assignment.tug_id not in tug_jobs:
-                tug_jobs[assignment.tug_id] = 0
-            tug_jobs[assignment.tug_id] += 1
-        
-        if not tug_jobs:
-            return 1.0
-        
-        job_counts = list(tug_jobs.values())
-        mean_jobs = statistics.mean(job_counts)
-        
-        if mean_jobs == 0:
-            return 1.0
-        
-        if len(job_counts) > 1:
-            variance = statistics.variance(job_counts)
-        else:
-            variance = 0.0
-        
-        balance_score = 1 - (variance / mean_jobs)
-        balance_score = max(0.0, min(1.0, balance_score))
-        
-        return round(balance_score, 2)
+        """计算作业均衡度（委托到 MetricsCalculator）"""
+        from utils.metrics_calculator import MetricsCalculator
+        return MetricsCalculator.calc_balance(assignments=assignments)
     
     def calc_efficiency(self, assignments: List[Assignment]) -> float:
-        """计算效率评分"""
+        """计算效率评分（委托到 MetricsCalculator）"""
         from data.loader import load_jobs
-        
-        jobs = {j.id: j for j in load_jobs()}
-        
-        total_wait_time = 0.0
-        max_wait_time = 2.0
-        
-        for assignment in assignments:
-            job = jobs.get(assignment.job_id)
-            if not job:
-                continue
-            
-            if job.job_type == "BERTHING":
-                estimated_wait_time = 0.6
-            elif job.job_type == "UNBERTHING":
-                estimated_wait_time = 0.4
-            else:
-                estimated_wait_time = 0.5
-            
-            total_wait_time += estimated_wait_time
-        
-        if not assignments:
-            return 1.0
-        
-        avg_wait_time = total_wait_time / len(assignments)
-        efficiency_score = 1.0 - (avg_wait_time / max_wait_time)
-        efficiency_score = max(0.0, min(1.0, efficiency_score))
-        
-        return round(efficiency_score, 2)
+        from utils.metrics_calculator import MetricsCalculator
+
+        jobs_dict = {j.id: j for j in load_jobs()}
+        return MetricsCalculator.calc_efficiency(assignments, jobs_dict)
