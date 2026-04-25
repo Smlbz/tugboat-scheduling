@@ -17,6 +17,7 @@ from agents.compliance_agent import ComplianceAgent
 from agents.fatigue_agent import FatigueAgent
 from agents.optimizer_agent import OptimizerAgent
 from agents.explainer_agent import ExplainerAgent
+from engine.rule_engine import RuleEngine
 from interfaces.schemas import (
     Tug, Job, ScheduleSolution, ChainJobPair, TugStatus
 )
@@ -32,13 +33,15 @@ class MasterAgent(BaseAgent):
     
     def __init__(self):
         super().__init__()
+        # 初始化规则引擎
+        self.rule_engine = RuleEngine()
         # 初始化所有 SlaveAgent
         self.perception_agent = PerceptionAgent()   # Agent1
         self.compliance_agent = ComplianceAgent()   # Agent2
         self.fatigue_agent = FatigueAgent()         # Agent3
         self.optimizer_agent = OptimizerAgent()     # Agent4
         self.explainer_agent = ExplainerAgent()     # Agent5
-        
+
         self.logger.info("MasterAgent 初始化完成")
     
     def process(self, request: Dict) -> Dict:
@@ -74,6 +77,8 @@ class MasterAgent(BaseAgent):
         # Step 1: 获取数据
         all_jobs = load_jobs()
         jobs = [j for j in all_jobs if j.id in job_ids] if job_ids else all_jobs
+        # 用规则引擎填充CSV需求参数
+        jobs = self.rule_engine.enrich_jobs(jobs)
         tugs = self.get_all_tugs()
         
         # Step 2: 识别连活

@@ -96,9 +96,9 @@ def get_jobs():
 
 @app.get("/api/rules")
 def get_rules():
-    """获取所有规则"""
-    rules = load_rules()
-    return ListResponse(data=[r.model_dump() for r in rules], total=len(rules))
+    """获取所有规则（三类合并）"""
+    all_rules = master_agent.rule_engine.get_all_rules()
+    return ListResponse(data=all_rules, total=len(all_rules))
 
 
 @app.post("/api/schedule", response_model=ScheduleResponse)

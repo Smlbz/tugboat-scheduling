@@ -47,6 +47,13 @@ class FatigueLevel(str, Enum):
     RED = "RED"        # 锁定 (>10)
 
 
+class RuleType(str, Enum):
+    """规则类型"""
+    USAGE_SPEC = "USAGE_SPEC"           # 参数型: 条件→需求值(CSV来源)
+    DISPATCH_FACTOR = "DISPATCH_FACTOR" # 因素型: 定性调度原则(XLSX来源)
+    COMPLIANCE = "COMPLIANCE"           # 合规型: 条件→违规判定(JSON来源)
+
+
 class RuleCategory(str, Enum):
     """规则分类"""
     SAFETY = "SAFETY"       # 安全类
@@ -106,8 +113,10 @@ class Job(BaseModel):
     id: str = Field(..., description="任务ID")
     job_type: JobType
     ship_name: str = Field(..., description="服务船舶名称")
+    ship_type: Optional[str] = Field(None, description="船舶类型(油船/杂货船/集装箱船/散货船)")
     ship_length: Optional[float] = Field(None, description="船长(米)")
     ship_tonnage: Optional[int] = Field(None, description="吨位")
+    draft_depth: Optional[float] = Field(None, description="吃水深度(米)")
     target_berth_id: str = Field(..., description="目标泊位")
     start_time: datetime
     end_time: datetime
@@ -125,11 +134,15 @@ class Rule(BaseModel):
     """业务规则"""
     id: str = Field(..., description="规则ID, 如 R001")
     name: str = Field(..., description="规则名称")
+    rule_type: RuleType = Field(default=RuleType.COMPLIANCE, description="规则类型")
     category: RuleCategory
     severity: RuleSeverity
     description: str = Field(..., description="规则描述")
     check_logic: Optional[str] = Field(None, description="检查逻辑表达式")
     keywords: List[str] = Field(default=[], description="关键词, 用于向量检索")
+    conditions: Optional[Dict[str, Any]] = Field(None, description="条件字段(USAGE_SPEC用): ship_type/length/draft/operation")
+    result: Optional[Dict[str, Any]] = Field(None, description="结果字段(USAGE_SPEC用): horsepower/tug_count")
+    source: str = Field(default="manual", description="来源标记: csv/xlsx/manual")
     enabled: bool = Field(default=True)
 
     class Config:

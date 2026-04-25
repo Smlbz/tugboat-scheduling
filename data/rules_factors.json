@@ -1,0 +1,328 @@
+{
+  "version": "1.0",
+  "description": "拖轮调配因素规则(来自XLSX)",
+  "rules": [
+    {
+      "id": "R002",
+      "name": "老旧拖轮高危限制",
+      "category": "SAFETY",
+      "severity": "CRITICAL",
+      "description": "船龄超过20年的拖轮不得执行高危作业(危化品、LNG等) | [XLSX#1] 老拖轮尽量不派给大油船、大矿船，靠离泊泊位为62、90、94、76的均为大油大矿。。算法原有计分方式不变，尽量不派给的规则，在具体实现时将总分按比例缩小。优先派遣的规则，在具体实现时将总分按比例扩大。",
+      "check_logic": "tug.ship_age > 20 and job.is_high_risk == true",
+      "keywords": [
+        "老旧",
+        "船龄",
+        "高危",
+        "危化品"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#1 新老拖轮使用影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "R007",
+      "name": "连续作业限制",
+      "category": "SAFETY",
+      "severity": "MEDIUM",
+      "description": "同一拖轮连续作业不得超过4小时，需安排休息 | [XLSX#7] 拖轮出去一次，尽量完成两次作业。。算法根据历史作业数据分析，计算作业中的拖轮预计作业完成时间，当拖轮完成当前作业的时间+拖轮到达带缆点的时间，与大船到达带缆点的时间相匹配；或者空闲拖轮不足时，算法对拖轮进行联活派遣，即将任务下发给任务中的拖轮。",
+      "check_logic": "tug.today_work_hours > 4",
+      "keywords": [
+        "连续",
+        "作业",
+        "休息",
+        "时长"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#7 连续作业影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "R001",
+      "name": "名称混淆禁止",
+      "category": "SAFETY",
+      "severity": "HIGH",
+      "description": "名称相似的拖轮(如亚洲1号、亚洲2号)不能同时分配给同一作业，避免调度混乱 | [XLSX#10] 一次作业派遣的拖轮尽量不使用名称相似拖轮，如亚洲2号、青港拖2等。",
+      "check_logic": "name_similarity(tug1, tug2) > 0.8",
+      "keywords": [
+        "亚洲",
+        "名称",
+        "混淆",
+        "相似"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#10 拖轮名称影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "R005",
+      "name": "夜间作业资质",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "22:00-06:00期间的作业需要具备夜间作业资质的船员 | [XLSX#11] 夜间作业，充分考虑疲劳度的情况下尽量连续作业。尽量安排22：00-02：00一批次拖轮作业，02：00-06：00点一批次拖轮作业。",
+      "check_logic": "job.start_time.hour >= 22 or job.start_time.hour < 6",
+      "keywords": [
+        "夜间",
+        "资质",
+        "证书"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#11 夜间作业影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "R004",
+      "name": "疲劳船员禁派",
+      "category": "SAFETY",
+      "severity": "CRITICAL",
+      "description": "疲劳值达到红色等级(>10)的拖轮禁止分配任何任务 | [XLSX#12] 拖轮交接班之后，疲劳度值为0，\n判断拖轮状态，停修或外派，疲劳度为0，。从当班开始计算，作业时疲劳度升高，未作业时疲劳度降低，疲劳度数值为0-100。",
+      "check_logic": "tug.fatigue_level != 'RED'",
+      "keywords": [
+        "疲劳",
+        "休息",
+        "安全"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#12 拖轮疲劳度影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "R009",
+      "name": "作业均衡分配",
+      "category": "EFFICIENCY",
+      "severity": "LOW",
+      "description": "优先分配给今日工作量较少的拖轮，保证作业均衡 | [XLSX#14] 拖轮作业量要均衡。\n统计拖轮当班作业总时长，作业时长越短的拖轮优先级越高。其数值为该拖轮每次作业时间的累加和。作业量=作业完成时刻-准备出发时刻",
+      "check_logic": "balance_score(all_tugs) > 0.7",
+      "keywords": [
+        "均衡",
+        "分配",
+        "公平"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#14 作业量影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "R006",
+      "name": "内档船移泊优先",
+      "category": "EFFICIENCY",
+      "severity": "LOW",
+      "description": "优先使用外档船，使用内档船需先安排移泊操作 | [XLSX#15] 在内外档数据准确时，优先调度外档拖轮，在其对应的内档拖轮也在拖轮使用方案中时，两个拖轮一起调度。",
+      "check_logic": "tug.berth_position == 'INNER'",
+      "keywords": [
+        "内档",
+        "外档",
+        "移泊"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#15 内外档影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "R010",
+      "name": "连活优先识别",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "间隔小于2小时且距离小于5海里的连续任务应识别为连活，优先同船执行 | [XLSX#19] 带船作业后的靠泊作业，继续派遣本拖轮。",
+      "check_logic": "interval_hours < 2 and distance_nm < 5",
+      "keywords": [
+        "连活",
+        "间隔",
+        "距离",
+        "节省"
+      ],
+      "enabled": true,
+      "source": "xlsx+manual",
+      "来源参考": [
+        "XLSX#19 带船+靠泊作业影响因素"
+      ],
+      "rule_type": "COMPLIANCE"
+    },
+    {
+      "id": "F02",
+      "name": "因素2",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "老拖轮优先派给260-300米的集装箱船。",
+      "check_logic": "",
+      "keywords": [],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F03",
+      "name": "因素3",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "老拖轮尽量不派给大于300米的集装箱船。",
+      "check_logic": "",
+      "keywords": [],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F04",
+      "name": "拖轮基地派遣影响因素",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "75区基地优先派给北岸",
+      "check_logic": "",
+      "keywords": [
+        "拖轮基地派遣影响因素"
+      ],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F05",
+      "name": "因素5",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "前湾基地优先派给南岸规则",
+      "check_logic": "",
+      "keywords": [],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F06",
+      "name": "因素6",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "管理六部基地如何派遣（新增）",
+      "check_logic": "",
+      "keywords": [],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F08",
+      "name": "因素8",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "即将完活拖轮，来得及的情况下，可继续派遣下一个活。",
+      "check_logic": "",
+      "keywords": [],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F09",
+      "name": "拖轮使用规范影响因素",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "按照拖轮使用规范中的规则派遣拖轮，1、油船15条，2、杂货船4条，3、集装箱船10条，4、散货船13条。★共42条影响因素",
+      "check_logic": "",
+      "keywords": [
+        "拖轮使用规范影响因素"
+      ],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F13",
+      "name": "拖轮与大船的距离影响因素",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "离得越近优先派遣。\n计算拖轮距离作业带缆点的距离，距离越近优先级越高。",
+      "check_logic": "",
+      "keywords": [
+        "拖轮与大船的距离影响因素"
+      ],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F16",
+      "name": "交接班影响因素",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "交接班的时候尽量不安排作业。\n拖轮点击交接班，在交接班未完成前，拖轮的调度优先级降低，优先使用其他拖轮。",
+      "check_logic": "",
+      "keywords": [
+        "交接班影响因素"
+      ],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F17",
+      "name": "港区影响因素",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "本港区拖轮不足时才调度其他港区拖轮，油港拖轮不足时优先调度前湾港区。",
+      "check_logic": "",
+      "keywords": [
+        "港区影响因素"
+      ],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    },
+    {
+      "id": "F18",
+      "name": "大型船舶影响因素",
+      "rule_type": "DISPATCH_FACTOR",
+      "category": "EFFICIENCY",
+      "severity": "MEDIUM",
+      "description": "尽量派遣寰宇等大马力拖轮",
+      "check_logic": "",
+      "keywords": [
+        "大型船舶影响因素"
+      ],
+      "conditions": null,
+      "result": null,
+      "source": "xlsx",
+      "enabled": true
+    }
+  ]
+}

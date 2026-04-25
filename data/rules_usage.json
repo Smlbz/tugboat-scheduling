@@ -1,0 +1,1475 @@
+{
+  "version": "1.0",
+  "description": "拖轮功率需求参数规则(来自usage_rules.csv)",
+  "rules": [
+    {
+      "id": "U001",
+      "name": "油船≥265米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船≥265米，靠，吃水≥18m → 功率27000- 33000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 265.0,
+        "length_max": null,
+        "draft_min": 18.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 27000,
+        "horsepower_max": 33000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U002",
+      "name": "油船≥265米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船≥265米，靠，吃水15m≤D<18m → 功率19800-24200HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 265.0,
+        "length_max": null,
+        "draft_min": 15.0,
+        "draft_max": 18.0
+      },
+      "result": {
+        "horsepower_min": 19800,
+        "horsepower_max": 24200
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U003",
+      "name": "油船≥265米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船≥265米，靠，吃水D<15m → 功率18000-20000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 265.0,
+        "length_max": null,
+        "draft_min": null,
+        "draft_max": 15.0
+      },
+      "result": {
+        "horsepower_min": 18000,
+        "horsepower_max": 20000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U004",
+      "name": "油船235米-265米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船235米-265米，靠，吃水≥13m → 功率18000-22000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 235.0,
+        "length_max": 265.0,
+        "draft_min": 13.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 18000,
+        "horsepower_max": 22000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U005",
+      "name": "油船235米-265米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船235米-265米，靠，吃水<13m → 功率13500-16500HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 235.0,
+        "length_max": 265.0,
+        "draft_min": null,
+        "draft_max": 13.0
+      },
+      "result": {
+        "horsepower_min": 13500,
+        "horsepower_max": 16500
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U006",
+      "name": "油船235米-265米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船235米-265米，靠，吃水空载 → 功率9000-11000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 235.0,
+        "length_max": 265.0,
+        "empty_draft": true
+      },
+      "result": {
+        "horsepower_min": 9000,
+        "horsepower_max": 11000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U007",
+      "name": "油船235米-265米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船235米-265米，离，吃水空载 → 功率9000-11000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "离",
+        "length_min": 235.0,
+        "length_max": 265.0,
+        "empty_draft": true
+      },
+      "result": {
+        "horsepower_min": 9000,
+        "horsepower_max": 11000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U008",
+      "name": "油船180米-235米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船180米-235米，靠，吃水>12m → 功率9900-12100HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 180.0,
+        "length_max": 235.0,
+        "draft_min": 12.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 9900,
+        "horsepower_max": 12100
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U009",
+      "name": "油船180米-235米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船180米-235米，离，吃水>12m → 功率9900-12100HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "离",
+        "length_min": 180.0,
+        "length_max": 235.0,
+        "draft_min": 12.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 9900,
+        "horsepower_max": 12100
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U010",
+      "name": "油船180米-235米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船180米-235米，靠，吃水<12m → 功率9000-11000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 180.0,
+        "length_max": 235.0,
+        "draft_min": null,
+        "draft_max": 12.0
+      },
+      "result": {
+        "horsepower_min": 9000,
+        "horsepower_max": 11000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U011",
+      "name": "油船180米-235米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船180米-235米，离，吃水<12m → 功率9000-11000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "离",
+        "length_min": 180.0,
+        "length_max": 235.0,
+        "draft_min": null,
+        "draft_max": 12.0
+      },
+      "result": {
+        "horsepower_min": 9000,
+        "horsepower_max": 11000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U012",
+      "name": "油船180米-235米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船180米-235米，靠，吃水空载 → 功率6400-8600HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 180.0,
+        "length_max": 235.0,
+        "empty_draft": true
+      },
+      "result": {
+        "horsepower_min": 6400,
+        "horsepower_max": 8600
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U013",
+      "name": "油船180米-235米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船180米-235米，离，吃水空载 → 功率6400-8600HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "离",
+        "length_min": 180.0,
+        "length_max": 235.0,
+        "empty_draft": true
+      },
+      "result": {
+        "horsepower_min": 6400,
+        "horsepower_max": 8600
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U014",
+      "name": "油船130米-180米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船130米-180米，靠，吃水>9m → 功率8400-9600HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 130.0,
+        "length_max": 180.0,
+        "draft_min": 9.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 8400,
+        "horsepower_max": 9600
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U015",
+      "name": "油船130米-180米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船130米-180米，靠，吃水<9m → 功率6400-7400HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 130.0,
+        "length_max": 180.0,
+        "draft_min": null,
+        "draft_max": 9.0
+      },
+      "result": {
+        "horsepower_min": 6400,
+        "horsepower_max": 7400
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U016",
+      "name": "油船100米-130米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船100米-130米，靠，吃水/ → 功率/，≥1条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": 100.0,
+        "length_max": 130.0
+      },
+      "result": {
+        "tug_count_min": 1,
+        "tug_count_max": null
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U017",
+      "name": "油船100米-130米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船100米-130米，离，吃水/ → 功率/，≥1条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "离",
+        "length_min": 100.0,
+        "length_max": 130.0
+      },
+      "result": {
+        "tug_count_min": 1,
+        "tug_count_max": null
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U018",
+      "name": "油船<100米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船<100米，靠，吃水/ → 功率0，0条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "靠",
+        "length_min": null,
+        "length_max": 100.0
+      },
+      "result": {
+        "horsepower_min": 0,
+        "horsepower_max": 0,
+        "tug_count_min": 0,
+        "tug_count_max": 0
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U019",
+      "name": "油船<100米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "油船<100米，离，吃水/ → 功率0，0条",
+      "check_logic": "",
+      "keywords": [
+        "油船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "油船",
+        "operation": "离",
+        "length_min": null,
+        "length_max": 100.0
+      },
+      "result": {
+        "horsepower_min": 0,
+        "horsepower_max": 0,
+        "tug_count_min": 0,
+        "tug_count_max": 0
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U020",
+      "name": "杂货船200-230米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船200-230米，靠，吃水/ → 功率8100-9900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "靠",
+        "length_min": 200.0,
+        "length_max": 230.0
+      },
+      "result": {
+        "horsepower_min": 8100,
+        "horsepower_max": 9900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U021",
+      "name": "杂货船200-230米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船200-230米，离，吃水/ → 功率8100-9900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "离",
+        "length_min": 200.0,
+        "length_max": 230.0
+      },
+      "result": {
+        "horsepower_min": 8100,
+        "horsepower_max": 9900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U022",
+      "name": "杂货船130-200米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船130-200米，靠，吃水/ → 功率6400-8400HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "靠",
+        "length_min": 130.0,
+        "length_max": 200.0
+      },
+      "result": {
+        "horsepower_min": 6400,
+        "horsepower_max": 8400
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U023",
+      "name": "杂货船130-200米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船130-200米，离，吃水/ → 功率6400-8400HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "离",
+        "length_min": 130.0,
+        "length_max": 200.0
+      },
+      "result": {
+        "horsepower_min": 6400,
+        "horsepower_max": 8400
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U024",
+      "name": "杂货船100-130米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船100-130米，靠，吃水/ → 功率<4200HP，>=1条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "靠",
+        "length_min": 100.0,
+        "length_max": 130.0
+      },
+      "result": {},
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U025",
+      "name": "杂货船100-130米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船100-130米，离，吃水/ → 功率<4200HP，>=1条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "离",
+        "length_min": 100.0,
+        "length_max": 130.0
+      },
+      "result": {},
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U026",
+      "name": "杂货船<100米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船<100米，靠，吃水/ → 功率可无需拖轮，0条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "靠",
+        "length_min": null,
+        "length_max": 100.0
+      },
+      "result": {
+        "horsepower_min": 0,
+        "horsepower_max": 0,
+        "tug_count_min": 0,
+        "tug_count_max": 0
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U027",
+      "name": "杂货船<100米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "杂货船<100米，离，吃水/ → 功率可无需拖轮，0条",
+      "check_logic": "",
+      "keywords": [
+        "杂货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "杂货船",
+        "operation": "离",
+        "length_min": null,
+        "length_max": 100.0
+      },
+      "result": {
+        "horsepower_min": 0,
+        "horsepower_max": 0,
+        "tug_count_min": 0,
+        "tug_count_max": 0
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U028",
+      "name": "集装箱船>390米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船>390米，靠，吃水/ → 功率>5000HP，>3条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "靠",
+        "length_min": 390.0,
+        "length_max": null
+      },
+      "result": {
+        "horsepower_min": 5000,
+        "horsepower_max": null,
+        "tug_count_min": 3,
+        "tug_count_max": null,
+        "tug_operation": "靠泊"
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U029",
+      "name": "集装箱船>390米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船>390米，离，吃水/ → 功率>5000HP，>3条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "离",
+        "length_min": 390.0,
+        "length_max": null
+      },
+      "result": {
+        "horsepower_min": 5000,
+        "horsepower_max": null,
+        "tug_count_min": 3,
+        "tug_count_max": null,
+        "tug_operation": "靠泊"
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U030",
+      "name": "集装箱船>390米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船>390米，靠，吃水/ → 功率>5000HP，>2条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "靠",
+        "length_min": 390.0,
+        "length_max": null
+      },
+      "result": {
+        "horsepower_min": 5000,
+        "horsepower_max": null,
+        "tug_count_min": 2,
+        "tug_count_max": null,
+        "tug_operation": "离泊"
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U031",
+      "name": "集装箱船>390米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船>390米，离，吃水/ → 功率>5000HP，>2条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "离",
+        "length_min": 390.0,
+        "length_max": null
+      },
+      "result": {
+        "horsepower_min": 5000,
+        "horsepower_max": null,
+        "tug_count_min": 2,
+        "tug_count_max": null,
+        "tug_operation": "离泊"
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U032",
+      "name": "集装箱船260-390米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船260-390米，靠，吃水/ → 功率>5000HP，>2条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "靠",
+        "length_min": 260.0,
+        "length_max": 390.0
+      },
+      "result": {
+        "horsepower_min": 5000,
+        "horsepower_max": null,
+        "tug_count_min": 2,
+        "tug_count_max": null
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U033",
+      "name": "集装箱船260-390米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船260-390米，离，吃水/ → 功率>5000HP，>2条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "离",
+        "length_min": 260.0,
+        "length_max": 390.0
+      },
+      "result": {
+        "horsepower_min": 5000,
+        "horsepower_max": null,
+        "tug_count_min": 2,
+        "tug_count_max": null
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U034",
+      "name": "集装箱船200-260米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船200-260米，靠，吃水/ → 功率8100-9900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "靠",
+        "length_min": 200.0,
+        "length_max": 260.0
+      },
+      "result": {
+        "horsepower_min": 8100,
+        "horsepower_max": 9900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U035",
+      "name": "集装箱船200-260米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船200-260米，离，吃水/ → 功率8100-9900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "离",
+        "length_min": 200.0,
+        "length_max": 260.0
+      },
+      "result": {
+        "horsepower_min": 8100,
+        "horsepower_max": 9900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U036",
+      "name": "集装箱船140-200米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船140-200米，靠，吃水/ → 功率6400-8400HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "靠",
+        "length_min": 140.0,
+        "length_max": 200.0
+      },
+      "result": {
+        "horsepower_min": 6400,
+        "horsepower_max": 8400
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U037",
+      "name": "集装箱船140-200米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船140-200米，离，吃水/ → 功率6400-8400HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "离",
+        "length_min": 140.0,
+        "length_max": 200.0
+      },
+      "result": {
+        "horsepower_min": 6400,
+        "horsepower_max": 8400
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U038",
+      "name": "集装箱船100-140米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船100-140米，靠，吃水/ → 功率<4200HP，1条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "靠",
+        "length_min": 100.0,
+        "length_max": 140.0
+      },
+      "result": {
+        "tug_count_min": 1,
+        "tug_count_max": 1
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U039",
+      "name": "集装箱船100-140米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船100-140米，离，吃水/ → 功率<4200HP，1条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "离",
+        "length_min": 100.0,
+        "length_max": 140.0
+      },
+      "result": {
+        "tug_count_min": 1,
+        "tug_count_max": 1
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U040",
+      "name": "集装箱船<100米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船<100米，靠，吃水/ → 功率可无需拖轮，0条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "靠",
+        "length_min": null,
+        "length_max": 100.0
+      },
+      "result": {
+        "horsepower_min": 0,
+        "horsepower_max": 0,
+        "tug_count_min": 0,
+        "tug_count_max": 0
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U041",
+      "name": "集装箱船<100米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "集装箱船<100米，离，吃水/ → 功率可无需拖轮，0条",
+      "check_logic": "",
+      "keywords": [
+        "集装箱船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "集装箱船",
+        "operation": "离",
+        "length_min": null,
+        "length_max": 100.0
+      },
+      "result": {
+        "horsepower_min": 0,
+        "horsepower_max": 0,
+        "tug_count_min": 0,
+        "tug_count_max": 0
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U042",
+      "name": "散货船≥320米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船≥320米，靠，吃水>18m → 功率22500-27500HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 320.0,
+        "length_max": null,
+        "draft_min": 18.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 22500,
+        "horsepower_max": 27500
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U043",
+      "name": "散货船≥320米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船≥320米，靠，吃水<18m → 功率18900-23100HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 320.0,
+        "length_max": null,
+        "draft_min": null,
+        "draft_max": 18.0
+      },
+      "result": {
+        "horsepower_min": 18900,
+        "horsepower_max": 23100
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U044",
+      "name": "散货船≥320米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船≥320米，离，吃水空载 → 功率10800-13100HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "离",
+        "length_min": 320.0,
+        "length_max": null,
+        "empty_draft": true
+      },
+      "result": {
+        "horsepower_min": 10800,
+        "horsepower_max": 13100
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U045",
+      "name": "散货船260米-320米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船260米-320米，靠，吃水>18m → 功率18900-23100HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 260.0,
+        "length_max": 320.0,
+        "draft_min": 18.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 18900,
+        "horsepower_max": 23100
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U046",
+      "name": "散货船260米-320米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船260米-320米，靠，吃水16-18m → 功率16200-19800HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 260.0,
+        "length_max": 320.0,
+        "draft_min": 16.0,
+        "draft_max": 18.0
+      },
+      "result": {
+        "horsepower_min": 16200,
+        "horsepower_max": 19800
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U047",
+      "name": "散货船260米-320米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船260米-320米，离，吃水>12.5m → 功率13500-16500HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "离",
+        "length_min": 260.0,
+        "length_max": 320.0,
+        "draft_min": 12.5,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 13500,
+        "horsepower_max": 16500
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U048",
+      "name": "散货船260米-320米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船260米-320米，离，吃水<12.5m → 功率9000-11000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "离",
+        "length_min": 260.0,
+        "length_max": 320.0,
+        "draft_min": null,
+        "draft_max": 12.5
+      },
+      "result": {
+        "horsepower_min": 9000,
+        "horsepower_max": 11000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U049",
+      "name": "散货船240-260米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船240-260米，靠，吃水>13m → 功率13500-16500HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 240.0,
+        "length_max": 260.0,
+        "draft_min": 13.0,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 13500,
+        "horsepower_max": 16500
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U050",
+      "name": "散货船240-260米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船240-260米，靠，吃水10-13m → 功率9000-11000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 240.0,
+        "length_max": 260.0,
+        "draft_min": 10.0,
+        "draft_max": 13.0
+      },
+      "result": {
+        "horsepower_min": 9000,
+        "horsepower_max": 11000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U051",
+      "name": "散货船240-260米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船240-260米，离，吃水空载 → 功率8100-9900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "离",
+        "length_min": 240.0,
+        "length_max": 260.0,
+        "empty_draft": true
+      },
+      "result": {
+        "horsepower_min": 8100,
+        "horsepower_max": 9900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U052",
+      "name": "散货船220-240米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船220-240米，靠，吃水>12.5m → 功率9000-11000HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 220.0,
+        "length_max": 240.0,
+        "draft_min": 12.5,
+        "draft_max": null
+      },
+      "result": {
+        "horsepower_min": 9000,
+        "horsepower_max": 11000
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U053",
+      "name": "散货船220-240米靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船220-240米，靠，吃水10-12.5m → 功率8100-9900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_min": 220.0,
+        "length_max": 240.0,
+        "draft_min": 10.0,
+        "draft_max": 12.5
+      },
+      "result": {
+        "horsepower_min": 8100,
+        "horsepower_max": 9900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U054",
+      "name": "散货船220-240米离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船220-240米，离，吃水空载 → 功率8100-9900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "离",
+        "length_min": 220.0,
+        "length_max": 240.0,
+        "empty_draft": true
+      },
+      "result": {
+        "horsepower_min": 8100,
+        "horsepower_max": 9900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U055",
+      "name": "散货船大港cape靠功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船大港cape，靠，吃水/ → 功率17100-20900HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "靠"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "靠",
+        "length_special": "大港cape"
+      },
+      "result": {
+        "horsepower_min": 17100,
+        "horsepower_max": 20900
+      },
+      "source": "csv",
+      "enabled": true
+    },
+    {
+      "id": "U056",
+      "name": "散货船大港cape离功率需求",
+      "rule_type": "USAGE_SPEC",
+      "category": "COMPLIANCE",
+      "severity": "MEDIUM",
+      "description": "散货船大港cape，离，吃水/ → 功率13500-16500HP，/条",
+      "check_logic": "",
+      "keywords": [
+        "散货船",
+        "离"
+      ],
+      "conditions": {
+        "ship_type": "散货船",
+        "operation": "离",
+        "length_special": "大港cape"
+      },
+      "result": {
+        "horsepower_min": 13500,
+        "horsepower_max": 16500
+      },
+      "source": "csv",
+      "enabled": true
+    }
+  ]
+}

@@ -15,7 +15,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB002",
@@ -32,7 +33,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB003",
@@ -49,7 +51,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB004",
@@ -66,7 +69,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB005",
@@ -83,7 +87,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB006",
@@ -100,7 +105,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB007",
@@ -117,7 +123,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB008",
@@ -135,7 +142,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB009",
@@ -150,7 +158,8 @@
       "required_tug_count": 2,
       "priority": 7,
       "is_high_risk": false,
-      "special_requirements": []
+      "special_requirements": [],
+      "ship_type": "集装箱船"
     },
     {
       "id": "JOB010",
@@ -167,7 +176,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB011",
@@ -185,7 +195,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB012",
@@ -202,7 +213,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB013",
@@ -217,7 +229,8 @@
       "required_tug_count": 3,
       "priority": 4,
       "is_high_risk": false,
-      "special_requirements": []
+      "special_requirements": [],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB014",
@@ -234,7 +247,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB015",
@@ -251,7 +265,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB016",
@@ -269,7 +284,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB017",
@@ -286,7 +302,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB018",
@@ -303,7 +320,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB019",
@@ -318,7 +336,8 @@
       "required_tug_count": 2,
       "priority": 3,
       "is_high_risk": false,
-      "special_requirements": []
+      "special_requirements": [],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB020",
@@ -335,7 +354,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB021",
@@ -352,7 +372,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB022",
@@ -369,7 +390,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "集装箱船"
     },
     {
       "id": "JOB023",
@@ -387,7 +409,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB024",
@@ -405,7 +428,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB025",
@@ -423,7 +447,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB026",
@@ -440,7 +465,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB027",
@@ -458,7 +484,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "集装箱船"
     },
     {
       "id": "JOB028",
@@ -475,7 +502,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB029",
@@ -492,7 +520,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB030",
@@ -509,7 +538,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB031",
@@ -524,7 +554,8 @@
       "required_tug_count": 2,
       "priority": 2,
       "is_high_risk": false,
-      "special_requirements": []
+      "special_requirements": [],
+      "ship_type": "集装箱船"
     },
     {
       "id": "JOB032",
@@ -541,7 +572,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB033",
@@ -559,7 +591,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB034",
@@ -576,7 +609,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB035",
@@ -593,7 +627,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB036",
@@ -610,7 +645,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB037",
@@ -627,7 +663,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB038",
@@ -644,7 +681,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "集装箱船"
     },
     {
       "id": "JOB039",
@@ -661,7 +699,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "集装箱船"
     },
     {
       "id": "JOB040",
@@ -678,7 +717,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB041",
@@ -695,7 +735,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要最高马力拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB042",
@@ -712,7 +753,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB043",
@@ -729,7 +771,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "杂货船"
     },
     {
       "id": "JOB044",
@@ -746,7 +789,8 @@
       "is_high_risk": true,
       "special_requirements": [
         "夜间作业"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB045",
@@ -761,7 +805,8 @@
       "required_tug_count": 2,
       "priority": 10,
       "is_high_risk": false,
-      "special_requirements": []
+      "special_requirements": [],
+      "ship_type": "集装箱船"
     },
     {
       "id": "JOB046",
@@ -779,7 +824,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "油船"
     },
     {
       "id": "JOB047",
@@ -796,7 +842,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB048",
@@ -813,7 +860,8 @@
       "is_high_risk": false,
       "special_requirements": [
         "需要有危化品作业资质"
-      ]
+      ],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB049",
@@ -831,7 +879,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "散货船"
     },
     {
       "id": "JOB050",
@@ -849,7 +898,8 @@
       "special_requirements": [
         "需要有危化品作业资质",
         "禁止老旧拖轮"
-      ]
+      ],
+      "ship_type": "散货船"
     }
   ]
 }
