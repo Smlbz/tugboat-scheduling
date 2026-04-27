@@ -41,6 +41,11 @@ build/
 chroma_db/
 *.db
 
+# 运行时数据
+data/history.json
+data/learning_adjustments.json
+data/tide_data.json
+
 # 临时文件
 tmp/
 temp/

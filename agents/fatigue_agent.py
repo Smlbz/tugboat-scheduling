@@ -73,17 +73,18 @@ class FatigueAgent(BaseAgent):
             result = self.get_fatigue(request.get("tug_id"))
             return result.model_dump()
         elif action == "update_fatigue":
-            self.update_fatigue(
-                request["tug_id"],
-                request["work_hours"],
-                request.get("is_night", False)
-            )
+            tug_id = request.get("tug_id")
+            work_hours = request.get("work_hours")
+            if not tug_id or work_hours is None:
+                return {"error": "缺少 tug_id 或 work_hours"}
+            self.update_fatigue(tug_id, work_hours, request.get("is_night", False))
             return {"success": True}
         elif action == "reset_fatigue":
-            self.reset_fatigue(
-                request["tug_id"],
-                request["rest_hours"]
-            )
+            tug_id = request.get("tug_id")
+            rest_hours = request.get("rest_hours")
+            if not tug_id or rest_hours is None:
+                return {"error": "缺少 tug_id 或 rest_hours"}
+            self.reset_fatigue(tug_id, rest_hours)
             return {"success": True}
         return {"error": "Unknown action"}
 

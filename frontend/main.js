@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMap();
     loadData();
     bindEvents();
+    initVoice();
 });
 
 function initMap() {
@@ -43,7 +44,8 @@ async function loadData() {
         await Promise.all([
             loadTugs(),
             loadBerths(),
-            loadJobs()
+            loadJobs(),
+            loadDashboard()
         ]);
         console.log('数据加载完成');
     } catch (error) {
@@ -52,23 +54,102 @@ async function loadData() {
 }
 
 async function loadTugs() {
-    const response = await fetch(`${API_BASE}/api/tugs`);
-    const data = await response.json();
-    renderTugsOnMap(data.data);
+    try {
+        const response = await fetch(`${API_BASE}/api/tugs`);
+        const data = await response.json();
+        renderTugsOnMap(data.data);
+    } catch (e) {
+        console.error('[加载] 拖轮数据失败:', e);
+    }
 }
 
 async function loadBerths() {
-    const response = await fetch(`${API_BASE}/api/berths`);
-    const data = await response.json();
-    data.data.forEach(b => { berthPositions[b.id] = b.position; });
-    renderBerthsOnMap(data.data);
+    try {
+        const response = await fetch(`${API_BASE}/api/berths`);
+        const data = await response.json();
+        data.data.forEach(b => { berthPositions[b.id] = b.position; });
+        renderBerthsOnMap(data.data);
+    } catch (e) {
+        console.error('[加载] 泊位数据失败:', e);
+    }
 }
 
 async function loadJobs() {
-    const response = await fetch(`${API_BASE}/api/jobs`);
-    const data = await response.json();
-    data.data.forEach(j => { jobBerthMap[j.id] = j.target_berth_id; });
-    renderJobList(data.data);
+    try {
+        const response = await fetch(`${API_BASE}/api/jobs`);
+        const data = await response.json();
+        data.data.forEach(j => { jobBerthMap[j.id] = j.target_berth_id; });
+        renderJobList(data.data);
+    } catch (e) {
+        console.error('[加载] 任务数据失败:', e);
+    }
+}
+
+async function loadDashboard() {
+    try {
+        const response = await fetch(`${API_BASE}/api/dashboard`);
+        const data = await response.json();
+        renderDashboard(data);
+    } catch (e) {
+        console.warn('看板加载失败:', e);
+    }
+    // 同时加载潮汐
+    loadTideInfo();
+}
+
+async function loadTideInfo() {
+    try {
+        const today = new Date().toISOString().slice(0, 10);
+        const resp = await fetch(`${API_BASE}/api/tide?date=${today}`);
+        const data = await resp.json();
+        if (!data.points || data.points.length === 0) return;
+
+        // 找到当前最近的潮位点
+        const now = new Date();
+        const nowMin = now.getHours() * 60 + now.getMinutes();
+        const closest = data.points.reduce((best, p) => {
+            const pt = new Date(p.time);
+            const ptMin = pt.getHours() * 60 + pt.getMinutes();
+            return Math.abs(ptMin - nowMin) < Math.abs(best.diff) ? {pt: p, diff: ptMin - nowMin} : best;
+        }, {diff: Infinity});
+
+        if (!closest.pt) return;
+
+        const el = document.getElementById('dash-tide');
+        const level = closest.pt.level;
+        const status = closest.pt.status;
+        const emoji = status.includes('DANGER') ? '🔴' : status === 'HIGH' || status === 'LOW' ? '🟡' : '🟢';
+        el.textContent = `${emoji} ${level.toFixed(1)}m`;
+
+        // 缆绳风险
+        const riskEl = document.getElementById('dash-cable-risk');
+        const labelEl = document.getElementById('dash-cable-label');
+        if (closest.pt.cable_risk !== 'SAFE') {
+            riskEl.style.display = 'flex';
+            const riskEmoji = closest.pt.cable_risk === 'DANGER' ? '🔴' : '🟡';
+            const riskText = closest.pt.cable_risk === 'DANGER' ? '危险' : '注意';
+            labelEl.textContent = `${riskEmoji} ${riskText}`;
+            labelEl.style.color = closest.pt.cable_risk === 'DANGER' ? 'var(--danger-color)' : 'var(--warning-color)';
+        } else {
+            riskEl.style.display = 'none';
+        }
+
+        // 潮位-色标
+        if (status.includes('DANGER')) el.style.color = 'var(--danger-color)';
+        else if (status === 'HIGH' || status === 'LOW') el.style.color = 'var(--warning-color)';
+        else el.style.color = 'var(--success-color)';
+    } catch (e) {
+        console.warn('潮汐加载失败:', e);
+    }
+}
+
+function renderDashboard(d) {
+    document.getElementById('dash-available').textContent = d.available_tugs ?? '--';
+    document.getElementById('dash-total').textContent = d.total_tugs ?? '--';
+    document.getElementById('dash-jobs').textContent = d.total_jobs ?? '--';
+    document.getElementById('dash-green').textContent = d.fatigue_distribution?.GREEN ?? 0;
+    document.getElementById('dash-yellow').textContent = d.fatigue_distribution?.YELLOW ?? 0;
+    document.getElementById('dash-red').textContent = d.fatigue_distribution?.RED ?? 0;
 }
 
 // ============ 地图渲染 ============
@@ -124,7 +205,10 @@ function renderBerthsOnMap(berths) {
 
 // ============ 任务列表 ============
 
+let allJobIds = [];
+
 function renderJobList(jobs) {
+    allJobIds = jobs.map(j => j.id);
     const container = document.getElementById('job-list');
     container.innerHTML = jobs.map(job => `
         <div class="job-card" data-id="${job.id}" onclick="toggleJobSelection('${job.id}')">
@@ -134,6 +218,7 @@ function renderJobList(jobs) {
             <p>${formatTime(job.start_time)} - ${formatTime(job.end_time)}</p>
         </div>
     `).join('');
+    updateSelectAllBtn();
 }
 
 function getJobTypeLabel(type) {
@@ -159,12 +244,36 @@ function toggleJobSelection(jobId) {
         selectedJobs.push(jobId);
         card.classList.add('selected');
     }
+    updateSelectAllBtn();
+}
+
+function toggleSelectAll() {
+    const allSelected = selectedJobs.length === allJobIds.length;
+    const cards = document.querySelectorAll('.job-card');
+    if (allSelected) {
+        // 取消全选
+        selectedJobs = [];
+        cards.forEach(c => c.classList.remove('selected'));
+    } else {
+        // 全选
+        selectedJobs = [...allJobIds];
+        cards.forEach(c => c.classList.add('selected'));
+    }
+    updateSelectAllBtn();
+}
+
+function updateSelectAllBtn() {
+    const btn = document.getElementById('select-all-btn');
+    if (!btn) return;
+    const allSelected = allJobIds.length > 0 && selectedJobs.length === allJobIds.length;
+    btn.textContent = allSelected ? '☑ 取消全选' : '☑ 全选';
 }
 
 // ============ 调度 ============
 
 async function runSchedule() {
     const btn = document.getElementById('schedule-btn');
+    if (!btn) return;
     btn.disabled = true;
     btn.textContent = '⏳ 计算中...';
 
@@ -181,7 +290,7 @@ async function runSchedule() {
             clearAdoption();
             renderSolutions(data.solutions);
         } else {
-            alert('调度失败: ' + data.error_message);
+            alert('调度失败: ' + (data.error_message || data.detail || '未知错误'));
         }
     } catch (error) {
         console.error('调度请求失败:', error);
@@ -222,7 +331,10 @@ function renderSolutions(solutions) {
                     ✨ 识别到 ${sol.chain_jobs.length} 对连活，节省 ¥${sol.chain_jobs.reduce((sum, c) => sum + c.cost_saving, 0).toFixed(0)}
                 </div>
             ` : ''}
-            <button class="btn-adopt" onclick="adoptSolution('${sol.solution_id}')">✓ 采纳此方案</button>
+            <div class="solution-actions">
+                <button class="btn-adopt" onclick="adoptSolution('${sol.solution_id}')">✓ 采纳</button>
+                <button class="btn-explain" onclick="showExplainModal('${sol.solution_id}')">🧠 AI 解释</button>
+            </div>
         </div>
     `).join('');
 }
@@ -243,6 +355,9 @@ function adoptSolution(solutionId) {
     highlightAssignedTugs(solution.assignments);
     drawChainLines(solution.chain_jobs || []);
     showAssignmentDetails(solution);
+
+    // 语音播报
+    speakTugAssignment(solution);
 
     // 高亮选中的方案卡片
     document.querySelectorAll('.solution-card').forEach(c => c.classList.remove('adopted'));
@@ -427,8 +542,106 @@ function showAssignmentDetails(solution) {
     </div>`;
 
     panel.innerHTML = html;
-    document.querySelector('.right-panel').appendChild(panel);
-    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.body.appendChild(panel);
+
+    // 初始定位右下角
+    panel.style.bottom = '20px';
+    panel.style.right = '20px';
+
+    // 拖拽逻辑
+    const header = panel.querySelector('.assignment-header');
+    let isDragging = false, startX, startY, origLeft, origTop;
+
+    header.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'BUTTON') return; // 不干扰关闭按钮
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        origLeft = panel.offsetLeft;
+        origTop = panel.offsetTop;
+        panel.style.transition = 'none';
+        document.body.style.userSelect = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        panel.style.left = (origLeft + e.clientX - startX) + 'px';
+        panel.style.top = (origTop + e.clientY - startY) + 'px';
+        panel.style.bottom = 'auto';
+        panel.style.right = 'auto';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        document.body.style.userSelect = '';
+    });
+}
+
+// ============ 语音提醒 ============
+
+let voiceEnabled = false;
+
+function initVoice() {
+    const btn = document.getElementById('voice-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        voiceEnabled = !voiceEnabled;
+        btn.textContent = voiceEnabled ? '🔊 语音开' : '🔇 语音关';
+        if (voiceEnabled) {
+            // 测试语音
+            const test = new SpeechSynthesisUtterance('语音播报已开启');
+            test.lang = 'zh-CN';
+            test.rate = 0.9;
+            speechSynthesis.speak(test);
+        } else {
+            speechSynthesis.cancel();
+        }
+    });
+}
+
+function speakTugAssignment(solution) {
+    if (!voiceEnabled || !window.speechSynthesis) return;
+
+    speechSynthesis.cancel();
+
+    const assignments = solution.assignments || [];
+    const chainJobs = solution.chain_jobs || [];
+
+    // 按作业分组
+    const byJob = {};
+    assignments.forEach(a => {
+        if (!byJob[a.job_id]) byJob[a.job_id] = [];
+        byJob[a.job_id].push(a);
+    });
+
+    // 逐任务播报
+    let idx = 0;
+    for (const [jobId, assigns] of Object.entries(byJob)) {
+        const tugNames = assigns.map(a => a.tug_name || a.tug_id).join('、');
+        const text = `任务 ${jobId}, 指派 ${tugNames} 执行`;
+        setTimeout(() => {
+            if (!voiceEnabled) return;
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'zh-CN';
+            u.rate = 0.85;
+            speechSynthesis.speak(u);
+        }, idx * 3000);
+        idx++;
+    }
+
+    // 连活提示
+    if (chainJobs.length > 0) {
+        setTimeout(() => {
+            if (!voiceEnabled) return;
+            const u = new SpeechSynthesisUtterance(
+                `识别到 ${chainJobs.length} 对连活任务, 预计节省成本`
+            );
+            u.lang = 'zh-CN';
+            u.rate = 0.85;
+            speechSynthesis.speak(u);
+        }, idx * 3000 + 1000);
+    }
 }
 
 // ============ 违规弹窗 ============
@@ -490,6 +703,139 @@ function closeViolationModal() {
     }
 }
 
+// ============ AI 解释 ============
+
+async function showExplainModal(solutionId) {
+    try {
+        console.log('[AI解释] 点击 solutionId:', solutionId);
+        if (!Array.isArray(currentSolutions) || currentSolutions.length === 0) {
+            throw new Error('当前没有可用的调度方案数据，请先执行智能调度');
+        }
+        console.log('[AI解释] currentSolutions:', currentSolutions.length, '条');
+
+        closeExplainModal();
+        const solution = currentSolutions.find(s => s.solution_id === solutionId);
+        if (!solution) {
+            throw new Error('未找到方案 ' + solutionId + ' 的数据，请重新调度');
+        }
+        console.log('[AI解释] 找到方案:', solution.name);
+        const name = solution.name ?? '未知方案';
+
+        // 创建遮罩+模态框
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.id = 'explain-modal';
+        overlay.onclick = e => { if (e.target === overlay) closeExplainModal(); };
+
+        const modal = document.createElement('div');
+        modal.className = 'modal-content explain-modal';
+
+        const m = solution.metrics || {};
+        const costStr = m.total_cost?.toFixed?.(0) ?? 'N/A';
+        const balStr = m.balance_score != null ? (m.balance_score * 100).toFixed(0) + '%' : 'N/A';
+        const effStr = m.efficiency_score != null ? (m.efficiency_score * 100).toFixed(0) + '%' : 'N/A';
+        const ovrStr = m.overall_score != null ? (m.overall_score * 100).toFixed(0) + '%' : 'N/A';
+
+        modal.innerHTML = `
+            <div class="modal-header">
+                <span class="modal-icon">🧠</span>
+                <h3>AI 调度解释 — ${name}</h3>
+                <button onclick="closeExplainModal()" class="btn-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="explain-section">
+                    <h4>📊 方案指标</h4>
+                    <div class="explain-metrics">
+                        <span>成本: ¥${costStr}</span>
+                        <span>均衡: ${balStr}</span>
+                        <span>效率: ${effStr}</span>
+                        <span>综合: ${ovrStr}</span>
+                    </div>
+                </div>
+                <div class="explain-section">
+                    <h4>💬 解释</h4>
+                    <div id="explain-text" class="explain-text">正在生成解释...</div>
+                </div>
+                <div class="explain-section">
+                    <h4>🔄 反事实推演</h4>
+                    <div class="counterfactual-controls">
+                        <button class="btn-small" onclick="runCounterfactual('${solutionId}')">推演: 替换拖轮</button>
+                    </div>
+                    <div id="counterfactual-text" class="counterfactual-text">点击按钮查看反事实分析</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeExplainModal()" class="btn-primary" style="margin:0;">关闭</button>
+            </div>
+        `;
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+        requestAnimationFrame(() => overlay.classList.add('visible'));
+
+        // 调用 API 获取解释
+        try {
+            console.log('[AI解释] 请求API, solutionId:', solutionId);
+            const resp = await fetch(`${API_BASE}/api/explain`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ solution_id: solutionId })
+            });
+            const data = await resp.json();
+            console.log('[AI解释] 响应:', data);
+            const text = data.explanation || '无法生成解释';
+            const el = document.getElementById('explain-text');
+            if (el) {
+                el.textContent = text;
+                console.log('[AI解释] 已更新文本');
+            } else {
+                console.warn('[AI解释] DOM元素explain-text不存在');
+            }
+        } catch (e) {
+            console.error('[AI解释] 请求失败:', e);
+            const el = document.getElementById('explain-text');
+            if (el) el.textContent = '解释服务不可用: ' + e.message;
+        }
+    } catch (e) {
+        console.error('[AI解释] 错误:', e);
+        alert('AI解释暂不可用: ' + e.message);
+    }
+}
+
+async function runCounterfactual(solutionId) {
+    try {
+        const textEl = document.getElementById('counterfactual-text');
+        if (!textEl) {
+            console.error('[反事实] 找不到 counterfactual-text DOM 元素');
+            return;
+        }
+        textEl.textContent = '正在推演...';
+
+        try {
+            const resp = await fetch(`${API_BASE}/api/counterfactual`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ solution_id: solutionId })
+            });
+            const data = await resp.json();
+            textEl.textContent = data.counterfactual || '推演结果不可用';
+        } catch (e) {
+            textEl.textContent = '推演服务不可用: ' + e.message;
+        }
+    } catch (e) {
+        console.error('[反事实] 错误:', e);
+        alert('反事实推演暂不可用: ' + e.message);
+    }
+}
+
+function closeExplainModal() {
+    const overlay = document.getElementById('explain-modal');
+    if (overlay) {
+        overlay.classList.remove('visible');
+        setTimeout(() => overlay.remove(), 200);
+    }
+}
+
 async function checkComplianceForAssignment(tugId, jobId) {
     try {
         const response = await fetch(`${API_BASE}/api/compliance/check`, {
@@ -506,55 +852,10 @@ async function checkComplianceForAssignment(tugId, jobId) {
     }
 }
 
-// ============ Chatbot ============
-
-async function sendChat() {
-    const input = document.getElementById('chat-input');
-    const question = input.value.trim();
-    if (!question) return;
-
-    addChatMessage(question, 'user');
-    input.value = '';
-
-    try {
-        const solutionId = currentSolutions[0]?.solution_id || '';
-        const response = await fetch(`${API_BASE}/api/explain?solution_id=${solutionId}&question=${encodeURIComponent(question)}`, {
-            method: 'POST'
-        });
-        const data = await response.json();
-        addChatMessage(data.explanation, 'bot');
-    } catch (error) {
-        addChatMessage('抱歉，无法获取回答。', 'bot');
-    }
-}
-
-function addChatMessage(text, type) {
-    const container = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = `message ${type}`;
-    div.textContent = text;
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
-}
-
 // ============ 事件绑定 ============
 
 function bindEvents() {
     document.getElementById('schedule-btn').addEventListener('click', runSchedule);
     document.getElementById('refresh-jobs').addEventListener('click', loadJobs);
-    document.getElementById('send-chat').addEventListener('click', sendChat);
-    document.getElementById('chat-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendChat();
-    });
-    document.getElementById('toggle-chat').addEventListener('click', () => {
-        const messages = document.getElementById('chat-messages');
-        const input = document.querySelector('.chat-input');
-        if (messages.style.display === 'none') {
-            messages.style.display = 'block';
-            input.style.display = 'flex';
-        } else {
-            messages.style.display = 'none';
-            input.style.display = 'none';
-        }
-    });
+    document.getElementById('select-all-btn').addEventListener('click', toggleSelectAll);
 }

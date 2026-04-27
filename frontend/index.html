@@ -14,8 +14,45 @@
             <h1>🚢 CMATSS 认知多智能体拖轮调度系统</h1>
             <div class="header-actions">
                 <span id="status-indicator" class="status-online">● 系统在线</span>
+                <button id="voice-toggle" class="voice-btn" title="语音播报开关">🔇 语音关</button>
             </div>
         </header>
+
+        <!-- 状态看板 -->
+        <div class="dashboard-bar">
+            <div class="dashboard-item">
+                <span class="dashboard-label">可用拖轮</span>
+                <span id="dash-available" class="dashboard-value">--</span>
+            </div>
+            <div class="dashboard-item">
+                <span class="dashboard-label">总拖轮</span>
+                <span id="dash-total" class="dashboard-value">--</span>
+            </div>
+            <div class="dashboard-item">
+                <span class="dashboard-label">待排任务</span>
+                <span id="dash-jobs" class="dashboard-value">--</span>
+            </div>
+            <div class="dashboard-item">
+                <span class="dashboard-label">疲劳绿色</span>
+                <span id="dash-green" class="dashboard-value green">--</span>
+            </div>
+            <div class="dashboard-item">
+                <span class="dashboard-label">疲劳黄色</span>
+                <span id="dash-yellow" class="dashboard-value yellow">--</span>
+            </div>
+            <div class="dashboard-item">
+                <span class="dashboard-label">疲劳红色</span>
+                <span id="dash-red" class="dashboard-value red">--</span>
+            </div>
+            <div class="dashboard-item tide-item">
+                <span class="dashboard-label">潮汐</span>
+                <span id="dash-tide" class="dashboard-value" style="font-size:0.9rem;">--</span>
+            </div>
+            <div class="dashboard-item" id="dash-cable-risk" style="display:none;">
+                <span class="dashboard-label">缆绳风险</span>
+                <span id="dash-cable-label" class="dashboard-value" style="font-size:0.75rem;">--</span>
+            </div>
+        </div>
 
         <!-- 主内容区 -->
         <main class="main-content">
@@ -23,7 +60,10 @@
             <aside class="left-panel">
                 <div class="panel-header">
                     <h2>📋 待排任务</h2>
-                    <button id="refresh-jobs" class="btn-icon" title="刷新">🔄</button>
+                    <div class="panel-header-actions">
+                        <button id="select-all-btn" class="btn-icon" title="全选/取消全选">☑ 全选</button>
+                        <button id="refresh-jobs" class="btn-icon" title="刷新">🔄</button>
+                    </div>
                 </div>
                 <div id="job-list" class="job-list">
                     <!-- 任务卡片动态生成 -->
@@ -58,22 +98,6 @@
             </aside>
         </main>
 
-        <!-- 底部: Chatbot -->
-        <div id="chatbot" class="chatbot">
-            <div class="chatbot-header">
-                <span>💬 智能助手</span>
-                <button id="toggle-chat" class="btn-icon">−</button>
-            </div>
-            <div id="chat-messages" class="chat-messages">
-                <div class="message bot">
-                    您好！我是调度解释助手，有任何问题请随时询问。
-                </div>
-            </div>
-            <div class="chat-input">
-                <input type="text" id="chat-input" placeholder="输入问题，如：为什么不派亚洲2号？">
-                <button id="send-chat" class="btn-primary">发送</button>
-            </div>
-        </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

@@ -98,10 +98,12 @@ class RuleEngine:
             draft=job.draft_depth,
         )
         if spec:
-            if spec.horsepower_max > 0:
-                job.required_horsepower = (spec.horsepower_min + spec.horsepower_max) // 2
-            elif spec.horsepower_min > 0:
-                job.required_horsepower = spec.horsepower_min
+            hp_min = spec.horsepower_min or 0
+            hp_max = spec.horsepower_max or 0
+            if hp_max > 0:
+                job.required_horsepower = (hp_min + hp_max) // 2
+            elif hp_min > 0:
+                job.required_horsepower = hp_min
             if spec.tug_count:
                 job.required_tug_count = spec.tug_count
         return job
@@ -182,7 +184,10 @@ class RuleEngine:
     @staticmethod
     def _check_fatigue(tug: Tug, job: Job, ctx: dict, helpers: dict) -> bool:
         """R004: 疲劳禁派"""
-        return tug.fatigue_level == "RED"
+        fl = tug.fatigue_level
+        if hasattr(fl, 'value'):
+            return fl.value == "RED"
+        return fl == "RED"
 
     @staticmethod
     def _check_night_operation(tug: Tug, job: Job, ctx: dict, helpers: dict) -> bool:

@@ -45,8 +45,8 @@ class ConditionMatcher:
         best = candidates[0][1]
         res = best.get("result", {})
         return UsageSpecResult(
-            horsepower_min=res.get("horsepower_min", 0),
-            horsepower_max=res.get("horsepower_max", 0),
+            horsepower_min=res.get("horsepower_min") or 0,
+            horsepower_max=res.get("horsepower_max") or 0,
             tug_count=res.get("tug_count_min") or res.get("tug_count_max"),
             tug_operation=res.get("tug_operation"),
         )

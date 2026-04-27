@@ -225,7 +225,7 @@ class ExplanationResponse(BaseModel):
 
 class ScheduleRequest(BaseModel):
     """调度请求"""
-    job_ids: List[str] = Field(..., min_length=1, description="待排任务ID列表")
+    job_ids: Optional[List[str]] = Field(default=None, min_length=1, description="待排任务ID列表(null=调度全部)")
 
 
 class ScheduleResponse(BaseModel):
@@ -239,6 +239,23 @@ class ListResponse(BaseModel):
     """通用列表响应"""
     data: List[Any]
     total: int
+
+
+class DepartureInfo(BaseModel):
+    """备车时间信息"""
+    tug_id: str
+    tug_name: str
+    job_id: str
+    target_berth_name: str
+    distance_nm: float
+    travel_time_min: int
+    aux_time_min: int
+    early_arrival_min: int
+    prep_time_min: int
+    departure_time_desc: str
+    estimated_departure_time: Optional[str] = None
+    base_name: Optional[str] = None
+    note: Optional[str] = None
 
 
 class ErrorResponse(BaseModel):

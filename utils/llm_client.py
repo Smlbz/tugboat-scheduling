@@ -47,13 +47,13 @@ class LLMClient:
                 base_url=self._base_url,
             )
 
-            if _old_ssl is not None:
-                os.environ["SSL_CERT_FILE"] = _old_ssl
-
             self.logger.info(f"LLM 客户端初始化成功 (provider={self._provider}, model={self._model})")
         except Exception as e:
             self.logger.warning(f"LLM 客户端初始化失败: {e}, 使用模板降级模式")
             self.client = None
+        finally:
+            if _old_ssl is not None:
+                os.environ["SSL_CERT_FILE"] = _old_ssl
 
     def chat(self, messages: List[Dict], temperature: float = 0.7,
              max_tokens: int = 1000) -> str:

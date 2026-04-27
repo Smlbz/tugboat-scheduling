@@ -58,6 +58,62 @@ body {
     font-size: 0.875rem;
 }
 
+.voice-btn {
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid #a78bfa;
+    color: #a78bfa;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+    margin-left: 0.5rem;
+}
+
+.voice-btn:hover {
+    background: #a78bfa;
+    color: white;
+}
+
+/* 状态看板 */
+.dashboard-bar {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 2rem;
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dashboard-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    padding: 0.25rem 0.75rem;
+    background: var(--bg-card);
+    border-radius: 8px;
+}
+
+.dashboard-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.dashboard-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.dashboard-value.green { color: var(--success-color); }
+.dashboard-value.yellow { color: var(--warning-color); }
+.dashboard-value.red { color: var(--danger-color); }
+
+/* 潮汐看板项 */
+.tide-item {
+    cursor: default;
+}
+
 .main-content {
     display: grid;
     grid-template-columns: 280px 1fr 320px;
@@ -90,6 +146,17 @@ body {
 .panel-header h2 {
     font-size: 1rem;
     font-weight: 600;
+}
+
+.panel-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+#select-all-btn {
+    font-size: 0.75rem;
+    white-space: nowrap;
 }
 
 /* 任务列表 */
@@ -282,76 +349,31 @@ body {
     color: white;
 }
 
-/* Chatbot */
-.chatbot {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 350px;
-    background: var(--bg-dark);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    overflow: hidden;
-}
-
-.chatbot-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.chat-messages {
-    height: 200px;
-    overflow-y: auto;
-    padding: 1rem;
-}
-
-.message {
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    max-width: 85%;
-    font-size: 0.875rem;
-}
-
-.message.bot {
-    background: var(--bg-card);
-}
-
-.message.user {
-    background: var(--primary-color);
-    margin-left: auto;
-}
-
-.chat-input {
+/* 方案按钮组 */
+.solution-actions {
     display: flex;
     gap: 0.5rem;
-    padding: 0.75rem;
-    border-top: 1px solid var(--border-color);
+    margin-top: 0.5rem;
 }
 
-.chat-input input {
+.solution-actions button {
     flex: 1;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    padding: 0.4rem 0.5rem;
     border-radius: 4px;
-    padding: 0.5rem;
-    color: var(--text-primary);
-    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.chat-input input::placeholder {
-    color: var(--text-secondary);
+.btn-explain {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+    border: 1px solid #a78bfa;
 }
 
-.chat-input .btn-primary {
-    margin: 0;
-    padding: 0.5rem 1rem;
+.btn-explain:hover {
+    background: #a78bfa;
+    color: white;
 }
 
 /* 滚动条 */
@@ -448,22 +470,33 @@ body {
     box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
 }
 
-/* ============ 方案详情面板 ============ */
+/* ============ 方案详情面板 - 浮动浮窗 ============ */
 
 .assignment-details-panel {
-    background: var(--bg-card);
-    border-top: 1px solid var(--border-color);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
     animation: assignmentSlideIn 0.3s ease;
-    overflow: hidden;
 }
 
 .assignment-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--border-color);
-    background: rgba(30, 41, 59, 0.8);
+    background: rgba(30, 41, 59, 0.95);
 }
 
 .assignment-header h3 {
@@ -631,4 +664,81 @@ body {
 .violation-icon {
     flex-shrink: 0;
     color: var(--warning-color);
+}
+
+/* ============ AI 解释弹窗 ============ */
+
+.explain-modal {
+    width: 520px;
+}
+
+.explain-modal .modal-header {
+    background: rgba(139, 92, 246, 0.15);
+}
+
+.explain-section {
+    margin-bottom: 1rem;
+}
+
+.explain-section h4 {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+    padding-bottom: 0.25rem;
+}
+
+.explain-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-primary);
+}
+
+.explain-metrics span {
+    text-align: center;
+    padding: 0.4rem;
+    background: rgba(71, 85, 105, 0.3);
+    border-radius: 4px;
+}
+
+.explain-text {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #e2e8f0;
+    min-height: 60px;
+}
+
+.counterfactual-controls {
+    margin-bottom: 0.5rem;
+}
+
+.btn-small {
+    background: rgba(139, 92, 246, 0.15);
+    color: #a78bfa;
+    border: 1px solid #a78bfa;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+}
+
+.btn-small:hover {
+    background: #a78bfa;
+    color: white;
+}
+
+.counterfactual-text {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #c4b5fd;
+    min-height: 40px;
 }
