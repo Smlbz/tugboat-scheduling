@@ -62,16 +62,17 @@ class NSGA2Optimizer:
 
         self.toolbox = base.Toolbox()
 
+        tug_count = len(self.tugs) if self.tugs else 1  # 空保护, 避免 up < low
         def generate_gene():
             if not self.tugs or not self.jobs:
                 return [0] * self.total_genes
-            return [random.randint(0, len(self.tugs) - 1) for _ in range(self.total_genes)]
+            return [random.randint(0, tug_count - 1) for _ in range(self.total_genes)]
 
         self.toolbox.register("individual", tools.initIterate, creator.Individual, generate_gene)
         self.toolbox.register("population", tools.initRepeat, list, self.toolbox.individual)
 
         self.toolbox.register("mate", tools.cxTwoPoint)
-        self.toolbox.register("mutate", tools.mutUniformInt, low=0, up=len(self.tugs) - 1, indpb=0.1)
+        self.toolbox.register("mutate", tools.mutUniformInt, low=0, up=max(0, tug_count - 1), indpb=0.1)
         self.toolbox.register("select", tools.selNSGA2)
         self.toolbox.register("evaluate", self._evaluate_fitness)
 
@@ -130,10 +131,26 @@ class NSGA2Optimizer:
                 missing = needed - unique_count
                 total_penalty += missing * PENALTY_PER_MISSING_TUG
         total_cost += total_penalty
+
+        # 5. 合规约束：逐任务检查每艘分配拖轮的合规性，违规施加惩罚
+        VIOLATION_PENALTY = 100000.0
+        compliance_violations = 0
+        from agents.compliance_agent import ComplianceAgent
+        ca = getattr(self, '_compliance_agent', None)
+        if ca is None:
+            ca = ComplianceAgent()
+            self._compliance_agent = ca
+        for job in self.jobs:
+            for tug in job_to_tugs.get(job.id, []):
+                result = ca.check_compliance(tug.id, job.id)
+                if not result.is_compliant:
+                    compliance_violations += 1
+        total_cost += compliance_violations * VIOLATION_PENALTY
+
         balance_score = MetricsCalculator.calc_balance(workload_dict=tug_workload)
         efficiency_score = MetricsCalculator.calc_efficiency(assignments, self.jobs_dict)
 
-        # 5. 连活奖励：链式任务对共享拖轮则减少成本
+        # 6. 连活奖励：链式任务对共享拖轮则减少成本
         for chain in self.chain_pairs:
             tugs_job1 = {a.tug_id for a in assignments if a.job_id == chain.job1_id}
             tugs_job2 = {a.tug_id for a in assignments if a.job_id == chain.job2_id}
@@ -196,6 +213,8 @@ class NSGA2Optimizer:
         return MetricsCalculator.calc_efficiency(assignments, self.jobs_dict)
 
     def optimize(self) -> list:
+        self.gen_history = []  # 每代记录
+
         population = self.toolbox.population(n=self.population_size)
 
         invalid_ind = [ind for ind in population if not ind.fitness.valid]
@@ -208,6 +227,20 @@ class NSGA2Optimizer:
             ind.fitness.crowding_dist = 0.0
 
         for gen in range(self.generations):
+            # 记录本代数据
+            costs = [ind.fitness.values[0] for ind in population]
+            balances = [ind.fitness.values[1] for ind in population]
+            efficiencies = [ind.fitness.values[2] for ind in population]
+            self.gen_history.append({
+                "gen": gen,
+                "avg_cost": float(np.mean(costs)),
+                "min_cost": float(np.min(costs)),
+                "avg_balance": float(np.mean(balances)),
+                "max_balance": float(np.max(balances)),
+                "avg_efficiency": float(np.mean(efficiencies)),
+                "max_efficiency": float(np.max(efficiencies)),
+                "crowding_dist_mean": float(np.mean([ind.fitness.crowding_dist for ind in population])),
+            })
             # 1. 父代选择（基于拥挤度距离的锦标赛选择）
             offspring = tools.selTournamentDCD(population, len(population))
             offspring = [self.toolbox.clone(ind) for ind in offspring]

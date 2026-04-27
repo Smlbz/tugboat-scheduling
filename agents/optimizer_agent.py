@@ -19,13 +19,6 @@ import uuid
 import json
 from pathlib import Path
 
-# DQN 可选导入
-try:
-    from algorithms.dqn import DQN
-    HAS_DQN = True
-except ImportError:
-    HAS_DQN = False
-
 
 class OptimizerAgent(BaseAgent):
     """运筹规划智能体"""
@@ -35,12 +28,7 @@ class OptimizerAgent(BaseAgent):
     def __init__(self):
         super().__init__()
         self._perception_agent = None
-        # DQN 实例保留，后续用于混合算法（NSGA-II + DQN 联合优化）
-        self.dqn: Optional[DQN] = DQN() if HAS_DQN else None
-        if self.dqn:
-            self.logger.info("OptimizerAgent 初始化完成, DQN 已加载")
-        else:
-            self.logger.info("OptimizerAgent 初始化完成, DQN 不可用")
+        self.logger.info("OptimizerAgent 初始化完成")
 
     @property
     def _get_perception(self):

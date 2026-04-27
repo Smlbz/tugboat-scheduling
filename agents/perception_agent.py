@@ -14,6 +14,7 @@ from agents.base_agent import BaseAgent
 from interfaces.schemas import Berth, Position
 from data.loader import load_berths, get_berth_by_id
 import math
+import threading
 
 
 class BerthStack:
@@ -91,9 +92,22 @@ class PerceptionAgent(BaseAgent):
     """全域感知智能体"""
 
     agent_name = "SlaveAgent1"
+    _instance = None
+    _singleton_lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            with cls._singleton_lock:
+                if cls._instance is None:
+                    cls._instance = super().__new__(cls)
+                    cls._instance._initialized = False
+        return cls._instance
 
     def __init__(self):
+        if self._initialized:
+            return
         super().__init__()
+        self._initialized = True
         self.berths = {b.id: b for b in load_berths()}
         # 初始化堆栈
         self.berth_stacks: Dict[str, BerthStack] = {

@@ -92,27 +92,14 @@ class MasterAgent(BaseAgent):
         berth_constraints = self.perception_agent.get_berth_constraints()
         hidden_tasks = self.perception_agent.get_hidden_tasks()
         
-        # Step 4: 过滤不可用拖轮
+        # Step 4: 过滤不可用拖轮（合规检查移入 NSGA-II 评估阶段逐任务执行）
         available_tugs = []
         for tug in tugs:
-            # 检查状态
             if tug.status in [TugStatus.LOCKED_BY_FRMS, TugStatus.MAINTENANCE, TugStatus.BUSY]:
                 continue
-            
-            # 检查是否内档
             if tug.berth_position == "INNER":
                 continue
-            
-            # 检查合规
-            is_compliant = False
-            for job in jobs:
-                result = self.compliance_agent.check_compliance(tug.id, job.id)
-                if result.is_compliant:
-                    is_compliant = True
-                    break
-            
-            if is_compliant:
-                available_tugs.append(tug)
+            available_tugs.append(tug)
         
         self.logger.info(f"可用拖轮: {len(available_tugs)}/{len(tugs)}")
         

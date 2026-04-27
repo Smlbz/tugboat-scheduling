@@ -28,6 +28,11 @@ class TestMasterAgentIntegration:
         assert sol.metrics.total_cost > 0, "成本应 > 0"
         assert 0 <= sol.metrics.balance_score <= 1, "均衡度应在 0-1"
         assert 0 <= sol.metrics.efficiency_score <= 1, "效率应在 0-1"
+        assert len(sol.assignments) > 0, "应有分配"
+        # 检查同一任务内无重复分配（不同任务可共享拖轮，如连活）
+        for job_id in set(a.job_id for a in sol.assignments):
+            job_tugs = [a.tug_id for a in sol.assignments if a.job_id == job_id]
+            assert len(job_tugs) == len(set(job_tugs)), f"任务 {job_id} 不应重复分配同一拖轮"
 
     def test_schedule_single_job(self):
         """单任务调度"""
