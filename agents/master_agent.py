@@ -18,6 +18,7 @@ from agents.fatigue_agent import FatigueAgent
 from agents.optimizer_agent import OptimizerAgent
 from agents.explainer_agent import ExplainerAgent
 from engine.rule_engine import RuleEngine
+from algorithms.learning import LearningEngine
 from interfaces.schemas import (
     Tug, Job, ScheduleSolution, ChainJobPair, TugStatus
 )
@@ -41,8 +42,9 @@ class MasterAgent(BaseAgent):
         self.fatigue_agent = FatigueAgent()         # Agent3
         self.optimizer_agent = OptimizerAgent()     # Agent4
         self.explainer_agent = ExplainerAgent()     # Agent5
+        self.learning_engine = LearningEngine()      # 自学习引擎
 
-        self.logger.info("MasterAgent 初始化完成")
+        self.logger.info("MasterAgent 初始化完成 (含 Agent5 ExplainerAgent)")
     
     def process(self, request: Dict) -> Dict:
         """通用处理接口"""
@@ -72,8 +74,9 @@ class MasterAgent(BaseAgent):
         
         TODO [成员A]: 完善调度流程
         """
-        self.logger.info(f"开始调度，任务数: {len(job_ids)}")
-        
+        job_count = len(job_ids) if job_ids else 0
+        self.logger.info(f"开始调度，任务数: {job_count}")
+
         # Step 1: 获取数据
         all_jobs = load_jobs()
         jobs = [j for j in all_jobs if j.id in job_ids] if job_ids else all_jobs
@@ -113,6 +116,12 @@ class MasterAgent(BaseAgent):
         
         self.logger.info(f"可用拖轮: {len(available_tugs)}/{len(tugs)}")
         
+        # 自学习调参（失败不阻塞调度）
+        try:
+            self.learning_engine.apply_adjustments()
+        except Exception as e:
+            self.logger.error("自学习调参失败: %s", e)
+
         # Step 5: 生成方案
         solutions = self.optimizer_agent.generate_solutions(
             jobs=jobs,
@@ -124,7 +133,26 @@ class MasterAgent(BaseAgent):
         # 缓存方案供解释使用
         for sol in solutions:
             self.explainer_agent.cache_solution(sol.solution_id, sol.model_dump())
-        
+
+        # 记录调度历史（自学习用，失败不阻塞调度）
+        if solutions:
+            best = solutions[0]
+            try:
+                self.learning_engine.record_schedule(
+                    solution_name=best.name,
+                    job_ids=job_ids,
+                    assignments=[{"tug_id": a.tug_id, "job_id": a.job_id} for a in best.assignments],
+                    metrics={
+                        "total_cost": best.metrics.total_cost,
+                        "balance_score": best.metrics.balance_score,
+                        "efficiency_score": best.metrics.efficiency_score,
+                        "overall_score": best.metrics.overall_score,
+                    },
+                    chain_jobs_count=len(chain_pairs),
+                )
+            except Exception as e:
+                self.logger.error("记录调度历史失败: %s", e)
+
         return solutions[:3]
     
     def identify_chain_jobs(self, jobs: List[Job]) -> List[ChainJobPair]:
@@ -168,11 +196,6 @@ class MasterAgent(BaseAgent):
         chain_pairs.sort(key=lambda cp: cp.cost_saving, reverse=True)
         
         return chain_pairs
-    
-    def get_explanation(self, solution_id: str, question: str = None) -> str:
-        """获取方案解释"""
-        result = self.explainer_agent.explain(solution_id, question)
-        return result.explanation
 
     def check_compliance(self, tug_id: str, job_id: str):
         """检查拖轮执行任务的合规性"""
