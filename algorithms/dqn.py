@@ -118,7 +118,7 @@ class DQN:
 
     def train_step(
         self, state: tuple, action: int, reward: float,
-        next_state: tuple, done: bool,
+        next_state: tuple, done: bool, n_actions: int = 0,
     ):
         """Single Q-learning update: Q(s,a) += lr * (target - Q(s,a))."""
         current_q = self.q_table.get((state, action), 0.0)
@@ -127,7 +127,7 @@ class DQN:
             target = reward
         else:
             max_next_q = max(
-                (self.q_table.get((next_state, a), 0.0) for a in range(50)),
+                (self.q_table.get((next_state, a), 0.0) for a in range(n_actions)),
                 default=0.0,
             )
             target = reward + self.gamma * max_next_q
@@ -198,8 +198,7 @@ class DQN:
                     )
                     done = len(available) < needed
 
-                    self.train_step(state, action, reward, next_state, done)
-                    self.memory.push(state, action, reward, next_state, done)
+                    self.train_step(state, action, reward, next_state, done, n_actions=len(available))
 
             # decay exploration rate
             self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
@@ -222,7 +221,9 @@ class DQN:
         Returns {job_id: [tug_id, ...]}.
         """
         n_train = min(50, self.config["episodes"])
+        old_epsilon = self.epsilon
         self.train(jobs, tugs, episodes=n_train)
+        self.epsilon = old_epsilon
         logger.info(
             "DQN schedule ready (%d eps, %d q-entries)",
             n_train, len(self.q_table),
