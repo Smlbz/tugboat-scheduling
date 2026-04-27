@@ -7,11 +7,23 @@ CMATSS 系统配置文件
 import os
 from pathlib import Path
 
+# 加载 .env 文件 (如有)
+try:
+    from dotenv import load_dotenv
+    env_path = Path(__file__).parent.parent / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+except ImportError:
+    pass
+
 # ========== 路径配置 ==========
 BASE_DIR = Path(__file__).parent.parent
 DATA_DIR = BASE_DIR / "data"
 INTERFACES_DIR = BASE_DIR / "interfaces"
 AGENTS_DIR = BASE_DIR / "agents"
+
+# 数据库路径
+DB_PATH = str(DATA_DIR / "cmatss.db")
 
 # ========== 模式配置 ==========
 # demo: 使用本地JSON数据和同进程调用
