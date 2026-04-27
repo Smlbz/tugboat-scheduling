@@ -9,13 +9,22 @@ SlaveAgent4 - 运筹规划智能体
 - 连活优化处理
 """
 
-from typing import List, Dict
+from typing import List, Dict, Optional
 from agents.base_agent import BaseAgent
 from interfaces.schemas import (
     Tug, Job, ScheduleSolution, SolutionMetrics,
     Assignment, ChainJobPair, JobType
 )
 import uuid
+import json
+from pathlib import Path
+
+# DQN 可选导入
+try:
+    from algorithms.dqn import DQN
+    HAS_DQN = True
+except ImportError:
+    HAS_DQN = False
 
 
 class OptimizerAgent(BaseAgent):
@@ -25,11 +34,36 @@ class OptimizerAgent(BaseAgent):
 
     def __init__(self):
         super().__init__()
-        self.logger.info("OptimizerAgent 初始化完成")
+        self._perception_agent = None
+        self.dqn: Optional[DQN] = DQN() if HAS_DQN else None
+        if self.dqn:
+            self.logger.info("OptimizerAgent 初始化完成, DQN 已加载")
+        else:
+            self.logger.info("OptimizerAgent 初始化完成, DQN 不可用")
+
+    @property
+    def _get_perception(self):
+        """延迟单例 PerceptionAgent"""
+        if self._perception_agent is None:
+            from agents.perception_agent import PerceptionAgent
+            self._perception_agent = PerceptionAgent()
+        return self._perception_agent
 
     def process(self, request: Dict) -> Dict:
         """通用处理接口"""
         return {"error": "Use generate_solutions directly"}
+
+    def _load_learning_adjustments(self) -> dict:
+        """加载自学习参数调整"""
+        adj_path = Path(__file__).parent.parent / "data" / "learning_adjustments.json"
+        if adj_path.exists():
+            try:
+                with open(adj_path, "r") as f:
+                    data = json.load(f)
+                return data
+            except Exception as e:
+                self.logger.error("加载学习参数失败: %s", e)
+        return {}
 
     def generate_solutions(
         self,
@@ -50,6 +84,13 @@ class OptimizerAgent(BaseAgent):
         if not available_tugs or not jobs:
             self.logger.warning("无可用拖轮或任务，返回空方案")
             return []
+
+        # 加载自学习调整
+        self.learning_adjustments = self._load_learning_adjustments()
+        if self.learning_adjustments:
+            self.logger.info(f"使用自学习调参: {self.learning_adjustments}")
+        else:
+            self.learning_adjustments = {}
 
         # 正常模式: NSGA-II 优化
         try:
@@ -202,13 +243,11 @@ class OptimizerAgent(BaseAgent):
         考虑连活优先级
         strategy: "cost" 马力最匹配, "balance" 工作量最少优先, "overall" 综合
         """
-        from agents.perception_agent import PerceptionAgent
-
         chain_pairs = chain_pairs or []
         assignments = []
         available = list(tugs)
         assigned_jobs = set()
-        perception_agent = PerceptionAgent()
+        perception_agent = self._get_perception
         from algorithms.nsga2 import NSGA2Optimizer
 
         tug_workload = {tug.id: 0 for tug in tugs}
@@ -286,17 +325,26 @@ class OptimizerAgent(BaseAgent):
 
     def _calc_metrics(
         self, assignments: List[Assignment],
-        weight_cost: float = 0.33,
-        weight_balance: float = 0.33,
-        weight_efficiency: float = 0.34
+        weight_cost: float = None,
+        weight_balance: float = None,
+        weight_efficiency: float = None
     ) -> SolutionMetrics:
-        """计算方案评价指标"""
+        """计算方案评价指标 (权重可从自学习调整加载)"""
+        adj = getattr(self, 'learning_adjustments', {})
+        weight_cost = weight_cost or adj.get('weight_cost', 0.33)
+        weight_balance = weight_balance or adj.get('weight_balance', 0.33)
+        weight_efficiency = weight_efficiency or adj.get('weight_efficiency', 0.34)
+
         total_cost = self.calc_cost(assignments)
         balance_score = self.calc_balance(assignments)
         efficiency_score = self.calc_efficiency(assignments)
 
+        num_jobs = len(set(a.job_id for a in assignments)) if assignments else 1
+        cost_per_job_baseline = 2000  # 单任务参考成本
+        cost_score = 1.0 - min(total_cost / (num_jobs * cost_per_job_baseline), 1.0)
+
         overall_score = (
-            total_cost * (-weight_cost) / 10000 +
+            cost_score * weight_cost +
             balance_score * weight_balance +
             efficiency_score * weight_efficiency
         )
