@@ -1,0 +1,992 @@
+{
+  "tugs": [
+    {
+      "id": "1245327767839440896",
+      "name": "日港拖16",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.515662,
+        "lat": 35.320382
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245330512780721920",
+      "name": "日港拖30",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.54306,
+        "lat": 35.376157
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1387718672457400320",
+      "name": "氢电拖1",
+      "horsepower": 7070.0,
+      "position": {
+        "lng": 120.22308,
+        "lat": 36.00768
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1365344689678450688",
+      "name": "青港拖30",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.239113,
+        "lat": 36.017167
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1050701365333983232",
+      "name": "青港拖1",
+      "horsepower": 5200.0,
+      "position": {
+        "lng": 120.325805,
+        "lat": 36.096995
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1391821362594578432",
+      "name": "青港拖31",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.21888,
+        "lat": 36.017055
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1123987342344847232",
+      "name": "亚洲19号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.239233,
+        "lat": 36.01706
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245330188313559040",
+      "name": "日港拖27",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.544253,
+        "lat": 35.375228
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245328504510218240",
+      "name": "日港拖17",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.54312,
+        "lat": 35.376567
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1216778866090049536",
+      "name": "新时代",
+      "horsepower": 3580.0,
+      "position": {
+        "lng": 120.307273,
+        "lat": 36.082468
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245330852104110080",
+      "name": "日港拖31",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.542912,
+        "lat": 35.376157
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245325976674500608",
+      "name": "日港拖2",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.534325,
+        "lat": 35.359107
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "507512431140929536",
+      "name": "青港吊2",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 83.6,
+        "lat": 39.1
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1059019900804136832",
+      "name": "新迎宾",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 120.307653,
+        "lat": 36.083757
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1216778451873169408",
+      "name": "贵宾",
+      "horsepower": 1220.0,
+      "position": {
+        "lng": 120.328645,
+        "lat": 36.031168
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1217391009290256384",
+      "name": "安德",
+      "horsepower": 2500.0,
+      "position": {
+        "lng": 120.303108,
+        "lat": 36.051475
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245329742396129280",
+      "name": "日港拖18",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.542965,
+        "lat": 35.376595
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1352947494174064640",
+      "name": "安泰",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.798237,
+        "lat": 35.586962
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1189166143282085888",
+      "name": "寰宇7号",
+      "horsepower": 8000.0,
+      "position": {
+        "lng": 119.84942,
+        "lat": 35.46197
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "1059019156864630784",
+      "name": "新贵宾",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 120.317042,
+        "lat": 36.08962
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245326882941959936",
+      "name": "日港拖12",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.515822,
+        "lat": 35.320413
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477137925172101120",
+      "name": "青港拖2",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 120.314815,
+        "lat": 36.08552
+      },
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477157339045036032",
+      "name": "青港拖8",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 119.760083,
+        "lat": 35.57347
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477139138257092608",
+      "name": "青港拖16",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 119.773612,
+        "lat": 35.576852
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477139142749192192",
+      "name": "青港拖27",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 119.775645,
+        "lat": 35.578113
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477143802012762112",
+      "name": "港强",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.18884,
+        "lat": 36.002642
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477143805850550336",
+      "name": "港福",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.279067,
+        "lat": 36.070022
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477143844220043264",
+      "name": "寰宇1号",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 120.22569,
+        "lat": 36.012107
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477143846606602240",
+      "name": "寰宇2号",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 119.797113,
+        "lat": 35.586748
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477145338117881856",
+      "name": "寰宇6号",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 120.20667,
+        "lat": 36.002285
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477145349123735616",
+      "name": "亚洲10号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.194202,
+        "lat": 35.995248
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477146389378236416",
+      "name": "亚洲11号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.203113,
+        "lat": 36.001533
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147717773033536",
+      "name": "亚洲12号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.216892,
+        "lat": 36.012555
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147723041079296",
+      "name": "亚洲16号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 119.7576,
+        "lat": 35.572127
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477147814749536256",
+      "name": "亚洲15号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.188823,
+        "lat": 36.002612
+      },
+      "status": "MAINTENANCE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477147816020410368",
+      "name": "亚洲9号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.20672,
+        "lat": 35.997062
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147829786116096",
+      "name": "亚洲6号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 118.965288,
+        "lat": 38.08391
+      },
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147839957303296",
+      "name": "亚洲7号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.317917,
+        "lat": 36.089422
+      },
+      "status": "MAINTENANCE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147847230226432",
+      "name": "亚洲2号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.19321,
+        "lat": 35.997888
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147891438190592",
+      "name": "亚洲3号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.237063,
+        "lat": 36.0422
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477148654172372992",
+      "name": "青港拖23",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 114.251203,
+        "lat": 22.569032
+      },
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477148907944542208",
+      "name": "青港拖25",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.092233,
+        "lat": 38.397522
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477148914047254464",
+      "name": "青港拖29",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.058052,
+        "lat": 38.35481
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477148919885725696",
+      "name": "青港拖6",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.221027,
+        "lat": 36.02028
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477148922851098560",
+      "name": "环消拖2",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 119.797145,
+        "lat": 35.586255
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477148934230245376",
+      "name": "青港拖9",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.221027,
+        "lat": 36.006307
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477143831414833216",
+      "name": "环消拖1",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 119.796987,
+        "lat": 35.586197
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "824601995049435008",
+      "name": "威港拖27",
+      "horsepower": 5200.0,
+      "position": {
+        "lng": 119.757738,
+        "lat": 35.579952
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "928967281520672768",
+      "name": "威港拖31",
+      "horsepower": 5200.0,
+      "position": {
+        "lng": 119.759013,
+        "lat": 35.571715
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147828586545216",
+      "name": "亚洲1号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.239772,
+        "lat": 36.017437
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477137343027871680",
+      "name": "青港拖12",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.315548,
+        "lat": 36.085772
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477138491252146176",
+      "name": "青港拖21",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.240618,
+        "lat": 36.017917
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477156541577822208",
+      "name": "青港拖26",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 113.682258,
+        "lat": 21.985478
+      },
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477146385553031168",
+      "name": "青港拖20",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.228542,
+        "lat": 36.063322
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477147722986553280",
+      "name": "亚洲18号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.189177,
+        "lat": 36.001722
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477143852633817024",
+      "name": "寰宇3号",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 119.798078,
+        "lat": 35.586835
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "1245325075377291264",
+      "name": "日港拖1",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.539752,
+        "lat": 35.370267
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245327299268575232",
+      "name": "日港拖15",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.543062,
+        "lat": 35.37713
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147727084388416",
+      "name": "亚洲17号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 122.055003,
+        "lat": 30.577983
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245330512780722176",
+      "name": "日港拖30",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.541947,
+        "lat": 35.371353
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1123987342344847360",
+      "name": "亚洲19号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.23922,
+        "lat": 36.017003
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 2.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1059019900804136960",
+      "name": "新迎宾",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 120.307672,
+        "lat": 36.083762
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "1245326882941960192",
+      "name": "日港拖12",
+      "horsepower": 0.0,
+      "position": {
+        "lng": 119.515842,
+        "lat": 35.320427
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477137925172101119",
+      "name": "青港拖2",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 120.314832,
+        "lat": 36.085488
+      },
+      "status": "LOCKED_BY_FRMS",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477143805850550272",
+      "name": "港福",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.326803,
+        "lat": 36.097458
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477145349123735552",
+      "name": "亚洲10号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.189938,
+        "lat": 36.00146
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147717773033472",
+      "name": "亚洲12号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.2298,
+        "lat": 36.01354
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477148914047254528",
+      "name": "青港拖29",
+      "horsepower": 4000.0,
+      "position": {
+        "lng": 120.102175,
+        "lat": 38.400902
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477148922851098624",
+      "name": "环消拖2",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 119.797092,
+        "lat": 35.586243
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477143831414833152",
+      "name": "环消拖1",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 119.797003,
+        "lat": 35.58616
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "824601995049435136",
+      "name": "威港拖27",
+      "horsepower": 5200.0,
+      "position": {
+        "lng": 119.75901,
+        "lat": 35.57392
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    },
+    {
+      "id": "477147828586545152",
+      "name": "亚洲1号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.205663,
+        "lat": 35.996385
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477137343027871744",
+      "name": "青港拖12",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.315508,
+        "lat": 36.085807
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477147722986553344",
+      "name": "亚洲18号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 120.204912,
+        "lat": 36.004113
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 3.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477143852633817088",
+      "name": "寰宇3号",
+      "horsepower": 7000.0,
+      "position": {
+        "lng": 119.798077,
+        "lat": 35.586887
+      },
+      "status": "AVAILABLE",
+      "fatigue_value": 0.0,
+      "today_work_hours": 1.5,
+      "ship_age": 10
+    },
+    {
+      "id": "477147727084388352",
+      "name": "亚洲17号",
+      "horsepower": 5000.0,
+      "position": {
+        "lng": 122.055033,
+        "lat": 30.57799
+      },
+      "status": "BUSY",
+      "fatigue_value": 0.0,
+      "today_work_hours": 0.0,
+      "ship_age": 10
+    }
+  ]
+}
