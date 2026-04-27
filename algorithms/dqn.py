@@ -7,7 +7,7 @@ Uses dict-based Q-table and discretized state representation.
 import random
 import logging
 from collections import deque
-from typing import List, Dict, Optional, Tuple, Any
+from typing import List, Dict, Optional, Tuple
 
 from interfaces.schemas import Tug, Job, TugStatus
 
