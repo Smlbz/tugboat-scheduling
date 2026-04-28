@@ -1,0 +1,5 @@
+/* Map styles - delegated to layout.css, keep for legacy */
+.berth-icon {
+    background: transparent !important;
+    border: none !important;
+}

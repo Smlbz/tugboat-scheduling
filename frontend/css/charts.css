@@ -1,0 +1,21 @@
+.radar-chart-container {
+    height: 200px;
+    background: rgba(10, 15, 30, 0.3);
+    border-radius: var(--radius-md);
+    padding: 0.15rem;
+}
+
+.radar-chart-container .echarts-container {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-box .echarts-container {
+    width: 100%;
+    height: 68px;
+}
+
+.berth-icon {
+    background: transparent !important;
+    border: none !important;
+}

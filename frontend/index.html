@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMATSS 拖轮调度系统</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚢</text></svg>">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="/static/style.css">
 </head>
@@ -11,96 +12,285 @@
     <div class="app-container">
         <!-- 顶部导航 -->
         <header class="header">
-            <h1>🚢 CMATSS 认知多智能体拖轮调度系统</h1>
+            <h1>🚢 CMATSS</h1>
             <div class="header-actions">
                 <span id="status-indicator" class="status-online">● 系统在线</span>
+                <span class="header-time" id="header-time">--</span>
                 <button id="voice-toggle" class="voice-btn" title="语音播报开关">🔇 语音关</button>
             </div>
         </header>
 
-        <!-- 状态看板 -->
-        <div class="dashboard-bar">
-            <div class="dashboard-item">
-                <span class="dashboard-label">可用拖轮</span>
-                <span id="dash-available" class="dashboard-value">--</span>
-            </div>
-            <div class="dashboard-item">
-                <span class="dashboard-label">总拖轮</span>
-                <span id="dash-total" class="dashboard-value">--</span>
-            </div>
-            <div class="dashboard-item">
-                <span class="dashboard-label">待排任务</span>
-                <span id="dash-jobs" class="dashboard-value">--</span>
-            </div>
-            <div class="dashboard-item">
-                <span class="dashboard-label">疲劳绿色</span>
-                <span id="dash-green" class="dashboard-value green">--</span>
-            </div>
-            <div class="dashboard-item">
-                <span class="dashboard-label">疲劳黄色</span>
-                <span id="dash-yellow" class="dashboard-value yellow">--</span>
-            </div>
-            <div class="dashboard-item">
-                <span class="dashboard-label">疲劳红色</span>
-                <span id="dash-red" class="dashboard-value red">--</span>
-            </div>
-            <div class="dashboard-item tide-item">
-                <span class="dashboard-label">潮汐</span>
-                <span id="dash-tide" class="dashboard-value" style="font-size:0.9rem;">--</span>
-            </div>
-            <div class="dashboard-item" id="dash-cable-risk" style="display:none;">
-                <span class="dashboard-label">缆绳风险</span>
-                <span id="dash-cable-label" class="dashboard-value" style="font-size:0.75rem;">--</span>
-            </div>
+        <div class="app-body">
+            <!-- 左侧导航栏 -->
+            <nav class="sidebar" id="sidebar">
+                <ul class="nav-list">
+                    <li class="nav-item active" data-view="workbench" onclick="switchNav('workbench')">
+                        <span class="nav-icon">📐</span>
+                        <span class="nav-label">工作台</span>
+                    </li>
+                    <li class="nav-item" data-view="planning" onclick="switchNav('planning')">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">方案与定稿</span>
+                    </li>
+                    <li class="nav-item" data-view="assistant" onclick="switchNav('assistant')">
+                        <span class="nav-icon">🚢</span>
+                        <span class="nav-label">作业助手</span>
+                    </li>
+                    <li class="nav-item" data-view="pad" onclick="switchNav('pad')">
+                        <span class="nav-icon">📱</span>
+                        <span class="nav-label">拖轮监控</span>
+                    </li>
+                </ul>
+                <div class="sidebar-footer">
+                    <span class="sidebar-status"></span>
+                </div>
+            </nav>
+
+            <!-- 主内容区 -->
+            <main class="main-content">
+
+                <!-- ========== 视图1: 调度工作台 ========== -->
+                <section id="view-workbench" class="view-container active">
+                    <!-- KPI 统计行 -->
+                    <div class="kpi-row">
+                        <div class="kpi-card">
+                            <span class="kpi-label">今日计划任务</span>
+                            <span id="kpi-jobs" class="kpi-value blue">--</span>
+                            <span class="kpi-subtitle">总任务数</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">可用拖轮</span>
+                            <span id="kpi-available" class="kpi-value orange">--</span>
+                            <span class="kpi-subtitle">可用/总数</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">作业中拖轮</span>
+                            <span id="kpi-busy" class="kpi-value orange">--</span>
+                            <span class="kpi-subtitle">繁忙数量</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">疲劳锁定</span>
+                            <span id="kpi-locked" class="kpi-value red">--</span>
+                            <span class="kpi-subtitle">红色阈值</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">潮汐状态</span>
+                            <span id="kpi-tide" class="kpi-value green">--</span>
+                            <span class="kpi-subtitle">当前潮高</span>
+                        </div>
+                    </div>
+
+                    <!-- 疲劳预警条 -->
+                    <div id="fatigue-alert-bar" class="fatigue-alert-bar" style="display:none;">
+                        <span>⚠️ <span id="fatigue-alert-count">0</span> 艘拖轮疲劳过高, 已自动锁定</span>
+                    </div>
+
+                    <!-- 看板图表行 -->
+                    <div class="dashboard-charts">
+                        <div class="chart-box" id="trend-chart"><div class="chart-title">可用拖轮趋势</div></div>
+                        <div class="chart-box" id="bar-chart"><div class="chart-title">作业类型分布</div></div>
+                        <div class="chart-box" id="ring-chart"><div class="chart-title">疲劳度分布</div></div>
+                    </div>
+
+                    <!-- 下半部: 任务列表 + 港区态势 -->
+                    <div class="workbench-body">
+                        <div class="panel-card task-panel">
+                            <div class="panel-card-header">
+                                <h3>📋 待排任务</h3>
+                                <div class="panel-card-actions">
+                                    <button id="select-all-btn" class="btn-icon">☑ 全选</button>
+                                    <button id="refresh-jobs" class="btn-icon">🔄</button>
+                                </div>
+                            </div>
+                            <div id="job-list" class="job-list"></div>
+                            <button id="schedule-btn" class="btn-primary">🤖 智能调度</button>
+                        </div>
+                        <div class="panel-card status-panel">
+                            <div class="panel-card-header">
+                                <h3>📡 港区态势摘要</h3>
+                            </div>
+                            <div class="port-status">
+                                <div class="port-counters">
+                                    <span class="port-counter"><b id="port-incoming">0</b> 可用</span>
+                                    <span class="port-counter"><b id="port-departing">0</b> 作业中</span>
+                                    <span class="port-counter"><b id="port-berthed">0</b> 锁定</span>
+                                </div>
+                                <div class="status-list" id="port-tug-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== 视图2: 方案比选与人工定稿 ========== -->
+                <section id="view-planning" class="view-container">
+                    <div class="planning-header">
+                        <div>
+                            <h2>📊 方案比选与人工定稿</h2>
+                            <span class="planning-desc">多目标优化方案对比与决策</span>
+                        </div>
+                        <div class="planning-actions">
+                            <button id="planning-refresh" class="btn-icon">🔄 刷新</button>
+                        </div>
+                    </div>
+
+                    <!-- KPI 行 -->
+                    <div class="kpi-row">
+                        <div class="kpi-card">
+                            <span class="kpi-label">任务总数</span>
+                            <span id="plan-total-jobs" class="kpi-value">--</span>
+                            <span class="kpi-subtitle">待排任务</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">可用拖轮</span>
+                            <span id="plan-available-tugs" class="kpi-value blue">--</span>
+                            <span class="kpi-subtitle">可调用</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">生成方案</span>
+                            <span id="plan-solution-count" class="kpi-value purple">--</span>
+                            <span class="kpi-subtitle">Pareto最优</span>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">限制条目</span>
+                            <span id="plan-restrictions" class="kpi-value red">0</span>
+                            <span class="kpi-subtitle">合规规则</span>
+                        </div>
+                    </div>
+
+                    <div class="planning-body">
+                        <div class="planning-left">
+                            <div class="panel-card">
+                                <div class="panel-card-header"><h3>📊 方案雷达对比</h3></div>
+                                <div class="radar-chart-container" id="radar-chart"></div>
+                            </div>
+                            <div class="panel-card solution-list-panel">
+                                <div class="panel-card-header"><h3>🏆 调度方案</h3></div>
+                                <div id="solution-list" class="solution-list">
+                                    <div class="empty-state">点击"智能调度"生成方案</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="planning-right">
+                            <div class="panel-card">
+                                <div class="panel-card-header"><h3>⚡ 当前专注任务</h3></div>
+                                <div id="focus-task" class="focus-task">
+                                    <div class="empty-state">选择任务后调度</div>
+                                </div>
+                            </div>
+                            <div class="panel-card" id="planning-assignment-panel">
+                                <div class="panel-card-header"><h3>📋 分配详细</h3></div>
+                                <div id="planning-assignment-list" class="focus-task">
+                                    <div class="empty-state">采纳方案后显示分配详情</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== 视图3: 船舶作业助手 ========== -->
+                <section id="view-assistant" class="view-container">
+                    <div class="assistant-header">
+                        <div>
+                            <h2>🚢 船舶作业助手</h2>
+                            <span class="assistant-desc">实时作业监控与环境信息</span>
+                        </div>
+                        <div class="assistant-actions">
+                            <button id="assistant-refresh" class="btn-icon">🔄 刷新</button>
+                        </div>
+                    </div>
+
+                    <div class="assistant-body">
+                        <div class="assistant-left">
+                            <div class="panel-card">
+                                <div class="panel-card-header"><h3>📍 港口GIS地图</h3></div>
+                                <div class="map-container" id="map-container">
+                                    <div id="map"></div>
+                                    <div class="map-legend">
+                                        <div class="legend-item"><span class="dot green"></span> 可用</div>
+                                        <div class="legend-item"><span class="dot yellow"></span> 警告</div>
+                                        <div class="legend-item"><span class="dot red"></span> 锁定</div>
+                                        <div class="legend-item"><span class="dot blue"></span> 作业中</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-card">
+                                <div class="panel-card-header"><h3>📋 重点任务</h3></div>
+                                <div id="assistant-job-list" class="assistant-job-list"></div>
+                            </div>
+                        </div>
+                        <div class="assistant-right">
+                            <div class="panel-card">
+                                <div class="panel-card-header"><h3>☁ 实时环境</h3></div>
+                                <div class="env-status" id="env-status">
+                                    <div class="env-row"><span class="env-icon">🌊</span> 潮汐: <span id="env-tide">--</span></div>
+                                    <div class="env-row"><span class="env-icon">🌡</span> 缆绳风险: <span id="env-cable">--</span></div>
+                                </div>
+                            </div>
+                            <div class="panel-card">
+                                <div class="panel-card-header"><h3>⚠ 作业关注点</h3></div>
+                                <div class="attention-points" id="attention-points">
+                                    <div class="attention-item">选择任务后查看关注点</div>
+                                </div>
+                            </div>
+                            <div class="panel-card fatigue-panel">
+                                <div class="panel-card-header"><h3>⚡ 拖轮疲劳状态</h3></div>
+                                <div class="fatigue-summary" id="fatigue-summary"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== 视图4: 拖轮PAD终端 ========== -->
+                <section id="view-pad" class="view-container">
+                    <div class="pad-header">
+                        <div class="pad-header-left">
+                            <span class="pad-back" onclick="switchNav('workbench')">← 返回调度中心</span>
+                        </div>
+                        <div class="pad-header-center">
+                            <span class="pad-title">📱 拖轮监控</span>
+                        </div>
+                        <div class="pad-header-right">
+                            <span class="pad-id">实时监控</span>
+                        </div>
+                    </div>
+                    <div class="pad-frame">
+                        <div class="pad-status-bar">
+                            <span class="pad-time" id="pad-time">09:28</span>
+                            <span class="pad-device-info">📶 🔋 100%</span>
+                        </div>
+                        <div class="pad-subtitle">全部拖轮状态 (共 <span id="pad-total">0</span> 艘)</div>
+                        <div class="pad-grid" id="pad-grid">
+                            <!-- 拖轮卡片由 JS 动态渲染 -->
+                        </div>
+                    </div>
+                </section>
+
+            </main>
         </div>
-
-        <!-- 主内容区 -->
-        <main class="main-content">
-            <!-- 左侧面板: 任务列表 -->
-            <aside class="left-panel">
-                <div class="panel-header">
-                    <h2>📋 待排任务</h2>
-                    <div class="panel-header-actions">
-                        <button id="select-all-btn" class="btn-icon" title="全选/取消全选">☑ 全选</button>
-                        <button id="refresh-jobs" class="btn-icon" title="刷新">🔄</button>
-                    </div>
-                </div>
-                <div id="job-list" class="job-list">
-                    <!-- 任务卡片动态生成 -->
-                </div>
-                <button id="schedule-btn" class="btn-primary">
-                    🤖 智能调度
-                </button>
-            </aside>
-
-            <!-- 中间: 地图 -->
-            <section class="map-container">
-                <div id="map"></div>
-                <!-- 图例 -->
-                <div class="map-legend">
-                    <div class="legend-item"><span class="dot green"></span> 可用</div>
-                    <div class="legend-item"><span class="dot yellow"></span> 警告</div>
-                    <div class="legend-item"><span class="dot red"></span> 锁定</div>
-                    <div class="legend-item"><span class="dot blue"></span> 作业中</div>
-                </div>
-            </section>
-
-            <!-- 右侧面板: 方案展示 -->
-            <aside class="right-panel">
-                <div class="panel-header">
-                    <h2>📊 调度方案</h2>
-                </div>
-                <div id="solution-list" class="solution-list">
-                    <div class="empty-state">
-                        点击"智能调度"生成方案
-                    </div>
-                </div>
-            </aside>
-        </main>
-
     </div>
 
+    <!-- 隐藏的旧版看板元素 (兼容旧 JS) -->
+    <div style="display:none">
+        <span id="dash-available"></span>
+        <span id="dash-total"></span>
+        <span id="dash-jobs"></span>
+        <span id="dash-green"></span>
+        <span id="dash-yellow"></span>
+        <span id="dash-red"></span>
+        <span id="dash-tide"></span>
+        <span id="dash-cable-risk"></span>
+        <span id="dash-cable-label"></span>
+    </div>
+
+    <!-- 脚本 -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="/static/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="/static/js/app.js?v=2"></script>
+    <script src="/static/js/map.js?v=2"></script>
+    <script src="/static/js/dashboard.js?v=2"></script>
+    <script src="/static/js/scheduling.js?v=2"></script>
+    <script src="/static/js/charts.js?v=2"></script>
+    <script src="/static/js/modals.js?v=2"></script>
+    <script src="/static/js/voice.js?v=2"></script>
 </body>
 </html>

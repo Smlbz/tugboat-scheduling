@@ -100,6 +100,13 @@ async def index():
     return FileResponse("frontend/index.html")
 
 
+@app.get("/favicon.ico")
+async def favicon():
+    """favicon (data URI in HTML, 后端占位避免 404)"""
+    from fastapi.responses import Response
+    return Response(status_code=204)
+
+
 # 挂载前端静态文件 (使用绝对路径避免工作目录依赖)
 import os as _os
 _frontend_dir = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "frontend")

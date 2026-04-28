@@ -1,0 +1,35 @@
+/* Dashboard specific overrides */
+.dashboard-bar {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(10, 15, 30, 0.6);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dashboard-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+    padding: 0.15rem 0.5rem;
+}
+
+.dashboard-label {
+    font-size: var(--font-xs);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.dashboard-value {
+    font-size: var(--font-lg);
+    font-weight: 700;
+}
+.dashboard-value.green { color: var(--success-color); }
+.dashboard-value.yellow { color: var(--warning-color); }
+.dashboard-value.red { color: var(--danger-color); }
+
+.chart-box .echarts-container {
+    width: 100%;
+    height: 68px;
+}

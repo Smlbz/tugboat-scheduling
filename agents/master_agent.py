@@ -171,6 +171,8 @@ class MasterAgent(BaseAgent):
                     # 计算节省成本
                     # 假设油价为50元/海里，连活节省20%成本
                     saving = distance * 50 * 0.2
+                    if saving <= 0:
+                        continue
                     chain_pairs.append(ChainJobPair(
                         job1_id=job1.id,
                         job2_id=job2.id,

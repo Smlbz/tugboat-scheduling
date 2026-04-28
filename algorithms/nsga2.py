@@ -7,6 +7,8 @@ NSGA-II 多目标优化算法实现
 
 import random
 import logging
+import time
+import signal
 import numpy as np
 from deap import base, creator, tools, algorithms
 from typing import List, Dict, Tuple
@@ -20,19 +22,20 @@ class NSGA2Optimizer:
     NSGA-II 优化器类
     """
 
-    def __init__(self, jobs: List[Job], tugs: List[Tug], chain_pairs: List = None):
+    def __init__(self, jobs: List[Job], tugs: List[Tug], chain_pairs: List = None,
+                 disable_compliance: bool = False):
         from config.algorithm_config import AlgorithmConfig
         from agents.perception_agent import PerceptionAgent
 
         self.jobs = jobs
         self.tugs = tugs
         self.chain_pairs = chain_pairs or []
+        self.disable_compliance = disable_compliance
 
         self.tugs_dict = {t.id: t for t in tugs}
         self.jobs_dict = {j.id: j for j in jobs}
 
         # 基因到任务的映射：支持 required_tug_count > 1
-        # 每个 Job 占用 required_tug_count 个基因位
         self.gene_to_job = []
         for i, job in enumerate(self.jobs):
             count = max(job.required_tug_count, 1)
@@ -40,29 +43,62 @@ class NSGA2Optimizer:
         self.total_genes = len(self.gene_to_job)
         self.perception_agent = PerceptionAgent()
 
+        # 自适应种群: 任务少则缩小搜索空间
+        job_count = len(self.jobs)
+        if job_count <= 5:
+            base_pop, base_gen = 20, 15
+        elif job_count <= 10:
+            base_pop, base_gen = 40, 20
+        else:
+            base_pop, base_gen = 60, 30
+
         config = AlgorithmConfig.get_config("nsga2")
-        self.population_size = config["population_size"]
-        self.generations = config["generations"]
+        self.population_size = base_pop
+        self.generations = base_gen
         self.crossover_prob = config["crossover_prob"]
         self.mutation_prob = config["mutation_prob"]
 
+        log_msg = f"任务数={job_count}, 种群={self.population_size}, 代数={self.generations}, 总评估≈{self.population_size + self.population_size * self.generations}"
+        logger.info(log_msg)
+
+        # 合规预缓存: 一次跑完所有 (tug, job) 组合, 避免 GA 循环中重复调用
+        self._compliance_cache = self._build_compliance_cache()
+        # Ctrl+C 中断标记
+        self._interrupted = False
+
         self._setup_deap()
+
+    def _build_compliance_cache(self) -> Dict[Tuple[str, str], bool]:
+        """预计算所有 (tug, job) 合规结果, 跳过 ChromaDB/违规原因生成"""
+        if self.disable_compliance or not self.tugs or not self.jobs:
+            return {}
+        try:
+            from engine.rule_engine import RuleEngine
+            re = RuleEngine()
+            cache = {}
+            total = len(self.tugs) * len(self.jobs)
+            for job in self.jobs:
+                for tug in self.tugs:
+                    violations = re.check_compliance(tug, job, [], {})
+                    cache[(tug.id, job.id)] = len(violations) == 0
+            logger.info(f"合规缓存就绪: {total} 项 (RuleEngine 直查, 无向量库)")
+            return cache
+        except Exception as e:
+            logger.error(f"合规缓存构建失败, 跳过: {e}", exc_info=True)
+            return {}
 
     def _setup_deap(self):
         for attr_name in ["FitnessMulti", "Individual"]:
             if hasattr(creator, attr_name):
                 delattr(creator, attr_name)
 
-        # 多目标权重:
-        #   (-1.0, 1.0, 1.0) → (成本 最小化, 均衡度 最大化, 效率 最大化)
-        #   _evaluate_fitness 返回 (total_cost, balance_score, efficiency_score)
         weights = (-1.0, 1.0, 1.0)
         creator.create("FitnessMulti", base.Fitness, weights=weights)
         creator.create("Individual", list, fitness=creator.FitnessMulti)
 
         self.toolbox = base.Toolbox()
 
-        tug_count = len(self.tugs) if self.tugs else 1  # 空保护, 避免 up < low
+        tug_count = len(self.tugs) if self.tugs else 1
         def generate_gene():
             if not self.tugs or not self.jobs:
                 return [0] * self.total_genes
@@ -79,7 +115,7 @@ class NSGA2Optimizer:
     def _evaluate_fitness(self, individual: List[int]) -> Tuple[float, float, float]:
         from utils.metrics_calculator import MetricsCalculator
 
-        # 1. 先按任务收集分配的拖轮（支持 required_tug_count > 1）
+        # 1. 按任务收集分配的拖轮
         job_to_tugs = {job.id: [] for job in self.jobs}
         tug_workload = {tug.id: 0 for tug in self.tugs}
 
@@ -90,8 +126,8 @@ class NSGA2Optimizer:
                 job_to_tugs[job.id].append(tug)
                 tug_workload[tug.id] += 1
 
-        # 去重：同一任务不能重复分配同一拖轮
-        for job_id in job_to_tugs:
+        # 去重
+        for job_id in list(job_to_tugs.keys()):
             seen = set()
             unique = []
             for tug in job_to_tugs[job_id]:
@@ -100,13 +136,13 @@ class NSGA2Optimizer:
                     unique.append(tug)
             job_to_tugs[job_id] = unique
 
-        # 根据去重结果重算工作量
+        # 重算工作量
         tug_workload = {tug.id: 0 for tug in self.tugs}
-        for job_id, tugs in job_to_tugs.items():
-            for tug in tugs:
+        for job_id, tugs_list in job_to_tugs.items():
+            for tug in tugs_list:
                 tug_workload[tug.id] += 1
 
-        # 2. 生成逐个拖轮-任务的分配列表
+        # 2. 生成分配列表
         assignments = []
         for job in self.jobs:
             for tug in job_to_tugs.get(job.id, []):
@@ -116,48 +152,52 @@ class NSGA2Optimizer:
                     job_id=job.id, job_type=job.job_type, score=score
                 ))
 
-        # 3. 使用统一的 MetricsCalculator 计算指标
+        # 3. 计算成本
         total_cost = MetricsCalculator.calc_cost(
             assignments, self.tugs_dict, self.jobs_dict, self.perception_agent
         )
 
-        # 4. 约束惩罚：不满 required_tug_count 或马力不足的施加巨大惩罚
+        # 4. 约束惩罚
         PENALTY_PER_MISSING_TUG = 50000.0
         total_penalty = 0.0
         for job in self.jobs:
             unique_count = len(job_to_tugs.get(job.id, []))
             needed = max(job.required_tug_count, 1)
             if unique_count < needed:
-                missing = needed - unique_count
-                total_penalty += missing * PENALTY_PER_MISSING_TUG
+                total_penalty += (needed - unique_count) * PENALTY_PER_MISSING_TUG
         total_cost += total_penalty
 
-        # 5. 合规约束：逐任务检查每艘分配拖轮的合规性，违规施加惩罚
+        # 5. 合规惩罚 (用预缓存, 避免重复调用 ComplianceAgent)
         VIOLATION_PENALTY = 100000.0
         compliance_violations = 0
-        from agents.compliance_agent import ComplianceAgent
-        ca = getattr(self, '_compliance_agent', None)
-        if ca is None:
-            ca = ComplianceAgent()
-            self._compliance_agent = ca
-        for job in self.jobs:
-            for tug in job_to_tugs.get(job.id, []):
-                result = ca.check_compliance(tug.id, job.id)
-                if not result.is_compliant:
-                    compliance_violations += 1
+        if self._compliance_cache:
+            for job in self.jobs:
+                for tug in job_to_tugs.get(job.id, []):
+                    if not self._compliance_cache.get((tug.id, job.id), True):
+                        compliance_violations += 1
+        elif not self.disable_compliance:
+            from agents.compliance_agent import ComplianceAgent
+            ca = getattr(self, '_compliance_agent', None)
+            if ca is None:
+                ca = ComplianceAgent()
+                self._compliance_agent = ca
+            for job in self.jobs:
+                for tug in job_to_tugs.get(job.id, []):
+                    result = ca.check_compliance(tug.id, job.id)
+                    if not result.is_compliant:
+                        compliance_violations += 1
         total_cost += compliance_violations * VIOLATION_PENALTY
 
         balance_score = MetricsCalculator.calc_balance(workload_dict=tug_workload)
         efficiency_score = MetricsCalculator.calc_efficiency(assignments, self.jobs_dict)
 
-        # 6. 连活奖励：链式任务对共享拖轮则减少成本
+        # 6. 连活奖励
         for chain in self.chain_pairs:
             tugs_job1 = {a.tug_id for a in assignments if a.job_id == chain.job1_id}
             tugs_job2 = {a.tug_id for a in assignments if a.job_id == chain.job2_id}
-            if tugs_job1 & tugs_job2:  # 至少共享一艘拖轮
+            if tugs_job1 & tugs_job2:
                 total_cost -= chain.cost_saving
 
-        # 运行时验证
         if total_cost < 0:
             total_cost = 0.0
         if not (0.0 <= balance_score <= 1.0):
@@ -212,8 +252,21 @@ class NSGA2Optimizer:
         from utils.metrics_calculator import MetricsCalculator
         return MetricsCalculator.calc_efficiency(assignments, self.jobs_dict)
 
+    def _signal_handler(self, signum, frame):
+        """Ctrl+SIGINT 处理: 标记中断, 当前代完成后退出"""
+        self._interrupted = True
+        logger.warning("收到中断信号, 当前代完成后停止...")
+
     def optimize(self) -> list:
-        self.gen_history = []  # 每代记录
+        t_start = time.time()
+        self.gen_history = []
+        self._interrupted = False
+
+        # 注册 Ctrl+C 处理器 (主线程有效)
+        try:
+            signal.signal(signal.SIGINT, self._signal_handler)
+        except (ValueError, AttributeError):
+            pass  # 非主线程忽略
 
         population = self.toolbox.population(n=self.population_size)
 
@@ -222,42 +275,43 @@ class NSGA2Optimizer:
         for fit, ind in zip(fits, invalid_ind):
             ind.fitness.values = fit
 
-        # 初始化拥挤度距离，供 selTournamentDCD 使用
         for ind in population:
             ind.fitness.crowding_dist = 0.0
 
+        t_eval = time.time()
         for gen in range(self.generations):
-            # 记录本代数据
+            if self._interrupted:
+                logger.info(f"中断标记, 提前退出于第 {gen} 代")
+                break
+
             costs = [ind.fitness.values[0] for ind in population]
-            balances = [ind.fitness.values[1] for ind in population]
-            efficiencies = [ind.fitness.values[2] for ind in population]
             self.gen_history.append({
                 "gen": gen,
                 "avg_cost": float(np.mean(costs)),
                 "min_cost": float(np.min(costs)),
-                "avg_balance": float(np.mean(balances)),
-                "max_balance": float(np.max(balances)),
-                "avg_efficiency": float(np.mean(efficiencies)),
-                "max_efficiency": float(np.max(efficiencies)),
-                "crowding_dist_mean": float(np.mean([ind.fitness.crowding_dist for ind in population])),
+                "avg_balance": float(np.mean([ind.fitness.values[1] for ind in population])),
+                "max_balance": float(np.max([ind.fitness.values[1] for ind in population])),
+                "avg_efficiency": float(np.mean([ind.fitness.values[2] for ind in population])),
+                "max_efficiency": float(np.max([ind.fitness.values[2] for ind in population])),
             })
-            # 1. 父代选择（基于拥挤度距离的锦标赛选择）
+
             offspring = tools.selTournamentDCD(population, len(population))
             offspring = [self.toolbox.clone(ind) for ind in offspring]
-
-            # 2. 交叉和变异生成子代
             offspring = algorithms.varAnd(offspring, self.toolbox, cxpb=self.crossover_prob, mutpb=self.mutation_prob)
 
-            # 3. 评估子代适应度
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
             fits = self.toolbox.map(self.toolbox.evaluate, invalid_ind)
             for fit, ind in zip(fits, invalid_ind):
                 ind.fitness.values = fit
 
-            # 4. 合并父代和子代，通过NSGA-II选择新一代
             population = self.toolbox.select(population + offspring, k=self.population_size)
 
         pareto_front = tools.sortNondominated(population, len(population), first_front_only=True)[0]
+
+        t_end = time.time()
+        eval_time = t_end - t_eval
+        total_time = t_end - t_start
+        logger.info(f"优化完成: {total_time:.1f}s (评估 {eval_time:.1f}s), 帕累托前沿 {len(pareto_front)} 个体")
 
         return pareto_front
 
